@@ -1,9 +1,9 @@
 /*
 Kagi API
 
-The search API provides programmatic access to data that powers our search results & more. Kagi APIs  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  Quick start for all APIs:  - Get the API key (requires a Kagi account). - Top off your API credits. - Call the API.  ### Free  - Kagi Small Web RSS feed (public)  ### Unofficial Client Libraries  Libraries created by Kagi users and third parties.  - kagigo for Go - FastGPT & Universal Summarizer - kagi-api for Rust - kagi-dotnet for C#/.NET  ### Beta Status  The API is currently in a \"v0\" beta status. Changes will be ongoing, and will be added to the documentation below as features become available.  Use at your own risk, but please reach out to us if you have any questions.  See the Support and Community section for details. ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - Bug Reports - Q&A Forum - API Feature Requests  ### Discord Join our Discord! Good for quick questions, chatting about thing you've made with our APIs! 
+The Kagi API provides programmatic access to data that powers our search results & more.   Quick start for all APIs:  - Create an account at [Kagi](https://kagi.com/signup) - Generate an [API key](https://kagi.com/settings?p=api) - Call the API  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  ### Free  - Kagi Small Web RSS feed (public)  ### Official Client Libraries  We offer the following libraries you can use to interact with the Kagi API. These are generated from an OpenAPI spec. If you have a language you would like to use and it's not in the list, send us a message and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download) to build your own custom library.  - [Golang](https://github.com/kagisearch/kagi-api-golang) - [Python](https://github.com/kagisearch/kagi-api-python)  ### Unofficial Client Libraries  There also exist third party libraries for interacting with the Kagi API.  - [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT & Universal Summarizer - [kagi-api](https://crates.io/crates/kagi-api) for Rust - [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby - [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET  ### API Status  Our existing API, the \"v0\" beta API, is being replaced with a new version that will be available publicly soon. As changes are made, we will be updating the documentation below when the new features become available.  See the [Support and Community](https://help.kagi.com/kagi/support-and-community/) section for details. ### Pricing  We are in the process of moving all APIs to a post-paid tiered system, where each tier has a limit on the number of requests that can be made. If an API has a pricing section, then it is still being migrated over to the new billing system.  ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose) - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api) - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)  ### Discord Join our [Discord](https://kagi.com/discord)! Good for quick questions or chatting about things you've made with our APIs! 
 
-API version: 0.0.0
+API version: 0.1.0
 Contact: support@kagi.com
 */
 
@@ -20,11 +20,11 @@ var _ MappedNullable = &SuperSearch200ResponseData{}
 
 // SuperSearch200ResponseData struct for SuperSearch200ResponseData
 type SuperSearch200ResponseData struct {
-	Search []V1ResultSearch `json:"search,omitempty"`
-	Video []V1ResultVideo `json:"video,omitempty"`
-	AdjacentQuestion []V1ResultAdjacentQuestion `json:"adjacent_question,omitempty"`
-	Infobox []V1ResultInfobox `json:"infobox,omitempty"`
-	WebArchive []V1ResultWebArchive `json:"web_archive,omitempty"`
+	Search []ResultSearch `json:"search,omitempty"`
+	Video []ResultVideo `json:"video,omitempty"`
+	AdjacentQuestion []ResultAdjacentQuestion `json:"adjacent_question,omitempty"`
+	Infobox []ResultInfobox `json:"infobox,omitempty"`
+	WebArchive []ResultWebArchive `json:"web_archive,omitempty"`
 }
 
 // NewSuperSearch200ResponseData instantiates a new SuperSearch200ResponseData object
@@ -45,9 +45,9 @@ func NewSuperSearch200ResponseDataWithDefaults() *SuperSearch200ResponseData {
 }
 
 // GetSearch returns the Search field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetSearch() []V1ResultSearch {
+func (o *SuperSearch200ResponseData) GetSearch() []ResultSearch {
 	if o == nil || IsNil(o.Search) {
-		var ret []V1ResultSearch
+		var ret []ResultSearch
 		return ret
 	}
 	return o.Search
@@ -55,7 +55,7 @@ func (o *SuperSearch200ResponseData) GetSearch() []V1ResultSearch {
 
 // GetSearchOk returns a tuple with the Search field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetSearchOk() ([]V1ResultSearch, bool) {
+func (o *SuperSearch200ResponseData) GetSearchOk() ([]ResultSearch, bool) {
 	if o == nil || IsNil(o.Search) {
 		return nil, false
 	}
@@ -71,15 +71,15 @@ func (o *SuperSearch200ResponseData) HasSearch() bool {
 	return false
 }
 
-// SetSearch gets a reference to the given []V1ResultSearch and assigns it to the Search field.
-func (o *SuperSearch200ResponseData) SetSearch(v []V1ResultSearch) {
+// SetSearch gets a reference to the given []ResultSearch and assigns it to the Search field.
+func (o *SuperSearch200ResponseData) SetSearch(v []ResultSearch) {
 	o.Search = v
 }
 
 // GetVideo returns the Video field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetVideo() []V1ResultVideo {
+func (o *SuperSearch200ResponseData) GetVideo() []ResultVideo {
 	if o == nil || IsNil(o.Video) {
-		var ret []V1ResultVideo
+		var ret []ResultVideo
 		return ret
 	}
 	return o.Video
@@ -87,7 +87,7 @@ func (o *SuperSearch200ResponseData) GetVideo() []V1ResultVideo {
 
 // GetVideoOk returns a tuple with the Video field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetVideoOk() ([]V1ResultVideo, bool) {
+func (o *SuperSearch200ResponseData) GetVideoOk() ([]ResultVideo, bool) {
 	if o == nil || IsNil(o.Video) {
 		return nil, false
 	}
@@ -103,15 +103,15 @@ func (o *SuperSearch200ResponseData) HasVideo() bool {
 	return false
 }
 
-// SetVideo gets a reference to the given []V1ResultVideo and assigns it to the Video field.
-func (o *SuperSearch200ResponseData) SetVideo(v []V1ResultVideo) {
+// SetVideo gets a reference to the given []ResultVideo and assigns it to the Video field.
+func (o *SuperSearch200ResponseData) SetVideo(v []ResultVideo) {
 	o.Video = v
 }
 
 // GetAdjacentQuestion returns the AdjacentQuestion field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetAdjacentQuestion() []V1ResultAdjacentQuestion {
+func (o *SuperSearch200ResponseData) GetAdjacentQuestion() []ResultAdjacentQuestion {
 	if o == nil || IsNil(o.AdjacentQuestion) {
-		var ret []V1ResultAdjacentQuestion
+		var ret []ResultAdjacentQuestion
 		return ret
 	}
 	return o.AdjacentQuestion
@@ -119,7 +119,7 @@ func (o *SuperSearch200ResponseData) GetAdjacentQuestion() []V1ResultAdjacentQue
 
 // GetAdjacentQuestionOk returns a tuple with the AdjacentQuestion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetAdjacentQuestionOk() ([]V1ResultAdjacentQuestion, bool) {
+func (o *SuperSearch200ResponseData) GetAdjacentQuestionOk() ([]ResultAdjacentQuestion, bool) {
 	if o == nil || IsNil(o.AdjacentQuestion) {
 		return nil, false
 	}
@@ -135,15 +135,15 @@ func (o *SuperSearch200ResponseData) HasAdjacentQuestion() bool {
 	return false
 }
 
-// SetAdjacentQuestion gets a reference to the given []V1ResultAdjacentQuestion and assigns it to the AdjacentQuestion field.
-func (o *SuperSearch200ResponseData) SetAdjacentQuestion(v []V1ResultAdjacentQuestion) {
+// SetAdjacentQuestion gets a reference to the given []ResultAdjacentQuestion and assigns it to the AdjacentQuestion field.
+func (o *SuperSearch200ResponseData) SetAdjacentQuestion(v []ResultAdjacentQuestion) {
 	o.AdjacentQuestion = v
 }
 
 // GetInfobox returns the Infobox field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetInfobox() []V1ResultInfobox {
+func (o *SuperSearch200ResponseData) GetInfobox() []ResultInfobox {
 	if o == nil || IsNil(o.Infobox) {
-		var ret []V1ResultInfobox
+		var ret []ResultInfobox
 		return ret
 	}
 	return o.Infobox
@@ -151,7 +151,7 @@ func (o *SuperSearch200ResponseData) GetInfobox() []V1ResultInfobox {
 
 // GetInfoboxOk returns a tuple with the Infobox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetInfoboxOk() ([]V1ResultInfobox, bool) {
+func (o *SuperSearch200ResponseData) GetInfoboxOk() ([]ResultInfobox, bool) {
 	if o == nil || IsNil(o.Infobox) {
 		return nil, false
 	}
@@ -167,15 +167,15 @@ func (o *SuperSearch200ResponseData) HasInfobox() bool {
 	return false
 }
 
-// SetInfobox gets a reference to the given []V1ResultInfobox and assigns it to the Infobox field.
-func (o *SuperSearch200ResponseData) SetInfobox(v []V1ResultInfobox) {
+// SetInfobox gets a reference to the given []ResultInfobox and assigns it to the Infobox field.
+func (o *SuperSearch200ResponseData) SetInfobox(v []ResultInfobox) {
 	o.Infobox = v
 }
 
 // GetWebArchive returns the WebArchive field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetWebArchive() []V1ResultWebArchive {
+func (o *SuperSearch200ResponseData) GetWebArchive() []ResultWebArchive {
 	if o == nil || IsNil(o.WebArchive) {
-		var ret []V1ResultWebArchive
+		var ret []ResultWebArchive
 		return ret
 	}
 	return o.WebArchive
@@ -183,7 +183,7 @@ func (o *SuperSearch200ResponseData) GetWebArchive() []V1ResultWebArchive {
 
 // GetWebArchiveOk returns a tuple with the WebArchive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetWebArchiveOk() ([]V1ResultWebArchive, bool) {
+func (o *SuperSearch200ResponseData) GetWebArchiveOk() ([]ResultWebArchive, bool) {
 	if o == nil || IsNil(o.WebArchive) {
 		return nil, false
 	}
@@ -199,8 +199,8 @@ func (o *SuperSearch200ResponseData) HasWebArchive() bool {
 	return false
 }
 
-// SetWebArchive gets a reference to the given []V1ResultWebArchive and assigns it to the WebArchive field.
-func (o *SuperSearch200ResponseData) SetWebArchive(v []V1ResultWebArchive) {
+// SetWebArchive gets a reference to the given []ResultWebArchive and assigns it to the WebArchive field.
+func (o *SuperSearch200ResponseData) SetWebArchive(v []ResultWebArchive) {
 	o.WebArchive = v
 }
 

@@ -1,6 +1,6 @@
 # \FastGPTAPI
 
-All URIs are relative to *https://kagi.com/api/v0*
+All URIs are relative to *https://kagi.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -29,7 +29,7 @@ import (
 )
 
 func main() {
-	fastGPTRequest := *openapiclient.NewFastGPTRequest() // FastGPTRequest | Contains the query to process.
+	fastGPTRequest := *openapiclient.NewFastGPTRequest("Query_example") // FastGPTRequest | Contains the query to process.
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

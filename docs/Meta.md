@@ -4,16 +4,17 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
+**Trace** | Pointer to **string** |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
 **Node** | **string** |  | 
 **Ms** | **int32** |  | 
-**ApiBalance** | Pointer to **float32** |  | [optional] 
+**Query** | Pointer to [**MetaQuery**](MetaQuery.md) |  | [optional] 
 
 ## Methods
 
 ### NewMeta
 
-`func NewMeta(id string, node string, ms int32, ) *Meta`
+`func NewMeta(node string, ms int32, ) *Meta`
 
 NewMeta instantiates a new Meta object
 This constructor will assign default values to properties that have it defined,
@@ -27,6 +28,31 @@ will change when the set of required properties is changed
 NewMetaWithDefaults instantiates a new Meta object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetTrace
+
+`func (o *Meta) GetTrace() string`
+
+GetTrace returns the Trace field if non-nil, zero value otherwise.
+
+### GetTraceOk
+
+`func (o *Meta) GetTraceOk() (*string, bool)`
+
+GetTraceOk returns a tuple with the Trace field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrace
+
+`func (o *Meta) SetTrace(v string)`
+
+SetTrace sets Trace field to given value.
+
+### HasTrace
+
+`func (o *Meta) HasTrace() bool`
+
+HasTrace returns a boolean if a field has been set.
 
 ### GetId
 
@@ -47,6 +73,11 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
+### HasId
+
+`func (o *Meta) HasId() bool`
+
+HasId returns a boolean if a field has been set.
 
 ### GetNode
 
@@ -88,30 +119,30 @@ and a boolean to check if the value has been set.
 SetMs sets Ms field to given value.
 
 
-### GetApiBalance
+### GetQuery
 
-`func (o *Meta) GetApiBalance() float32`
+`func (o *Meta) GetQuery() MetaQuery`
 
-GetApiBalance returns the ApiBalance field if non-nil, zero value otherwise.
+GetQuery returns the Query field if non-nil, zero value otherwise.
 
-### GetApiBalanceOk
+### GetQueryOk
 
-`func (o *Meta) GetApiBalanceOk() (*float32, bool)`
+`func (o *Meta) GetQueryOk() (*MetaQuery, bool)`
 
-GetApiBalanceOk returns a tuple with the ApiBalance field if it's non-nil, zero value otherwise
+GetQueryOk returns a tuple with the Query field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetApiBalance
+### SetQuery
 
-`func (o *Meta) SetApiBalance(v float32)`
+`func (o *Meta) SetQuery(v MetaQuery)`
 
-SetApiBalance sets ApiBalance field to given value.
+SetQuery sets Query field to given value.
 
-### HasApiBalance
+### HasQuery
 
-`func (o *Meta) HasApiBalance() bool`
+`func (o *Meta) HasQuery() bool`
 
-HasApiBalance returns a boolean if a field has been set.
+HasQuery returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

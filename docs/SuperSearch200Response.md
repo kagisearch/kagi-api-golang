@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Meta** | Pointer to [**V1Meta**](V1Meta.md) |  | [optional] 
+**Meta** | Pointer to [**Meta**](Meta.md) |  | [optional] 
 **Data** | Pointer to [**SuperSearch200ResponseData**](SuperSearch200ResponseData.md) |  | [optional] 
 
 ## Methods
@@ -28,20 +28,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetMeta
 
-`func (o *SuperSearch200Response) GetMeta() V1Meta`
+`func (o *SuperSearch200Response) GetMeta() Meta`
 
 GetMeta returns the Meta field if non-nil, zero value otherwise.
 
 ### GetMetaOk
 
-`func (o *SuperSearch200Response) GetMetaOk() (*V1Meta, bool)`
+`func (o *SuperSearch200Response) GetMetaOk() (*Meta, bool)`
 
 GetMetaOk returns a tuple with the Meta field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMeta
 
-`func (o *SuperSearch200Response) SetMeta(v V1Meta)`
+`func (o *SuperSearch200Response) SetMeta(v Meta)`
 
 SetMeta sets Meta field to given value.
 

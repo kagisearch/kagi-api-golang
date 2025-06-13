@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Text** | Pointer to **string** |  | [optional] 
+**Query** | **string** |  | 
 **Cache** | Pointer to **bool** |  | [optional] [default to true]
 
 ## Methods
 
 ### NewFastGPTRequest
 
-`func NewFastGPTRequest() *FastGPTRequest`
+`func NewFastGPTRequest(query string, ) *FastGPTRequest`
 
 NewFastGPTRequest instantiates a new FastGPTRequest object
 This constructor will assign default values to properties that have it defined,
@@ -26,30 +26,25 @@ NewFastGPTRequestWithDefaults instantiates a new FastGPTRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetText
+### GetQuery
 
-`func (o *FastGPTRequest) GetText() string`
+`func (o *FastGPTRequest) GetQuery() string`
 
-GetText returns the Text field if non-nil, zero value otherwise.
+GetQuery returns the Query field if non-nil, zero value otherwise.
 
-### GetTextOk
+### GetQueryOk
 
-`func (o *FastGPTRequest) GetTextOk() (*string, bool)`
+`func (o *FastGPTRequest) GetQueryOk() (*string, bool)`
 
-GetTextOk returns a tuple with the Text field if it's non-nil, zero value otherwise
+GetQueryOk returns a tuple with the Query field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetText
+### SetQuery
 
-`func (o *FastGPTRequest) SetText(v string)`
+`func (o *FastGPTRequest) SetQuery(v string)`
 
-SetText sets Text field to given value.
+SetQuery sets Query field to given value.
 
-### HasText
-
-`func (o *FastGPTRequest) HasText() bool`
-
-HasText returns a boolean if a field has been set.
 
 ### GetCache
 

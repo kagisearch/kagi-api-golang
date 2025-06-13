@@ -1,6 +1,6 @@
 # \SummarizerAPI
 
-All URIs are relative to *https://kagi.com/api/v0*
+All URIs are relative to *https://kagi.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

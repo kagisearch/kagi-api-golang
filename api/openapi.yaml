@@ -4,92 +4,63 @@ info:
     email: support@kagi.com
     name: API Support
     url: https://kagi.com/support
-  description: |
-    The search API provides programmatic access to data that powers our search results & more.
-    Kagi APIs
-
-    We have the following APIs available.
-    ### Commercial
-
-    - Kagi Search API (invite only at the moment)
-    - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem)
-    - Universal Summarizer API (public)
-    - FastGPT API (public)
-
-    Quick start for all APIs:
-
-    - Get the API key (requires a Kagi account).
-    - Top off your API credits.
-    - Call the API.
-
-    ### Free
-
-    - Kagi Small Web RSS feed (public)
-
-    ### Unofficial Client Libraries
-
-    Libraries created by Kagi users and third parties.
-
-    - kagigo for Go - FastGPT & Universal Summarizer
-    - kagi-api for Rust
-    - kagi-dotnet for C#/.NET
-
-    ### Beta Status
-
-    The API is currently in a "v0" beta status. Changes will be ongoing, and will be added to the documentation below as features become available.
-
-    Use at your own risk, but please reach out to us if you have any questions.
-
-    See the Support and Community section for details.
-    ### GitHub Discussions
-
-    This is the preferred venue for bug reports and feature requests.
-
-    - Bug Reports
-    - Q&A Forum
-    - API Feature Requests
-
-    ### Discord
-    Join our Discord! Good for quick questions, chatting about thing you've made with our APIs!
+  description: "The Kagi API provides programmatic access to data that powers our\
+    \ search results & more. \n\nQuick start for all APIs:\n\n- Create an account\
+    \ at [Kagi](https://kagi.com/signup)\n- Generate an [API key](https://kagi.com/settings?p=api)\n\
+    - Call the API\n\nWe have the following APIs available.\n### Commercial\n\n- Kagi\
+    \ Search API (invite only at the moment)\n- Web and News Enrichment API (public,\
+    \ exposes Kagi's own indexes Teclis and TinyGem)\n- Universal Summarizer API (public)\n\
+    - FastGPT API (public)\n\n### Free\n\n- Kagi Small Web RSS feed (public)\n\n###\
+    \ Official Client Libraries\n\nWe offer the following libraries you can use to\
+    \ interact with the Kagi API. These are generated from an OpenAPI spec. If you\
+    \ have a language you would like to use and it's not in the list, send us a message\
+    \ and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download)\
+    \ to build your own custom library.\n\n- [Golang](https://github.com/kagisearch/kagi-api-golang)\n\
+    - [Python](https://github.com/kagisearch/kagi-api-python)\n\n### Unofficial Client\
+    \ Libraries\n\nThere also exist third party libraries for interacting with the\
+    \ Kagi API.\n\n- [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT\
+    \ & Universal Summarizer\n- [kagi-api](https://crates.io/crates/kagi-api) for\
+    \ Rust\n- [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby\n- [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet)\
+    \ for C#/.NET\n\n### API Status\n\nOur existing API, the \"v0\" beta API, is being\
+    \ replaced with a new version that will be available publicly soon. As changes\
+    \ are made, we will be updating the documentation below when the new features\
+    \ become available.\n\nSee the [Support and Community](https://help.kagi.com/kagi/support-and-community/)\
+    \ section for details.\n### Pricing\n\nWe are in the process of moving all APIs\
+    \ to a post-paid tiered system, where each tier has a limit on the number of requests\
+    \ that can be made. If an API has a pricing section, then it is still being migrated\
+    \ over to the new billing system.\n\n### GitHub Discussions\n\nThis is the preferred\
+    \ venue for bug reports and feature requests.\n\n- [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose)\n\
+    - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api)\n\
+    - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)\n\
+    \n### Discord\nJoin our [Discord](https://kagi.com/discord)! Good for quick questions\
+    \ or chatting about things you've made with our APIs!\n"
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   title: Kagi API
-  version: 0.0.0
+  version: 0.1.0
 servers:
 - description: Production api endpoint
-  url: https://kagi.com/api/v0
+  url: https://kagi.com/api/v1
 tags:
 - description: |
-    The Search API gives programmable access to Kagi's premium search results. It will inherit the setting in your account. For example you can:
+    The Search API gives programmable access to Kagi's premium search results. It will inherit the settings in your account. For example, you can:
 
-    Block or promote websites ([results personalization](https://help.kagi.com/kagi/getting-started/index.html)).
-    Select to receive longer or shorter search snippets (under [Settings -> Search](https://help.kagi.com/kagi/settings/search.html))
+    - Block or promote websites ([results personalization](https://help.kagi.com/kagi/getting-started/index.html))
+    - Select to receive longer or shorter search snippets (under [Settings -> Search](https://help.kagi.com/kagi/settings/search.html))
+
+    For a full list, please check out our [search features.](https://help.kagi.com/kagi/features/website-info-personalized-results.html)
   name: Search
   x-displayName: Search API
 - description: |
     The Universal Summarizer is an API using powerful LLMs to summarize any content, of almost any format, with unlimited token length!
-    Quick start
-
-    - Get the API key (requires a Kagi account)
-    - Top off your API credits.
-    - Call the API. See example usage.
-    - Alternatively use Kagi Search browser extension (Chrome/Firefox) and you can use the most advanced Muriel model right from the extension.
-
-    API key
-
-    To obtain an API key you will first need to create a Kagi account.
-
-    Then, navigate to Settings -> Advanced -> API portal, or click here to go directly.
-
-    Click "Generate API Token".
-    API credits
+    As an alternative to using the API, we provide the Kagi Search browser extension ([Chrome](https://chromewebstore.google.com/detail/kagi-search-for-chrome/cdglnehniifkbagbbombnjghhcihifij?pli=1)/[Firefox](https://addons.mozilla.org/en-US/firefox/addon/kagi-search-for-firefox/)) and you can use the most advanced Muriel model right from the extension.
 
     Universal Summarizer API uses pre-paid API credits. You can manage API credits in the API billing page of your Kagi settings.
 
     Using API with insufficient credits will produce "Insufficient credit to perform this request." response message.
-    Pricing
-    Consumer models
+    ### Pricing
+    #### Consumer models
 
     Price for our consumer-grade models (Cecil and Agnes) is $0.030 USD per 1,000 tokens processed. If you are subscribed to the Kagi Ultimate plan, discounted pricing at $0.025 per 1,000 tokens processed is automatically applied.
 
@@ -99,83 +70,74 @@ tags:
     - Any request over 10,000 tokens is billed as 10,000 tokens, regardless of the length of the document.
     - Accessing cached summaries of the same URL is always free.
 
-    Enterprise models
+    #### Enterprise models
 
-    Our enterprise-grade Muriel summarization engine produces even higher quality summaries, especially for long documents. It also provides longer and more detailed summaries than our consumer-grade model. See the difference here.
+    Our enterprise-grade Muriel summarization engine produces even higher quality summaries, especially for long documents. It also provides longer and more detailed summaries than our consumer-grade model. See the difference [here](https://blog.kagi.com/universal-summarizer#muriel).
 
     Muriel usage is a flat rate of $1 USD per summary, regardless of the length or type of the document.
 
     To use Muriel just use "muriel" as the "engine" parameter in the API call. See examples below.
-    Privacy
+    ### Privacy
 
-    Read how is summarization data handled in our privacy policy.
+    Read how summarization data is handled in our [privacy policy](https://kagi.com/privacy#Summarizer).
 
     For handling sensitive information and documents, we recommend setting the 'cache' API parameter to False. In this way, the document will "flow through" our infrastructure and will not be retained anywhere after processing.
-    Integrations
+    ### Integrations
 
-    Universal Summarizer is available as a Zapier integration allowing you to quickly integrate summarization into your programmatic workflows.
-
-    Check out Universal Summarizer Zapier integration.
-    Support
+    Universal Summarizer is available as a [Zapier integration](https://zapier.com/apps/universal-summarizer-by-kagi-ca1/integrations) allowing you to quickly integrate summarization into your programmatic workflows.
   name: Summarizer
   x-displayName: Universal Summarizer API
 - description: |
-    The enrichment APIs are a collection of indexes that can be used to supplement other products with more novel and interesting content from around the web.
+    The Enrichment APIs are a collection of indexes that can be used to supplement other products with more novel content from around the web.
 
-    Enrichment APIs allow anyone to get Kagi's unique results, namely the Teclis index (web results) and TinyGem index (news) results.
+    Enrichment APIs allow anyone to get Kagi's unique results, namely the Teclis index (web results) and TinyGem index (news results).
 
     They are best used for finding non-commercial websites and "small web" discussions surrounding a particular topic. The news enrichment API offers interesting discussions and news worth reading from typically non-mainstream sources.
 
-    They are not "general" search indexes that can answer any type of query but rather these results are our 'secret sauce' and what makes Kagi results unique and interesting and are best used in combination with a general results index.
+    They are not "general" search indexes that can answer any type of query, but rather these results are our "secret sauce" and what makes Kagi results unique and interesting and are best used in combination with a general results index.
     ### Pricing
-
-    All /enrich APIs are currently billed at $2/1000 searches ($0.002 USD per search). Volume discounts are available (contact support@kagi.com for more information).
 
     Since results are niche, we bill only when non-zero results are returned.
   name: Enrichment
   x-displayName: Enrichment API
 - description: |
-    FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
-
-    ### Quick start
-
-    - Get the API key (requires a Kagi account)
-    - Top off your API credits.
-    - Call the API. See example usage.
-
-    ### API key
-
-    To obtain an API key you will first need to create a Kagi account.
-
-    Then, navigate to Settings -> Advanced -> API portal, or click here to go directly.
-
-    Click "Generate API Token".
-
-    ### API Credits
-
-    The FastGPT API uses pre-paid API credits. You can manage API credits in the API billing page of your Kagi settings.
-
-    Using API with insufficient credits will produce "Insufficient credit to perform this request." response message.
+    FastGPT is a Kagi service that uses powerful LLMs to answer user queries and runs a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app [here](https://kagi.com/fastgpt).
 
     ### Pricing
 
     Pricing for FastGPT is a flat rate per-query:
 
-        1.5¢ per query ($15 USD per 1000 queries) when web_search is enabled.
-        (Out of service) 0.15¢ per query ($1.5 USD per 1000 queries) when web_search is disabled.
+    1.5¢ per query ($15 USD per 1000 queries).
   name: FastGPT
   x-displayName: FastGPT API
-- description: |
-    Just some filler for now
-  name: Translate
-  x-displayName: Translation API
 paths:
-  /v1/search:
+  /search:
     get:
       operationId: superSearch
       requestBody:
         content:
           application/json:
+            examples:
+              basicSearch:
+                description: Simple search showing how to use the serach API
+                summary: Basic search query
+                value:
+                  query: steve jobs
+                  workflow: search
+              snapSearch:
+                description: Snaps are supported for quickly searching in individual
+                  sites
+                summary: Search with snaps
+                value:
+                  query: '@r headphones'
+                  workflow: search
+              imageSearch:
+                description: "Searching just for images, or other catrgories is supported\
+                  \ using the workflow parameter"
+                summary: Search just for images
+                value:
+                  query: doggo
+                  workflow: images
             schema:
               $ref: '#/components/schemas/superSearch_request'
         description: Contains the search query to run
@@ -316,111 +278,7 @@ paths:
           description: Access token is missing or invalid
       security:
       - kagi: []
-      summary: Perform a super charged search.
-      tags:
-      - Search
-  /search:
-    get:
-      operationId: search
-      parameters:
-      - description: A query used to perform the search.
-        explode: true
-        in: query
-        name: q
-        required: true
-        schema:
-          type: string
-        style: form
-      - description: Limit number of search results.
-        explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          type: integer
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                      api_balance: 123.456
-                    data:
-                    - t: 0
-                      url: https://en.wikipedia.org/wiki/Steve_Jobs
-                      title: Steve Jobs - Wikipedia
-                      snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011)\
-                        \ was an American businessman, inventor, and investor best\
-                        \ known for co-founding the technology company ..."
-                      thumbnail:
-                        url: /proxy/310px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg?c=9cn5Kxse4yD05EJkf6QML9dK4clUbdQ9Oq4d5gDoyHBwiX43u0CCAEVi8DMCHFAXhMAIsLbp8IO0pmQf41WB6CWu9BNfAxhRqV-EQL_l_gnV1yD14xBDf5Sgj1vfjIF0aMOqcVwh-jMVcqkx3GjwnuZrt2Z8-tdYhu3uERcYzLTTqq5TKumyN0Q1c5n3utowEZhefA7WoUo3SNIB1-iHhCnijbEL5iAQo1iTroqppHk%3D
-                    - t: 0
-                      url: https://en.wikipedia.org/wiki/Steve_Jobs_(film)
-                      title: Steve Jobs (film) - Wikipedia
-                      snippet: "Steve Jobs is a 2015 biographical drama film directed\
-                        \ by Danny Boyle and written by Aaron Sorkin. A British-American\
-                        \ co-production, it was adapted from the ..."
-                      thumbnail:
-                        url: /proxy/310px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg?c=9cn5Kxse4yD05EJkf6QML9dK4clUbdQ9Oq4d5gDoyHBwiX43u0CCAEVi8DMCHFAXhMAIsLbp8IO0pmQf41WB6CWu9BNfAxhRqV-EQL_l_gnV1yD14xBDf5Sgj1vfjIF0aMOqcVwh-jMVcqkx3GjwnuZrt2Z8-tdYhu3uERcYzLTTqq5TKumyN0Q1c5n3utowEZhefA7WoUo3SNIB1-iHhCnijbEL5iAQo1iTroqppHk%3D
-                        width: 310
-                        height: 300
-                    - t: 0
-                      url: https://www.apple.com/stevejobs/
-                      title: Remembering Steve Jobs - Apple
-                      snippet: He was a visionary that had the amazing ability to
-                        breath life into his ideas. He believed so passionately in
-                        his work that his creativity became both seductive ...
-                    - t: 0
-                      url: https://www.npr.org/2015/10/09/447165973/steve-jobs-the-story-of-the-man-behind-the-personal-computer
-                      title: "Steve Jobs: The Story Of The Man Behind The Personal\
-                        \ Computer"
-                      snippet: "The Apple founder spoke with Fresh Air&#39;s Terry\
-                        \ Gross in 1996. Later, after he was diagnosed with cancer,\
-                        \ Jobs asked Walter Isaacson to write his biography. Isaacson\
-                        \ spoke to Fresh Air Oct. 25, 2011."
-                      published: 2015-10-09T00:00:00Z
-                    - t: 1
-                      list:
-                      - Steve Jobs
-                      - steve jobs death
-                      - steve jobs net worth
-                      - steve jobs quotes
-                      - steve jobs movie
-                      - steve jobs wife
-                      - steve jobs daughter
-                      - steve jobs biography
-                      - steve jobs last words
-                      - steve jobs age
-              schema:
-                $ref: '#/components/schemas/search_200_response'
-          description: Success
-        "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
-      security:
-      - kagi: []
-      summary: Perform a search.
+      summary: Perform a search of the web.
       tags:
       - Search
   /summarize:
@@ -724,6 +582,7 @@ paths:
       operationId: enrichSearch
       parameters:
       - description: Query to enrich
+        example: steve jobs
         explode: true
         in: query
         name: q
@@ -807,6 +666,13 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              basicQuery:
+                description: An example of how to use the FastGPT API endpoint
+                summary: Basic query
+                value:
+                  query: who is steve jobs?
+                  cache: true
             schema:
               $ref: '#/components/schemas/fastGPT_request'
         description: Contains the query to process.
@@ -887,7 +753,7 @@ components:
             $ref: '#/components/schemas/exampleError'
       description: Access token is missing or invalid
   schemas:
-    v1Meta:
+    meta:
       example:
         node: node
         trace: trace
@@ -905,21 +771,23 @@ components:
             negate: true
             name: name
             value: value
+        id: id
       properties:
         trace:
+          type: string
+        id:
           type: string
         node:
           type: string
         ms:
           type: integer
         query:
-          $ref: '#/components/schemas/v1Meta_query'
+          $ref: '#/components/schemas/meta_query'
       required:
       - ms
       - node
-      - trace
       type: object
-    v1ResultSearch:
+    resultSearch:
       example:
         snippet: snippet
         image:
@@ -952,14 +820,14 @@ components:
         time:
           type: string
         image:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
         props:
-          $ref: '#/components/schemas/v1ResultSearch_props'
+          $ref: '#/components/schemas/resultSearch_props'
       required:
       - title
       - url
       type: object
-    v1ResultVideo:
+    resultVideo:
       example:
         snippet: snippet
         image:
@@ -988,14 +856,14 @@ components:
         time:
           type: string
         image:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
         props:
-          $ref: '#/components/schemas/v1ResultVideo_props'
+          $ref: '#/components/schemas/resultVideo_props'
       required:
       - title
       - url
       type: object
-    v1ResultAdjacentQuestion:
+    resultAdjacentQuestion:
       example:
         snippet: snippet
         image:
@@ -1019,15 +887,15 @@ components:
         time:
           type: string
         image:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
         props:
-          $ref: '#/components/schemas/v1ResultAdjacentQuestion_props'
+          $ref: '#/components/schemas/resultAdjacentQuestion_props'
       required:
       - snippet
       - title
       - url
       type: object
-    v1ResultInfobox:
+    resultInfobox:
       example:
         snippet: snippet
         image:
@@ -1064,15 +932,15 @@ components:
         time:
           type: string
         image:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
         props:
-          $ref: '#/components/schemas/v1ResultInfobox_props'
+          $ref: '#/components/schemas/resultInfobox_props'
       required:
       - snippet
       - title
       - url
       type: object
-    v1ResultWebArchive:
+    resultWebArchive:
       example:
         snippet: snippet
         image:
@@ -1096,33 +964,13 @@ components:
         time:
           type: string
         image:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
         props:
-          $ref: '#/components/schemas/v1ResultWebArchive_props'
+          $ref: '#/components/schemas/resultWebArchive_props'
       required:
       - snippet
       - title
       - url
-      type: object
-    meta:
-      example:
-        node: node
-        api_balance: 1.2315135367772556
-        ms: 7
-        id: id
-      properties:
-        id:
-          type: string
-        node:
-          type: string
-        ms:
-          type: integer
-        api_balance:
-          type: number
-      required:
-      - id
-      - ms
-      - node
       type: object
     exampleError:
       description: I need an example error to appease the linter. Please accept my
@@ -1130,13 +978,26 @@ components:
       example:
         meta:
           node: node
-          api_balance: 1.2315135367772556
-          ms: 7
+          trace: trace
+          ms: 0
+          query:
+            workflow: workflow
+            terms: terms
+            raw: raw
+            fields:
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+            - kind: kind
+              negate: true
+              name: name
+              value: value
           id: id
         error:
           msg: msg
           ref: ref
-          code: 1
+          code: 7
       properties:
         meta:
           $ref: '#/components/schemas/meta'
@@ -1145,6 +1006,47 @@ components:
       required:
       - error
       - meta
+      type: object
+    summary:
+      description: A summary of the text or url provided
+      example:
+        data:
+          output: output
+          tokens: 0
+        meta:
+          node: node
+          trace: trace
+          ms: 0
+          query:
+            workflow: workflow
+            terms: terms
+            raw: raw
+            fields:
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+          id: id
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          $ref: '#/components/schemas/summary_data'
+      required:
+      - data
+      - meta
+      type: object
+    uploadText:
+      description: Used to upload text to be summarized
+      properties:
+        text:
+          type: string
+      required:
+      - text
       type: object
     searchObject:
       example:
@@ -1176,65 +1078,28 @@ components:
         published:
           type: string
         thumbnail:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
         image:
-          $ref: '#/components/schemas/v1ResultSearch_image'
+          $ref: '#/components/schemas/resultSearch_image'
       required:
       - title
       - url
-      type: object
-    searchRelated:
-      properties:
-        t:
-          type: integer
-        list:
-          items:
-            type: string
-          type: array
-      required:
-      - list
-      - t
-      type: object
-    summary:
-      description: A summary of the text or url provided
-      example:
-        data:
-          output: output
-          tokens: 0
-        meta:
-          node: node
-          api_balance: 1.2315135367772556
-          ms: 7
-          id: id
-      properties:
-        meta:
-          $ref: '#/components/schemas/meta'
-        data:
-          $ref: '#/components/schemas/summary_data'
-      required:
-      - data
-      - meta
-      type: object
-    uploadText:
-      description: Used to upload text to be summarized
-      properties:
-        text:
-          type: string
-      required:
-      - text
       type: object
     superSearch_request:
       description: Used to upload the search query
       properties:
         query:
+          description: The search query to perform.
           type: string
         workflow:
+          default: search
+          description: Can be used to filter result output to a single category.
           enum:
           - search
           - images
           - videos
           - news
-          - podcats
+          - podcasts
           type: string
       required:
       - query
@@ -1423,23 +1288,23 @@ components:
       properties:
         search:
           items:
-            $ref: '#/components/schemas/v1ResultSearch'
+            $ref: '#/components/schemas/resultSearch'
           type: array
         video:
           items:
-            $ref: '#/components/schemas/v1ResultVideo'
+            $ref: '#/components/schemas/resultVideo'
           type: array
         adjacent_question:
           items:
-            $ref: '#/components/schemas/v1ResultAdjacentQuestion'
+            $ref: '#/components/schemas/resultAdjacentQuestion'
           type: array
         infobox:
           items:
-            $ref: '#/components/schemas/v1ResultInfobox'
+            $ref: '#/components/schemas/resultInfobox'
           type: array
         web_archive:
           items:
-            $ref: '#/components/schemas/v1ResultWebArchive'
+            $ref: '#/components/schemas/resultWebArchive'
           type: array
       type: object
     superSearch_200_response:
@@ -1642,60 +1507,12 @@ components:
               negate: true
               name: name
               value: value
-      properties:
-        meta:
-          $ref: '#/components/schemas/v1Meta'
-        data:
-          $ref: '#/components/schemas/superSearch_200_response_data'
-      type: object
-    search_200_response_data_inner:
-      anyOf:
-      - $ref: '#/components/schemas/searchObject'
-      - $ref: '#/components/schemas/searchRelated'
-    search_200_response:
-      description: A response with a description and results references used
-      example:
-        data:
-        - snippet: snippet
-          image:
-            width: 1
-            url: url
-            height: 6
-          thumbnail:
-            width: 1
-            url: url
-            height: 6
-          t: 0
-          rank: 6
-          published: published
-          title: title
-          url: url
-        - snippet: snippet
-          image:
-            width: 1
-            url: url
-            height: 6
-          thumbnail:
-            width: 1
-            url: url
-            height: 6
-          t: 0
-          rank: 6
-          published: published
-          title: title
-          url: url
-        meta:
-          node: node
-          api_balance: 1.2315135367772556
-          ms: 7
           id: id
       properties:
         meta:
           $ref: '#/components/schemas/meta'
         data:
-          items:
-            $ref: '#/components/schemas/search_200_response_data_inner'
-          type: array
+          $ref: '#/components/schemas/superSearch_200_response_data'
       type: object
     enrichSearch_200_response:
       description: An array of search objects that can enrich a search query
@@ -1731,8 +1548,21 @@ components:
           url: url
         meta:
           node: node
-          api_balance: 1.2315135367772556
-          ms: 7
+          trace: trace
+          ms: 0
+          query:
+            workflow: workflow
+            terms: terms
+            raw: raw
+            fields:
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+            - kind: kind
+              negate: true
+              name: name
+              value: value
           id: id
       properties:
         meta:
@@ -1743,9 +1573,9 @@ components:
           type: array
       type: object
     fastGPT_request:
-      description: Used to upload text to be summarized
+      description: Used to upload the query to FastGPT
       properties:
-        text:
+        query:
           type: string
         cache:
           default: true
@@ -1833,8 +1663,21 @@ components:
           tokens: 0
         meta:
           node: node
-          api_balance: 1.2315135367772556
-          ms: 7
+          trace: trace
+          ms: 0
+          query:
+            workflow: workflow
+            terms: terms
+            raw: raw
+            fields:
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+            - kind: kind
+              negate: true
+              name: name
+              value: value
           id: id
       properties:
         meta:
@@ -1842,7 +1685,7 @@ components:
         data:
           $ref: '#/components/schemas/fastGPT_200_response_data'
       type: object
-    v1Meta_query_fields_inner:
+    meta_query_fields_inner:
       example:
         kind: kind
         negate: true
@@ -1858,7 +1701,7 @@ components:
         negate:
           type: boolean
       type: object
-    v1Meta_query:
+    meta_query:
       example:
         workflow: workflow
         terms: terms
@@ -1879,12 +1722,12 @@ components:
           type: string
         fields:
           items:
-            $ref: '#/components/schemas/v1Meta_query_fields_inner'
+            $ref: '#/components/schemas/meta_query_fields_inner'
           type: array
         workflow:
           type: string
       type: object
-    v1ResultSearch_image:
+    resultSearch_image:
       example:
         width: 1
         url: url
@@ -1899,7 +1742,7 @@ components:
       required:
       - url
       type: object
-    v1ResultSearch_props_thumbnail_image:
+    resultSearch_props_thumbnail_image:
       example:
         width: 5
         url: url
@@ -1913,7 +1756,7 @@ components:
           type: integer
       required:
       - url
-    v1ResultSearch_props:
+    resultSearch_props:
       example:
         language_probability: 2.3021358869347655
         sort_normalize_url: sort_normalize_url
@@ -1929,7 +1772,7 @@ components:
         - source_history
       properties:
         thumbnail_image:
-          $ref: '#/components/schemas/v1ResultSearch_props_thumbnail_image'
+          $ref: '#/components/schemas/resultSearch_props_thumbnail_image'
         language:
           type: string
         language_probability:
@@ -1945,7 +1788,7 @@ components:
             type: string
           type: array
       type: object
-    v1ResultVideo_props:
+    resultVideo_props:
       example:
         hires_thumbnail_url: hires_thumbnail_url
         language_probability: 7.061401241503109
@@ -1971,7 +1814,7 @@ components:
             type: string
           type: array
       type: object
-    v1ResultAdjacentQuestion_props:
+    resultAdjacentQuestion_props:
       example:
         question: question
         language_probability: 9.301444243932576
@@ -1984,7 +1827,7 @@ components:
         language_probability:
           type: number
       type: object
-    v1ResultInfobox_props_infobox_inner:
+    resultInfobox_props_infobox_inner:
       example:
         merged: true
         header: header
@@ -2001,7 +1844,7 @@ components:
       - merged
       - value
       type: object
-    v1ResultInfobox_props:
+    resultInfobox_props:
       example:
         wikipedia.page_id: 3
         language_probability: 2.027123023002322
@@ -2022,7 +1865,7 @@ components:
       properties:
         infobox:
           items:
-            $ref: '#/components/schemas/v1ResultInfobox_props_infobox_inner'
+            $ref: '#/components/schemas/resultInfobox_props_infobox_inner'
           type: array
         wikipedia.subtext:
           type: string
@@ -2041,7 +1884,7 @@ components:
             type: string
           type: array
       type: object
-    v1ResultWebArchive_props:
+    resultWebArchive_props:
       example:
         language_probability: 4.145608029883936
         web_archive_domain: web_archive_domain
@@ -2058,7 +1901,7 @@ components:
       example:
         msg: msg
         ref: ref
-        code: 1
+        code: 7
       properties:
         code:
           type: integer
@@ -2089,8 +1932,3 @@ components:
       in: header
       name: Authorization
       type: apiKey
-    ApiKeyAuth:
-      description: "Kagi Bearer authentication. It should match the format `Bearer\
-        \ {value}`"
-      scheme: bearer
-      type: http

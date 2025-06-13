@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Query** | **string** |  | 
-**Workflow** | Pointer to **string** |  | [optional] 
+**Query** | **string** | The search query to perform. | 
+**Workflow** | Pointer to **string** | Can be used to filter result output to a single category. | [optional] [default to "search"]
 
 ## Methods
 

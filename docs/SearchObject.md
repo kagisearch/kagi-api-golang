@@ -10,8 +10,8 @@ Name | Type | Description | Notes
 **Title** | **string** |  | 
 **Snippet** | Pointer to **string** |  | [optional] 
 **Published** | Pointer to **string** |  | [optional] 
-**Thumbnail** | Pointer to [**V1ResultSearchImage**](V1ResultSearchImage.md) |  | [optional] 
-**Image** | Pointer to [**V1ResultSearchImage**](V1ResultSearchImage.md) |  | [optional] 
+**Thumbnail** | Pointer to [**ResultSearchImage**](ResultSearchImage.md) |  | [optional] 
+**Image** | Pointer to [**ResultSearchImage**](ResultSearchImage.md) |  | [optional] 
 
 ## Methods
 
@@ -174,20 +174,20 @@ HasPublished returns a boolean if a field has been set.
 
 ### GetThumbnail
 
-`func (o *SearchObject) GetThumbnail() V1ResultSearchImage`
+`func (o *SearchObject) GetThumbnail() ResultSearchImage`
 
 GetThumbnail returns the Thumbnail field if non-nil, zero value otherwise.
 
 ### GetThumbnailOk
 
-`func (o *SearchObject) GetThumbnailOk() (*V1ResultSearchImage, bool)`
+`func (o *SearchObject) GetThumbnailOk() (*ResultSearchImage, bool)`
 
 GetThumbnailOk returns a tuple with the Thumbnail field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetThumbnail
 
-`func (o *SearchObject) SetThumbnail(v V1ResultSearchImage)`
+`func (o *SearchObject) SetThumbnail(v ResultSearchImage)`
 
 SetThumbnail sets Thumbnail field to given value.
 
@@ -199,20 +199,20 @@ HasThumbnail returns a boolean if a field has been set.
 
 ### GetImage
 
-`func (o *SearchObject) GetImage() V1ResultSearchImage`
+`func (o *SearchObject) GetImage() ResultSearchImage`
 
 GetImage returns the Image field if non-nil, zero value otherwise.
 
 ### GetImageOk
 
-`func (o *SearchObject) GetImageOk() (*V1ResultSearchImage, bool)`
+`func (o *SearchObject) GetImageOk() (*ResultSearchImage, bool)`
 
 GetImageOk returns a tuple with the Image field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetImage
 
-`func (o *SearchObject) SetImage(v V1ResultSearchImage)`
+`func (o *SearchObject) SetImage(v ResultSearchImage)`
 
 SetImage sets Image field to given value.
 

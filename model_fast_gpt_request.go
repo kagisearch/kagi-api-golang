@@ -1,9 +1,9 @@
 /*
 Kagi API
 
-The search API provides programmatic access to data that powers our search results & more. Kagi APIs  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  Quick start for all APIs:  - Get the API key (requires a Kagi account). - Top off your API credits. - Call the API.  ### Free  - Kagi Small Web RSS feed (public)  ### Unofficial Client Libraries  Libraries created by Kagi users and third parties.  - kagigo for Go - FastGPT & Universal Summarizer - kagi-api for Rust - kagi-dotnet for C#/.NET  ### Beta Status  The API is currently in a \"v0\" beta status. Changes will be ongoing, and will be added to the documentation below as features become available.  Use at your own risk, but please reach out to us if you have any questions.  See the Support and Community section for details. ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - Bug Reports - Q&A Forum - API Feature Requests  ### Discord Join our Discord! Good for quick questions, chatting about thing you've made with our APIs! 
+The Kagi API provides programmatic access to data that powers our search results & more.   Quick start for all APIs:  - Create an account at [Kagi](https://kagi.com/signup) - Generate an [API key](https://kagi.com/settings?p=api) - Call the API  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  ### Free  - Kagi Small Web RSS feed (public)  ### Official Client Libraries  We offer the following libraries you can use to interact with the Kagi API. These are generated from an OpenAPI spec. If you have a language you would like to use and it's not in the list, send us a message and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download) to build your own custom library.  - [Golang](https://github.com/kagisearch/kagi-api-golang) - [Python](https://github.com/kagisearch/kagi-api-python)  ### Unofficial Client Libraries  There also exist third party libraries for interacting with the Kagi API.  - [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT & Universal Summarizer - [kagi-api](https://crates.io/crates/kagi-api) for Rust - [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby - [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET  ### API Status  Our existing API, the \"v0\" beta API, is being replaced with a new version that will be available publicly soon. As changes are made, we will be updating the documentation below when the new features become available.  See the [Support and Community](https://help.kagi.com/kagi/support-and-community/) section for details. ### Pricing  We are in the process of moving all APIs to a post-paid tiered system, where each tier has a limit on the number of requests that can be made. If an API has a pricing section, then it is still being migrated over to the new billing system.  ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose) - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api) - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)  ### Discord Join our [Discord](https://kagi.com/discord)! Good for quick questions or chatting about things you've made with our APIs! 
 
-API version: 0.0.0
+API version: 0.1.0
 Contact: support@kagi.com
 */
 
@@ -13,23 +13,28 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the FastGPTRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FastGPTRequest{}
 
-// FastGPTRequest Used to upload text to be summarized
+// FastGPTRequest Used to upload the query to FastGPT
 type FastGPTRequest struct {
-	Text *string `json:"text,omitempty"`
+	Query string `json:"query"`
 	Cache *bool `json:"cache,omitempty"`
 }
+
+type _FastGPTRequest FastGPTRequest
 
 // NewFastGPTRequest instantiates a new FastGPTRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewFastGPTRequest() *FastGPTRequest {
+func NewFastGPTRequest(query string) *FastGPTRequest {
 	this := FastGPTRequest{}
+	this.Query = query
 	var cache bool = true
 	this.Cache = &cache
 	return &this
@@ -45,36 +50,28 @@ func NewFastGPTRequestWithDefaults() *FastGPTRequest {
 	return &this
 }
 
-// GetText returns the Text field value if set, zero value otherwise.
-func (o *FastGPTRequest) GetText() string {
-	if o == nil || IsNil(o.Text) {
+// GetQuery returns the Query field value
+func (o *FastGPTRequest) GetQuery() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Text
+
+	return o.Query
 }
 
-// GetTextOk returns a tuple with the Text field value if set, nil otherwise
+// GetQueryOk returns a tuple with the Query field value
 // and a boolean to check if the value has been set.
-func (o *FastGPTRequest) GetTextOk() (*string, bool) {
-	if o == nil || IsNil(o.Text) {
+func (o *FastGPTRequest) GetQueryOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Text, true
+	return &o.Query, true
 }
 
-// HasText returns a boolean if a field has been set.
-func (o *FastGPTRequest) HasText() bool {
-	if o != nil && !IsNil(o.Text) {
-		return true
-	}
-
-	return false
-}
-
-// SetText gets a reference to the given string and assigns it to the Text field.
-func (o *FastGPTRequest) SetText(v string) {
-	o.Text = &v
+// SetQuery sets field value
+func (o *FastGPTRequest) SetQuery(v string) {
+	o.Query = v
 }
 
 // GetCache returns the Cache field value if set, zero value otherwise.
@@ -119,13 +116,48 @@ func (o FastGPTRequest) MarshalJSON() ([]byte, error) {
 
 func (o FastGPTRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Text) {
-		toSerialize["text"] = o.Text
-	}
+	toSerialize["query"] = o.Query
 	if !IsNil(o.Cache) {
 		toSerialize["cache"] = o.Cache
 	}
 	return toSerialize, nil
+}
+
+func (o *FastGPTRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"query",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varFastGPTRequest := _FastGPTRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varFastGPTRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = FastGPTRequest(varFastGPTRequest)
+
+	return err
 }
 
 type NullableFastGPTRequest struct {

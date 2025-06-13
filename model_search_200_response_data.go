@@ -15,11 +15,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the SuperSearch200ResponseData type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &SuperSearch200ResponseData{}
+// checks if the Search200ResponseData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Search200ResponseData{}
 
-// SuperSearch200ResponseData struct for SuperSearch200ResponseData
-type SuperSearch200ResponseData struct {
+// Search200ResponseData struct for Search200ResponseData
+type Search200ResponseData struct {
 	Search []ResultSearch `json:"search,omitempty"`
 	Video []ResultVideo `json:"video,omitempty"`
 	AdjacentQuestion []ResultAdjacentQuestion `json:"adjacent_question,omitempty"`
@@ -27,25 +27,25 @@ type SuperSearch200ResponseData struct {
 	WebArchive []ResultWebArchive `json:"web_archive,omitempty"`
 }
 
-// NewSuperSearch200ResponseData instantiates a new SuperSearch200ResponseData object
+// NewSearch200ResponseData instantiates a new Search200ResponseData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSuperSearch200ResponseData() *SuperSearch200ResponseData {
-	this := SuperSearch200ResponseData{}
+func NewSearch200ResponseData() *Search200ResponseData {
+	this := Search200ResponseData{}
 	return &this
 }
 
-// NewSuperSearch200ResponseDataWithDefaults instantiates a new SuperSearch200ResponseData object
+// NewSearch200ResponseDataWithDefaults instantiates a new Search200ResponseData object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSuperSearch200ResponseDataWithDefaults() *SuperSearch200ResponseData {
-	this := SuperSearch200ResponseData{}
+func NewSearch200ResponseDataWithDefaults() *Search200ResponseData {
+	this := Search200ResponseData{}
 	return &this
 }
 
 // GetSearch returns the Search field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetSearch() []ResultSearch {
+func (o *Search200ResponseData) GetSearch() []ResultSearch {
 	if o == nil || IsNil(o.Search) {
 		var ret []ResultSearch
 		return ret
@@ -55,7 +55,7 @@ func (o *SuperSearch200ResponseData) GetSearch() []ResultSearch {
 
 // GetSearchOk returns a tuple with the Search field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetSearchOk() ([]ResultSearch, bool) {
+func (o *Search200ResponseData) GetSearchOk() ([]ResultSearch, bool) {
 	if o == nil || IsNil(o.Search) {
 		return nil, false
 	}
@@ -63,7 +63,7 @@ func (o *SuperSearch200ResponseData) GetSearchOk() ([]ResultSearch, bool) {
 }
 
 // HasSearch returns a boolean if a field has been set.
-func (o *SuperSearch200ResponseData) HasSearch() bool {
+func (o *Search200ResponseData) HasSearch() bool {
 	if o != nil && !IsNil(o.Search) {
 		return true
 	}
@@ -72,12 +72,12 @@ func (o *SuperSearch200ResponseData) HasSearch() bool {
 }
 
 // SetSearch gets a reference to the given []ResultSearch and assigns it to the Search field.
-func (o *SuperSearch200ResponseData) SetSearch(v []ResultSearch) {
+func (o *Search200ResponseData) SetSearch(v []ResultSearch) {
 	o.Search = v
 }
 
 // GetVideo returns the Video field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetVideo() []ResultVideo {
+func (o *Search200ResponseData) GetVideo() []ResultVideo {
 	if o == nil || IsNil(o.Video) {
 		var ret []ResultVideo
 		return ret
@@ -87,7 +87,7 @@ func (o *SuperSearch200ResponseData) GetVideo() []ResultVideo {
 
 // GetVideoOk returns a tuple with the Video field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetVideoOk() ([]ResultVideo, bool) {
+func (o *Search200ResponseData) GetVideoOk() ([]ResultVideo, bool) {
 	if o == nil || IsNil(o.Video) {
 		return nil, false
 	}
@@ -95,7 +95,7 @@ func (o *SuperSearch200ResponseData) GetVideoOk() ([]ResultVideo, bool) {
 }
 
 // HasVideo returns a boolean if a field has been set.
-func (o *SuperSearch200ResponseData) HasVideo() bool {
+func (o *Search200ResponseData) HasVideo() bool {
 	if o != nil && !IsNil(o.Video) {
 		return true
 	}
@@ -104,12 +104,12 @@ func (o *SuperSearch200ResponseData) HasVideo() bool {
 }
 
 // SetVideo gets a reference to the given []ResultVideo and assigns it to the Video field.
-func (o *SuperSearch200ResponseData) SetVideo(v []ResultVideo) {
+func (o *Search200ResponseData) SetVideo(v []ResultVideo) {
 	o.Video = v
 }
 
 // GetAdjacentQuestion returns the AdjacentQuestion field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetAdjacentQuestion() []ResultAdjacentQuestion {
+func (o *Search200ResponseData) GetAdjacentQuestion() []ResultAdjacentQuestion {
 	if o == nil || IsNil(o.AdjacentQuestion) {
 		var ret []ResultAdjacentQuestion
 		return ret
@@ -119,7 +119,7 @@ func (o *SuperSearch200ResponseData) GetAdjacentQuestion() []ResultAdjacentQuest
 
 // GetAdjacentQuestionOk returns a tuple with the AdjacentQuestion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetAdjacentQuestionOk() ([]ResultAdjacentQuestion, bool) {
+func (o *Search200ResponseData) GetAdjacentQuestionOk() ([]ResultAdjacentQuestion, bool) {
 	if o == nil || IsNil(o.AdjacentQuestion) {
 		return nil, false
 	}
@@ -127,7 +127,7 @@ func (o *SuperSearch200ResponseData) GetAdjacentQuestionOk() ([]ResultAdjacentQu
 }
 
 // HasAdjacentQuestion returns a boolean if a field has been set.
-func (o *SuperSearch200ResponseData) HasAdjacentQuestion() bool {
+func (o *Search200ResponseData) HasAdjacentQuestion() bool {
 	if o != nil && !IsNil(o.AdjacentQuestion) {
 		return true
 	}
@@ -136,12 +136,12 @@ func (o *SuperSearch200ResponseData) HasAdjacentQuestion() bool {
 }
 
 // SetAdjacentQuestion gets a reference to the given []ResultAdjacentQuestion and assigns it to the AdjacentQuestion field.
-func (o *SuperSearch200ResponseData) SetAdjacentQuestion(v []ResultAdjacentQuestion) {
+func (o *Search200ResponseData) SetAdjacentQuestion(v []ResultAdjacentQuestion) {
 	o.AdjacentQuestion = v
 }
 
 // GetInfobox returns the Infobox field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetInfobox() []ResultInfobox {
+func (o *Search200ResponseData) GetInfobox() []ResultInfobox {
 	if o == nil || IsNil(o.Infobox) {
 		var ret []ResultInfobox
 		return ret
@@ -151,7 +151,7 @@ func (o *SuperSearch200ResponseData) GetInfobox() []ResultInfobox {
 
 // GetInfoboxOk returns a tuple with the Infobox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetInfoboxOk() ([]ResultInfobox, bool) {
+func (o *Search200ResponseData) GetInfoboxOk() ([]ResultInfobox, bool) {
 	if o == nil || IsNil(o.Infobox) {
 		return nil, false
 	}
@@ -159,7 +159,7 @@ func (o *SuperSearch200ResponseData) GetInfoboxOk() ([]ResultInfobox, bool) {
 }
 
 // HasInfobox returns a boolean if a field has been set.
-func (o *SuperSearch200ResponseData) HasInfobox() bool {
+func (o *Search200ResponseData) HasInfobox() bool {
 	if o != nil && !IsNil(o.Infobox) {
 		return true
 	}
@@ -168,12 +168,12 @@ func (o *SuperSearch200ResponseData) HasInfobox() bool {
 }
 
 // SetInfobox gets a reference to the given []ResultInfobox and assigns it to the Infobox field.
-func (o *SuperSearch200ResponseData) SetInfobox(v []ResultInfobox) {
+func (o *Search200ResponseData) SetInfobox(v []ResultInfobox) {
 	o.Infobox = v
 }
 
 // GetWebArchive returns the WebArchive field value if set, zero value otherwise.
-func (o *SuperSearch200ResponseData) GetWebArchive() []ResultWebArchive {
+func (o *Search200ResponseData) GetWebArchive() []ResultWebArchive {
 	if o == nil || IsNil(o.WebArchive) {
 		var ret []ResultWebArchive
 		return ret
@@ -183,7 +183,7 @@ func (o *SuperSearch200ResponseData) GetWebArchive() []ResultWebArchive {
 
 // GetWebArchiveOk returns a tuple with the WebArchive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200ResponseData) GetWebArchiveOk() ([]ResultWebArchive, bool) {
+func (o *Search200ResponseData) GetWebArchiveOk() ([]ResultWebArchive, bool) {
 	if o == nil || IsNil(o.WebArchive) {
 		return nil, false
 	}
@@ -191,7 +191,7 @@ func (o *SuperSearch200ResponseData) GetWebArchiveOk() ([]ResultWebArchive, bool
 }
 
 // HasWebArchive returns a boolean if a field has been set.
-func (o *SuperSearch200ResponseData) HasWebArchive() bool {
+func (o *Search200ResponseData) HasWebArchive() bool {
 	if o != nil && !IsNil(o.WebArchive) {
 		return true
 	}
@@ -200,11 +200,11 @@ func (o *SuperSearch200ResponseData) HasWebArchive() bool {
 }
 
 // SetWebArchive gets a reference to the given []ResultWebArchive and assigns it to the WebArchive field.
-func (o *SuperSearch200ResponseData) SetWebArchive(v []ResultWebArchive) {
+func (o *Search200ResponseData) SetWebArchive(v []ResultWebArchive) {
 	o.WebArchive = v
 }
 
-func (o SuperSearch200ResponseData) MarshalJSON() ([]byte, error) {
+func (o Search200ResponseData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -212,7 +212,7 @@ func (o SuperSearch200ResponseData) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o SuperSearch200ResponseData) ToMap() (map[string]interface{}, error) {
+func (o Search200ResponseData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Search) {
 		toSerialize["search"] = o.Search
@@ -232,38 +232,38 @@ func (o SuperSearch200ResponseData) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableSuperSearch200ResponseData struct {
-	value *SuperSearch200ResponseData
+type NullableSearch200ResponseData struct {
+	value *Search200ResponseData
 	isSet bool
 }
 
-func (v NullableSuperSearch200ResponseData) Get() *SuperSearch200ResponseData {
+func (v NullableSearch200ResponseData) Get() *Search200ResponseData {
 	return v.value
 }
 
-func (v *NullableSuperSearch200ResponseData) Set(val *SuperSearch200ResponseData) {
+func (v *NullableSearch200ResponseData) Set(val *Search200ResponseData) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSuperSearch200ResponseData) IsSet() bool {
+func (v NullableSearch200ResponseData) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSuperSearch200ResponseData) Unset() {
+func (v *NullableSearch200ResponseData) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSuperSearch200ResponseData(val *SuperSearch200ResponseData) *NullableSuperSearch200ResponseData {
-	return &NullableSuperSearch200ResponseData{value: val, isSet: true}
+func NewNullableSearch200ResponseData(val *Search200ResponseData) *NullableSearch200ResponseData {
+	return &NullableSearch200ResponseData{value: val, isSet: true}
 }
 
-func (v NullableSuperSearch200ResponseData) MarshalJSON() ([]byte, error) {
+func (v NullableSearch200ResponseData) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSuperSearch200ResponseData) UnmarshalJSON(src []byte) error {
+func (v *NullableSearch200ResponseData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

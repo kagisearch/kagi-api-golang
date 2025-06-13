@@ -23,46 +23,46 @@ import (
 // SearchAPIService SearchAPI service
 type SearchAPIService service
 
-type ApiSuperSearchRequest struct {
+type ApiSearchRequest struct {
 	ctx context.Context
 	ApiService *SearchAPIService
-	superSearchRequest *SuperSearchRequest
+	searchRequest *SearchRequest
 }
 
 // Contains the search query to run
-func (r ApiSuperSearchRequest) SuperSearchRequest(superSearchRequest SuperSearchRequest) ApiSuperSearchRequest {
-	r.superSearchRequest = &superSearchRequest
+func (r ApiSearchRequest) SearchRequest(searchRequest SearchRequest) ApiSearchRequest {
+	r.searchRequest = &searchRequest
 	return r
 }
 
-func (r ApiSuperSearchRequest) Execute() (*SuperSearch200Response, *http.Response, error) {
-	return r.ApiService.SuperSearchExecute(r)
+func (r ApiSearchRequest) Execute() (*Search200Response, *http.Response, error) {
+	return r.ApiService.SearchExecute(r)
 }
 
 /*
-SuperSearch Perform a search of the web.
+Search Perform a search of the web.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiSuperSearchRequest
+ @return ApiSearchRequest
 */
-func (a *SearchAPIService) SuperSearch(ctx context.Context) ApiSuperSearchRequest {
-	return ApiSuperSearchRequest{
+func (a *SearchAPIService) Search(ctx context.Context) ApiSearchRequest {
+	return ApiSearchRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return SuperSearch200Response
-func (a *SearchAPIService) SuperSearchExecute(r ApiSuperSearchRequest) (*SuperSearch200Response, *http.Response, error) {
+//  @return Search200Response
+func (a *SearchAPIService) SearchExecute(r ApiSearchRequest) (*Search200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *SuperSearch200Response
+		localVarReturnValue  *Search200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SearchAPIService.SuperSearch")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SearchAPIService.Search")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -72,8 +72,8 @@ func (a *SearchAPIService) SuperSearchExecute(r ApiSuperSearchRequest) (*SuperSe
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.superSearchRequest == nil {
-		return localVarReturnValue, nil, reportError("superSearchRequest is required and must be specified")
+	if r.searchRequest == nil {
+		return localVarReturnValue, nil, reportError("searchRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -94,7 +94,7 @@ func (a *SearchAPIService) SuperSearchExecute(r ApiSuperSearchRequest) (*SuperSe
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.superSearchRequest
+	localVarPostBody = r.searchRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

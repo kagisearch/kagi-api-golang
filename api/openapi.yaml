@@ -113,7 +113,7 @@ tags:
 paths:
   /search:
     get:
-      operationId: superSearch
+      operationId: search
       requestBody:
         content:
           application/json:
@@ -139,7 +139,7 @@ paths:
                   query: doggo
                   workflow: images
             schema:
-              $ref: '#/components/schemas/superSearch_request'
+              $ref: '#/components/schemas/search_request'
         description: Contains the search query to run
         required: true
       responses:
@@ -257,7 +257,7 @@ paths:
                           language: en
                           language_probability: 0.9541819095611572
               schema:
-                $ref: '#/components/schemas/superSearch_200_response'
+                $ref: '#/components/schemas/search_200_response'
           description: Success
         "401":
           content:
@@ -1085,7 +1085,7 @@ components:
       - title
       - url
       type: object
-    superSearch_request:
+    search_request:
       description: Used to upload the search query
       properties:
         query:
@@ -1104,7 +1104,7 @@ components:
       required:
       - query
       type: object
-    superSearch_200_response_data:
+    search_200_response_data:
       example:
         search:
         - snippet: snippet
@@ -1307,7 +1307,7 @@ components:
             $ref: '#/components/schemas/resultWebArchive'
           type: array
       type: object
-    superSearch_200_response:
+    search_200_response:
       description: A response with a description and results references used
       example:
         data:
@@ -1512,7 +1512,7 @@ components:
         meta:
           $ref: '#/components/schemas/meta'
         data:
-          $ref: '#/components/schemas/superSearch_200_response_data'
+          $ref: '#/components/schemas/search_200_response_data'
       type: object
     enrichSearch_200_response:
       description: An array of search objects that can enrich a search query

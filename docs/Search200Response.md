@@ -1,78 +1,78 @@
-# SuperSearch200Response
+# Search200Response
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Meta** | Pointer to [**Meta**](Meta.md) |  | [optional] 
-**Data** | Pointer to [**SuperSearch200ResponseData**](SuperSearch200ResponseData.md) |  | [optional] 
+**Data** | Pointer to [**Search200ResponseData**](Search200ResponseData.md) |  | [optional] 
 
 ## Methods
 
-### NewSuperSearch200Response
+### NewSearch200Response
 
-`func NewSuperSearch200Response() *SuperSearch200Response`
+`func NewSearch200Response() *Search200Response`
 
-NewSuperSearch200Response instantiates a new SuperSearch200Response object
+NewSearch200Response instantiates a new Search200Response object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewSuperSearch200ResponseWithDefaults
+### NewSearch200ResponseWithDefaults
 
-`func NewSuperSearch200ResponseWithDefaults() *SuperSearch200Response`
+`func NewSearch200ResponseWithDefaults() *Search200Response`
 
-NewSuperSearch200ResponseWithDefaults instantiates a new SuperSearch200Response object
+NewSearch200ResponseWithDefaults instantiates a new Search200Response object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetMeta
 
-`func (o *SuperSearch200Response) GetMeta() Meta`
+`func (o *Search200Response) GetMeta() Meta`
 
 GetMeta returns the Meta field if non-nil, zero value otherwise.
 
 ### GetMetaOk
 
-`func (o *SuperSearch200Response) GetMetaOk() (*Meta, bool)`
+`func (o *Search200Response) GetMetaOk() (*Meta, bool)`
 
 GetMetaOk returns a tuple with the Meta field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMeta
 
-`func (o *SuperSearch200Response) SetMeta(v Meta)`
+`func (o *Search200Response) SetMeta(v Meta)`
 
 SetMeta sets Meta field to given value.
 
 ### HasMeta
 
-`func (o *SuperSearch200Response) HasMeta() bool`
+`func (o *Search200Response) HasMeta() bool`
 
 HasMeta returns a boolean if a field has been set.
 
 ### GetData
 
-`func (o *SuperSearch200Response) GetData() SuperSearch200ResponseData`
+`func (o *Search200Response) GetData() Search200ResponseData`
 
 GetData returns the Data field if non-nil, zero value otherwise.
 
 ### GetDataOk
 
-`func (o *SuperSearch200Response) GetDataOk() (*SuperSearch200ResponseData, bool)`
+`func (o *Search200Response) GetDataOk() (*Search200ResponseData, bool)`
 
 GetDataOk returns a tuple with the Data field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetData
 
-`func (o *SuperSearch200Response) SetData(v SuperSearch200ResponseData)`
+`func (o *Search200Response) SetData(v Search200ResponseData)`
 
 SetData sets Data field to given value.
 
 ### HasData
 
-`func (o *SuperSearch200Response) HasData() bool`
+`func (o *Search200Response) HasData() bool`
 
 HasData returns a boolean if a field has been set.
 

@@ -13,99 +13,102 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
-// checks if the SuperSearch200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &SuperSearch200Response{}
+// checks if the SearchRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SearchRequest{}
 
-// SuperSearch200Response A response with a description and results references used
-type SuperSearch200Response struct {
-	Meta *Meta `json:"meta,omitempty"`
-	Data *SuperSearch200ResponseData `json:"data,omitempty"`
+// SearchRequest Used to upload the search query
+type SearchRequest struct {
+	// The search query to perform.
+	Query string `json:"query"`
+	// Can be used to filter result output to a single category.
+	Workflow *string `json:"workflow,omitempty"`
 }
 
-// NewSuperSearch200Response instantiates a new SuperSearch200Response object
+type _SearchRequest SearchRequest
+
+// NewSearchRequest instantiates a new SearchRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSuperSearch200Response() *SuperSearch200Response {
-	this := SuperSearch200Response{}
+func NewSearchRequest(query string) *SearchRequest {
+	this := SearchRequest{}
+	this.Query = query
+	var workflow string = "search"
+	this.Workflow = &workflow
 	return &this
 }
 
-// NewSuperSearch200ResponseWithDefaults instantiates a new SuperSearch200Response object
+// NewSearchRequestWithDefaults instantiates a new SearchRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSuperSearch200ResponseWithDefaults() *SuperSearch200Response {
-	this := SuperSearch200Response{}
+func NewSearchRequestWithDefaults() *SearchRequest {
+	this := SearchRequest{}
+	var workflow string = "search"
+	this.Workflow = &workflow
 	return &this
 }
 
-// GetMeta returns the Meta field value if set, zero value otherwise.
-func (o *SuperSearch200Response) GetMeta() Meta {
-	if o == nil || IsNil(o.Meta) {
-		var ret Meta
+// GetQuery returns the Query field value
+func (o *SearchRequest) GetQuery() string {
+	if o == nil {
+		var ret string
 		return ret
 	}
-	return *o.Meta
+
+	return o.Query
 }
 
-// GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
+// GetQueryOk returns a tuple with the Query field value
 // and a boolean to check if the value has been set.
-func (o *SuperSearch200Response) GetMetaOk() (*Meta, bool) {
-	if o == nil || IsNil(o.Meta) {
+func (o *SearchRequest) GetQueryOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Meta, true
+	return &o.Query, true
 }
 
-// HasMeta returns a boolean if a field has been set.
-func (o *SuperSearch200Response) HasMeta() bool {
-	if o != nil && !IsNil(o.Meta) {
+// SetQuery sets field value
+func (o *SearchRequest) SetQuery(v string) {
+	o.Query = v
+}
+
+// GetWorkflow returns the Workflow field value if set, zero value otherwise.
+func (o *SearchRequest) GetWorkflow() string {
+	if o == nil || IsNil(o.Workflow) {
+		var ret string
+		return ret
+	}
+	return *o.Workflow
+}
+
+// GetWorkflowOk returns a tuple with the Workflow field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchRequest) GetWorkflowOk() (*string, bool) {
+	if o == nil || IsNil(o.Workflow) {
+		return nil, false
+	}
+	return o.Workflow, true
+}
+
+// HasWorkflow returns a boolean if a field has been set.
+func (o *SearchRequest) HasWorkflow() bool {
+	if o != nil && !IsNil(o.Workflow) {
 		return true
 	}
 
 	return false
 }
 
-// SetMeta gets a reference to the given Meta and assigns it to the Meta field.
-func (o *SuperSearch200Response) SetMeta(v Meta) {
-	o.Meta = &v
+// SetWorkflow gets a reference to the given string and assigns it to the Workflow field.
+func (o *SearchRequest) SetWorkflow(v string) {
+	o.Workflow = &v
 }
 
-// GetData returns the Data field value if set, zero value otherwise.
-func (o *SuperSearch200Response) GetData() SuperSearch200ResponseData {
-	if o == nil || IsNil(o.Data) {
-		var ret SuperSearch200ResponseData
-		return ret
-	}
-	return *o.Data
-}
-
-// GetDataOk returns a tuple with the Data field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SuperSearch200Response) GetDataOk() (*SuperSearch200ResponseData, bool) {
-	if o == nil || IsNil(o.Data) {
-		return nil, false
-	}
-	return o.Data, true
-}
-
-// HasData returns a boolean if a field has been set.
-func (o *SuperSearch200Response) HasData() bool {
-	if o != nil && !IsNil(o.Data) {
-		return true
-	}
-
-	return false
-}
-
-// SetData gets a reference to the given SuperSearch200ResponseData and assigns it to the Data field.
-func (o *SuperSearch200Response) SetData(v SuperSearch200ResponseData) {
-	o.Data = &v
-}
-
-func (o SuperSearch200Response) MarshalJSON() ([]byte, error) {
+func (o SearchRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -113,49 +116,84 @@ func (o SuperSearch200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o SuperSearch200Response) ToMap() (map[string]interface{}, error) {
+func (o SearchRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Meta) {
-		toSerialize["meta"] = o.Meta
-	}
-	if !IsNil(o.Data) {
-		toSerialize["data"] = o.Data
+	toSerialize["query"] = o.Query
+	if !IsNil(o.Workflow) {
+		toSerialize["workflow"] = o.Workflow
 	}
 	return toSerialize, nil
 }
 
-type NullableSuperSearch200Response struct {
-	value *SuperSearch200Response
+func (o *SearchRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"query",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varSearchRequest := _SearchRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varSearchRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = SearchRequest(varSearchRequest)
+
+	return err
+}
+
+type NullableSearchRequest struct {
+	value *SearchRequest
 	isSet bool
 }
 
-func (v NullableSuperSearch200Response) Get() *SuperSearch200Response {
+func (v NullableSearchRequest) Get() *SearchRequest {
 	return v.value
 }
 
-func (v *NullableSuperSearch200Response) Set(val *SuperSearch200Response) {
+func (v *NullableSearchRequest) Set(val *SearchRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSuperSearch200Response) IsSet() bool {
+func (v NullableSearchRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSuperSearch200Response) Unset() {
+func (v *NullableSearchRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSuperSearch200Response(val *SuperSearch200Response) *NullableSuperSearch200Response {
-	return &NullableSuperSearch200Response{value: val, isSet: true}
+func NewNullableSearchRequest(val *SearchRequest) *NullableSearchRequest {
+	return &NullableSearchRequest{value: val, isSet: true}
 }
 
-func (v NullableSuperSearch200Response) MarshalJSON() ([]byte, error) {
+func (v NullableSearchRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSuperSearch200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableSearchRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

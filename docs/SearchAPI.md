@@ -4,13 +4,13 @@ All URIs are relative to *https://kagi.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**SuperSearch**](SearchAPI.md#SuperSearch) | **Get** /search | Perform a search of the web.
+[**Search**](SearchAPI.md#Search) | **Get** /search | Perform a search of the web.
 
 
 
-## SuperSearch
+## Search
 
-> SuperSearch200Response SuperSearch(ctx).SuperSearchRequest(superSearchRequest).Execute()
+> Search200Response Search(ctx).SearchRequest(searchRequest).Execute()
 
 Perform a search of the web.
 
@@ -27,17 +27,17 @@ import (
 )
 
 func main() {
-	superSearchRequest := *openapiclient.NewSuperSearchRequest("Query_example") // SuperSearchRequest | Contains the search query to run
+	searchRequest := *openapiclient.NewSearchRequest("Query_example") // SearchRequest | Contains the search query to run
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SearchAPI.SuperSearch(context.Background()).SuperSearchRequest(superSearchRequest).Execute()
+	resp, r, err := apiClient.SearchAPI.Search(context.Background()).SearchRequest(searchRequest).Execute()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.SuperSearch``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Error when calling `SearchAPI.Search``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `SuperSearch`: SuperSearch200Response
-	fmt.Fprintf(os.Stdout, "Response from `SearchAPI.SuperSearch`: %v\n", resp)
+	// response from `Search`: Search200Response
+	fmt.Fprintf(os.Stdout, "Response from `SearchAPI.Search`: %v\n", resp)
 }
 ```
 
@@ -47,16 +47,16 @@ func main() {
 
 ### Other Parameters
 
-Other parameters are passed through a pointer to a apiSuperSearchRequest struct via the builder pattern
+Other parameters are passed through a pointer to a apiSearchRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **superSearchRequest** | [**SuperSearchRequest**](SuperSearchRequest.md) | Contains the search query to run | 
+ **searchRequest** | [**SearchRequest**](SearchRequest.md) | Contains the search query to run | 
 
 ### Return type
 
-[**SuperSearch200Response**](SuperSearch200Response.md)
+[**Search200Response**](Search200Response.md)
 
 ### Authorization
 

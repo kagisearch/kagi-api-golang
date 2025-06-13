@@ -1,0 +1,2096 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: support@kagi.com
+    name: API Support
+    url: https://kagi.com/support
+  description: |
+    The search API provides programmatic access to data that powers our search results & more.
+    Kagi APIs
+
+    We have the following APIs available.
+    ### Commercial
+
+    - Kagi Search API (invite only at the moment)
+    - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem)
+    - Universal Summarizer API (public)
+    - FastGPT API (public)
+
+    Quick start for all APIs:
+
+    - Get the API key (requires a Kagi account).
+    - Top off your API credits.
+    - Call the API.
+
+    ### Free
+
+    - Kagi Small Web RSS feed (public)
+
+    ### Unofficial Client Libraries
+
+    Libraries created by Kagi users and third parties.
+
+    - kagigo for Go - FastGPT & Universal Summarizer
+    - kagi-api for Rust
+    - kagi-dotnet for C#/.NET
+
+    ### Beta Status
+
+    The API is currently in a "v0" beta status. Changes will be ongoing, and will be added to the documentation below as features become available.
+
+    Use at your own risk, but please reach out to us if you have any questions.
+
+    See the Support and Community section for details.
+    ### GitHub Discussions
+
+    This is the preferred venue for bug reports and feature requests.
+
+    - Bug Reports
+    - Q&A Forum
+    - API Feature Requests
+
+    ### Discord
+    Join our Discord! Good for quick questions, chatting about thing you've made with our APIs!
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  title: Kagi API
+  version: 0.0.0
+servers:
+- description: Production api endpoint
+  url: https://kagi.com/api/v0
+tags:
+- description: |
+    The Search API gives programmable access to Kagi's premium search results. It will inherit the setting in your account. For example you can:
+
+    Block or promote websites ([results personalization](https://help.kagi.com/kagi/getting-started/index.html)).
+    Select to receive longer or shorter search snippets (under [Settings -> Search](https://help.kagi.com/kagi/settings/search.html))
+  name: Search
+  x-displayName: Search API
+- description: |
+    The Universal Summarizer is an API using powerful LLMs to summarize any content, of almost any format, with unlimited token length!
+    Quick start
+
+    - Get the API key (requires a Kagi account)
+    - Top off your API credits.
+    - Call the API. See example usage.
+    - Alternatively use Kagi Search browser extension (Chrome/Firefox) and you can use the most advanced Muriel model right from the extension.
+
+    API key
+
+    To obtain an API key you will first need to create a Kagi account.
+
+    Then, navigate to Settings -> Advanced -> API portal, or click here to go directly.
+
+    Click "Generate API Token".
+    API credits
+
+    Universal Summarizer API uses pre-paid API credits. You can manage API credits in the API billing page of your Kagi settings.
+
+    Using API with insufficient credits will produce "Insufficient credit to perform this request." response message.
+    Pricing
+    Consumer models
+
+    Price for our consumer-grade models (Cecil and Agnes) is $0.030 USD per 1,000 tokens processed. If you are subscribed to the Kagi Ultimate plan, discounted pricing at $0.025 per 1,000 tokens processed is automatically applied.
+
+    Notes:
+
+    - Tokens include all tokens processed in + out.
+    - Any request over 10,000 tokens is billed as 10,000 tokens, regardless of the length of the document.
+    - Accessing cached summaries of the same URL is always free.
+
+    Enterprise models
+
+    Our enterprise-grade Muriel summarization engine produces even higher quality summaries, especially for long documents. It also provides longer and more detailed summaries than our consumer-grade model. See the difference here.
+
+    Muriel usage is a flat rate of $1 USD per summary, regardless of the length or type of the document.
+
+    To use Muriel just use "muriel" as the "engine" parameter in the API call. See examples below.
+    Privacy
+
+    Read how is summarization data handled in our privacy policy.
+
+    For handling sensitive information and documents, we recommend setting the 'cache' API parameter to False. In this way, the document will "flow through" our infrastructure and will not be retained anywhere after processing.
+    Integrations
+
+    Universal Summarizer is available as a Zapier integration allowing you to quickly integrate summarization into your programmatic workflows.
+
+    Check out Universal Summarizer Zapier integration.
+    Support
+  name: Summarizer
+  x-displayName: Universal Summarizer API
+- description: |
+    The enrichment APIs are a collection of indexes that can be used to supplement other products with more novel and interesting content from around the web.
+
+    Enrichment APIs allow anyone to get Kagi's unique results, namely the Teclis index (web results) and TinyGem index (news) results.
+
+    They are best used for finding non-commercial websites and "small web" discussions surrounding a particular topic. The news enrichment API offers interesting discussions and news worth reading from typically non-mainstream sources.
+
+    They are not "general" search indexes that can answer any type of query but rather these results are our 'secret sauce' and what makes Kagi results unique and interesting and are best used in combination with a general results index.
+    ### Pricing
+
+    All /enrich APIs are currently billed at $2/1000 searches ($0.002 USD per search). Volume discounts are available (contact support@kagi.com for more information).
+
+    Since results are niche, we bill only when non-zero results are returned.
+  name: Enrichment
+  x-displayName: Enrichment API
+- description: |
+    FastGPT is a Kagi service using powerful LLMs to answer user queries running a full search engine underneath. Think ChatGPT, but on steroids and faster! You can try the web app here.
+
+    ### Quick start
+
+    - Get the API key (requires a Kagi account)
+    - Top off your API credits.
+    - Call the API. See example usage.
+
+    ### API key
+
+    To obtain an API key you will first need to create a Kagi account.
+
+    Then, navigate to Settings -> Advanced -> API portal, or click here to go directly.
+
+    Click "Generate API Token".
+
+    ### API Credits
+
+    The FastGPT API uses pre-paid API credits. You can manage API credits in the API billing page of your Kagi settings.
+
+    Using API with insufficient credits will produce "Insufficient credit to perform this request." response message.
+
+    ### Pricing
+
+    Pricing for FastGPT is a flat rate per-query:
+
+        1.5¢ per query ($15 USD per 1000 queries) when web_search is enabled.
+        (Out of service) 0.15¢ per query ($1.5 USD per 1000 queries) when web_search is disabled.
+  name: FastGPT
+  x-displayName: FastGPT API
+- description: |
+    Just some filler for now
+  name: Translate
+  x-displayName: Translation API
+paths:
+  /v1/search:
+    get:
+      operationId: superSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/superSearch_request'
+        description: Contains the search query to run
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      trace: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                      query:
+                        raw: steve jobs
+                        terms: steve jobs
+                        workflow: search
+                        fields:
+                        - kind: token
+                          value: steve
+                          name: ""
+                          negate: false
+                        - kind: token
+                          value: jobs
+                          name: ""
+                          negate: false
+                    data:
+                      search:
+                      - url: https://www.billboard.com/pro/iphone-turns-10-steve-jobs-introduction-apple-ads/
+                        title: "iPhone Turns 10: Watch Steve Jobs Introduce Apple’\
+                          s ‘Revolutionary ..."
+                        time: 2017-01-09T14:49:00Z
+                        image:
+                          url: https://www.billboard.com/wp-content/uploads/media/Steve-Jobs-2007-iphone-billboard-1548.jpg
+                          height: 1024
+                          width: 1548
+                        props:
+                          thumbnail_image:
+                            url: https://tse1.mm.bing.net/th/id/OIP.etmvjdMAF91p8PbA3bH4-wHaE5?pid=Api
+                            height: 313
+                            width: 474
+                          paywalled: true
+                          sort_normalize_url: //billboard.com/pro/iphone-turns-10-steve-jobs-introduction-apple-ads
+                          sort_group_id: billboard.com
+                          source_history:
+                          - bing16
+                      video:
+                      - url: https://www.youtube.com/watch?v=UF8uR6Z6KLc
+                        title: Steve Jobs&#39; 2005 Stanford Commencement Address
+                        snippet: Steve Jobs&#39; 2005 Stanford Commencement Address
+                          · Comments. 27K. Who is listening to this in 2025? 22:10
+                          · Go to channel. Steve Jobs&#39; 2005 ...
+                        time: 2024-11-29T03:54:26Z
+                        image:
+                          url: https://i.ytimg.com/vi/UF8uR6Z6KLc/hqdefault.jpg?sqp=-oaymwEmCOADEOgC8quKqQMa8AEB-AG-AoAC8AGKAgwIABABGGUgTShAMA8=&rs=AOn4CLBQpu5eC9IARIhuqaqee1Zc53SWpw
+                          height: 480
+                          width: 360
+                        props:
+                          hires_thumbnail_url: https://i.ytimg.com/vi/UF8uR6Z6KLc/hqdefault.jpg
+                          sort_normalize_url: //youtube.com/watch?v=UF8uR6Z6KLc
+                          sort_group_id: youtube.com
+                          source_history:
+                          - mojeek4
+                          - serper8
+                          language: en
+                          language_probability: 0.9551553726196289
+                      web_archive:
+                      - url: https://web.archive.org/web/20111007174823/http://netspencer.com/stevejobs/
+                        title: steve jobs
+                        snippet: "It is best to admit them quickly, and get on with\
+                          \ improving your other innovations. Being the richest man\
+                          \ in the cemetery doesn’t matter to me … Going to bed at\
+                          \ night saying we’ve done something wonderful… that’s what\
+                          \ matters to me. I’m convinced that about half of what separates\
+                          \ the successful entrepreneurs from the non-successful ones\
+                          \ is pure per.."
+                        time: 2011-10-07T17:48:23Z
+                        props:
+                          language: en
+                          language_probability: 0.9240066409111023
+                          web_archive_domain: netspencer.com
+                      infobox:
+                      - url: https://en.wikipedia.org/wiki/Steve_Jobs
+                        title: Steve Jobs
+                        snippet: "Steven Paul Jobs (February 24, 1955 – October 5,\
+                          \ 2011) was an American businessman, inventor, and ...."
+                        image:
+                          url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg
+                          height: 300
+                          width: 310
+                        props:
+                          infobox:
+                          - header: Born
+                            value: "Steven Paul Jobs<br> February 24, 1955<br> San\
+                              \ Francisco, California, U.S."
+                            merged: false
+                          wikipedia.subtext: American businessman and inventor (1955–2011)
+                          wikipedia.page_id: 7412236
+                          language: en
+                          language_probability: 0.8304631114006042
+                      adjacent_question:
+                      - url: https://www.ceotodaymagazine.com/2025/02/steve-jobs-10-minute-rule-you-can-implement/
+                        title: "Steve Jobs&#39; 10-Minute Rule: How Walking Boosts\
+                          \ Brainpower"
+                        snippet: "Steve Jobs was a visionary, innovator, and problem-solver,\
+                          \ but he also had a simple secret for overcoming mental\
+                          \ roadblocks: The 10-Minute Rule. According to his biographer,\
+                          \ Walter Isaacson, Jobs believed that if he couldn't solve\
+                          \ a problem in 10 minutes, he needed to step away and go\
+                          \ for a walk—often barefoot."
+                        time: 2025-02-01T00:00:00Z
+                        props:
+                          question: What is Steve Jobs' 10 minute rule?
+                          language: en
+                          language_probability: 0.9541819095611572
+              schema:
+                $ref: '#/components/schemas/superSearch_200_response'
+          description: Success
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi: []
+      summary: Perform a super charged search.
+      tags:
+      - Search
+  /search:
+    get:
+      operationId: search
+      parameters:
+      - description: A query used to perform the search.
+        explode: true
+        in: query
+        name: q
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Limit number of search results.
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                      api_balance: 123.456
+                    data:
+                    - t: 0
+                      url: https://en.wikipedia.org/wiki/Steve_Jobs
+                      title: Steve Jobs - Wikipedia
+                      snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011)\
+                        \ was an American businessman, inventor, and investor best\
+                        \ known for co-founding the technology company ..."
+                      thumbnail:
+                        url: /proxy/310px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg?c=9cn5Kxse4yD05EJkf6QML9dK4clUbdQ9Oq4d5gDoyHBwiX43u0CCAEVi8DMCHFAXhMAIsLbp8IO0pmQf41WB6CWu9BNfAxhRqV-EQL_l_gnV1yD14xBDf5Sgj1vfjIF0aMOqcVwh-jMVcqkx3GjwnuZrt2Z8-tdYhu3uERcYzLTTqq5TKumyN0Q1c5n3utowEZhefA7WoUo3SNIB1-iHhCnijbEL5iAQo1iTroqppHk%3D
+                    - t: 0
+                      url: https://en.wikipedia.org/wiki/Steve_Jobs_(film)
+                      title: Steve Jobs (film) - Wikipedia
+                      snippet: "Steve Jobs is a 2015 biographical drama film directed\
+                        \ by Danny Boyle and written by Aaron Sorkin. A British-American\
+                        \ co-production, it was adapted from the ..."
+                      thumbnail:
+                        url: /proxy/310px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg?c=9cn5Kxse4yD05EJkf6QML9dK4clUbdQ9Oq4d5gDoyHBwiX43u0CCAEVi8DMCHFAXhMAIsLbp8IO0pmQf41WB6CWu9BNfAxhRqV-EQL_l_gnV1yD14xBDf5Sgj1vfjIF0aMOqcVwh-jMVcqkx3GjwnuZrt2Z8-tdYhu3uERcYzLTTqq5TKumyN0Q1c5n3utowEZhefA7WoUo3SNIB1-iHhCnijbEL5iAQo1iTroqppHk%3D
+                        width: 310
+                        height: 300
+                    - t: 0
+                      url: https://www.apple.com/stevejobs/
+                      title: Remembering Steve Jobs - Apple
+                      snippet: He was a visionary that had the amazing ability to
+                        breath life into his ideas. He believed so passionately in
+                        his work that his creativity became both seductive ...
+                    - t: 0
+                      url: https://www.npr.org/2015/10/09/447165973/steve-jobs-the-story-of-the-man-behind-the-personal-computer
+                      title: "Steve Jobs: The Story Of The Man Behind The Personal\
+                        \ Computer"
+                      snippet: "The Apple founder spoke with Fresh Air&#39;s Terry\
+                        \ Gross in 1996. Later, after he was diagnosed with cancer,\
+                        \ Jobs asked Walter Isaacson to write his biography. Isaacson\
+                        \ spoke to Fresh Air Oct. 25, 2011."
+                      published: 2015-10-09T00:00:00Z
+                    - t: 1
+                      list:
+                      - Steve Jobs
+                      - steve jobs death
+                      - steve jobs net worth
+                      - steve jobs quotes
+                      - steve jobs movie
+                      - steve jobs wife
+                      - steve jobs daughter
+                      - steve jobs biography
+                      - steve jobs last words
+                      - steve jobs age
+              schema:
+                $ref: '#/components/schemas/search_200_response'
+          description: Success
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi: []
+      summary: Perform a search.
+      tags:
+      - Search
+  /summarize:
+    get:
+      operationId: summarizeURL
+      parameters:
+      - description: Different summarization engines are provided that will give you
+          choices over the "flavor" of the summarization text.
+        explode: true
+        in: query
+        name: engine
+        required: false
+        schema:
+          default: cecil
+          enum:
+          - cecil
+          - agnes
+          - daphne
+          - muriel
+          type: string
+        style: form
+      - description: Different summary types are provided that control the structure
+          of the summary output.
+        explode: true
+        in: query
+        name: summary_type
+        required: false
+        schema:
+          default: summary
+          enum:
+          - summary
+          - takeaway
+          type: string
+        style: form
+      - description: |
+          The summarizer can translate the output into a desired language, using the table of supported language codes below.
+
+          If no language is specified, the document's original language is allowed to influence the summarizer's output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.
+
+          For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying "EN" will ensure all passages are translated as English.
+        explode: true
+        in: query
+        name: target_language
+        required: false
+        schema:
+          enum:
+          - BG
+          - CS
+          - DA
+          - DE
+          - EL
+          - EN
+          - ES
+          - ET
+          - FI
+          - FR
+          - HU
+          - ID
+          - IT
+          - JA
+          - KO
+          - LT
+          - LV
+          - NB
+          - NL
+          - PL
+          - PT
+          - RO
+          - RU
+          - SK
+          - SL
+          - SV
+          - TR
+          - UK
+          - ZH
+          - ZH-HANT
+          type: string
+        style: form
+      - description: Whether to allow cached requests & responses.
+        explode: true
+        in: query
+        name: cache
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      - description: A URL to a document to summarize.
+        explode: true
+        in: query
+        name: url
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Summary of https://www.youtube.com/watch?v=ZSRHeXYDLko
+                    using the murial engine
+                  value:
+                    meta:
+                      id: 120145af-f057-466d-9e6d-7829ac902adc
+                      node: us-east
+                      ms: 7943
+                    data:
+                      output: "In this Youtube video, Jonathan Blow discusses the\
+                        \ decline of software technology and the potential collapse\
+                        \ of civilization. He argues that technology does not automatically\
+                        \ improve and that great achievements in technology can be\
+                        \ lost due to the fall of civilizations. Blow believes that\
+                        \ software technology has not improved in quite a while and\
+                        \ that the industry is adding too much complication to everything.\
+                        \ He suggests that simplifying software systems is the right\
+                        \ short-term play and that removing complexity is still the\
+                        \ right approach even if it doesn't seem like it. Blow also\
+                        \ emphasizes the importance of developing the aesthetics for\
+                        \ things that are not a giant horrible mess and building institutional\
+                        \ knowledge about how to simplify."
+                      tokens: 11757
+              schema:
+                $ref: '#/components/schemas/summary'
+          description: Success
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi: []
+      summary: Get a summary for a URL
+      tags:
+      - Summarizer
+    post:
+      operationId: summarizeText
+      parameters:
+      - description: Different summarization engines are provided that will give you
+          choices over the "flavor" of the summarization text.
+        explode: true
+        in: query
+        name: engine
+        required: false
+        schema:
+          default: cecil
+          enum:
+          - cecil
+          - agnes
+          - daphne
+          - muriel
+          type: string
+        style: form
+      - description: Different summary types are provided that control the structure
+          of the summary output.
+        explode: true
+        in: query
+        name: summary_type
+        required: false
+        schema:
+          default: summary
+          enum:
+          - summary
+          - takeaway
+          type: string
+        style: form
+      - description: |
+          The summarizer can translate the output into a desired language, using the table of supported language codes below.
+
+          If no language is specified, the document's original language is allowed to influence the summarizer's output. Specifying a language will add an explicit translation step, to translate the summary to the desired language.
+
+          For example, if a document is mostly written in Spanish, the summary output may itself be in Spanish or contain Spanish passages. Specifying "EN" will ensure all passages are translated as English.
+        explode: true
+        in: query
+        name: target_language
+        required: false
+        schema:
+          enum:
+          - BG
+          - CS
+          - DA
+          - DE
+          - EL
+          - EN
+          - ES
+          - ET
+          - FI
+          - FR
+          - HU
+          - ID
+          - IT
+          - JA
+          - KO
+          - LT
+          - LV
+          - NB
+          - NL
+          - PL
+          - PT
+          - RO
+          - RU
+          - SK
+          - SL
+          - SV
+          - TR
+          - UK
+          - ZH
+          - ZH-HANT
+          type: string
+        style: form
+      - description: Whether to allow cached requests & responses.
+        explode: true
+        in: query
+        name: cache
+        required: false
+        schema:
+          default: true
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/uploadText'
+          x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/uploadText'
+        description: Text to summarize
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Post example with the lyrics from https://genius.com/Brothertiger-mainsail-lyrics
+                    in the body
+                  value:
+                    meta:
+                      id: 55fc737b-29d7-4192-ab62-d23946576323
+                      node: us-east
+                      ms: 10868
+                    data:
+                      output: "Brothertiger's song \"Mainsail\" is a reflective and\
+                        \ hopeful track about escaping the mundane life and setting\
+                        \ sail for a new adventure. The narrator is asking if the\
+                        \ listener can recognize his face in a crowded room, and if\
+                        \ they can make their escape together. The chorus is a call\
+                        \ to action, with the narrator inviting the listener to lean\
+                        \ forward and relax as he raises the mainsail on the mast.\
+                        \ The bridge is a moment of clarity, with the narrator realizing\
+                        \ that they can sail away from the dull life they live and\
+                        \ find a way out of their head for the weekend. The song is\
+                        \ a reminder to take a break from the everyday and explore\
+                        \ the world around us. The imagery of the sun cascading on\
+                        \ the narrator's back and casting a shadow on the map is particularly\
+                        \ evocative and paints a vivid picture of the journey ahead."
+                      tokens: 543
+              schema:
+                $ref: '#/components/schemas/summary'
+          description: successful operation
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi: []
+      summary: Upload text to summarize.
+      tags:
+      - Summarizer
+    summary: FastGPT is a Kagi service using powerful LLMs to answer user queries
+      running a full search engine underneath.
+  /enrich/{type}:
+    get:
+      operationId: enrichSearch
+      parameters:
+      - description: Query to enrich
+        explode: true
+        in: query
+        name: q
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Enrich with 'web' results or 'news' results
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          default: web
+          enum:
+          - news
+          - web
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: A truncated enrichment result
+                  value:
+                    meta:
+                      id: db862c5b-c594-4480-9e0c-86a14f71cf0e
+                      node: us-east4
+                      ms: 386
+                    data:
+                    - t: 0
+                      rank: 1
+                      url: http://minimsft.blogspot.com/2011/01/microsoft-fy11q2-results.html
+                      title: "Mini-Microsoft: Microsoft FY11Q2 Results"
+                      snippet: "Like I said, there&#39;s a big convergence ahead of\
+                        \ us, and it will be good to start aligning a simpler development\
+                        \ story, both for Microsoft and its partners. The biggest\
+                        \ obvious concern is the development path for the mobile platform\
+                        \ compared to the development path for Windows, but even there\
+                        \ you can squint and see on the horizon the possibility for.."
+                      published: 2011-01-01T00:00:00Z
+                    - t: 0
+                      rank: 2
+                      url: http://toastytech.com/guis/bob.html
+                      title: Microsoft Bob
+                      snippet: Microsoft Bob| Microsoft Bob And so Microsoft Bob disappeared
+                        in to obscurity.
+              schema:
+                $ref: '#/components/schemas/enrichSearch_200_response'
+          description: Success
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi: []
+      summary: Get enriched search results
+      tags:
+      - Enrichment
+  /fastgpt:
+    post:
+      description: "FastGPT is a Kagi service using powerful LLMs to answer user queries\
+        \ running a full search engine underneath. Think ChatGPT, but on steroids\
+        \ and faster! You can try the web app here."
+      operationId: fastGPT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/fastGPT_request'
+        description: Contains the query to process.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with references included
+                  value:
+                    meta:
+                      id: 120145af-f057-466d-9e6d-7829ac902adc
+                      node: us-east
+                      ms: 7943
+                    data:
+                      output: "Python 3.11 was released in 2021 and introduced several\
+                        \ new features compared to previous versions:\n- Faster performance:\
+                        \ The interpreter was optimized, resulting in up to 1.25x\
+                        \ speedup on benchmarks.[1]\n- New syntax features: Exception\
+                        \ groups were added using PEP 654.[1]    \n- Traceback annotation:\
+                        \ The new version includes a feature to annotate tracebacks\
+                        \ to make them more intelligible.[2]\n- Type hint improvements:\
+                        \ Type hints were made more powerful.[3]\n"
+                      tokens: 757
+                      references:
+                      - title: What's New In Python 3.11 — Python 3.11.3 documentation
+                        snippet: '...'
+                        url: https://docs.python.org/3/whatsnew/3.11.html
+                      - title: Introducing the New Features in Python 3.11 -
+                        snippet: '...'
+                        url: https://earthly.dev/blog/python-3.11-new-features/
+              schema:
+                $ref: '#/components/schemas/fastGPT_200_response'
+          description: Success
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi: []
+      summary: Answer a query.
+      tags:
+      - FastGPT
+    summary: FastGPT is a Kagi service using powerful LLMs to answer user queries
+      running a full search engine underneath.
+components:
+  responses:
+    unauthorized:
+      content:
+        application/json:
+          examples:
+            default:
+              summary: Response with example search objects
+              value:
+                meta:
+                  id: 69c3f5c4168f66b860e951c585550f1c
+                  node: us-central1
+                  ms: 213
+                error:
+                  code: 2
+                  msg: Unauthorized
+          schema:
+            $ref: '#/components/schemas/exampleError'
+      description: Access token is missing or invalid
+  schemas:
+    v1Meta:
+      example:
+        node: node
+        trace: trace
+        ms: 0
+        query:
+          workflow: workflow
+          terms: terms
+          raw: raw
+          fields:
+          - kind: kind
+            negate: true
+            name: name
+            value: value
+          - kind: kind
+            negate: true
+            name: name
+            value: value
+      properties:
+        trace:
+          type: string
+        node:
+          type: string
+        ms:
+          type: integer
+        query:
+          $ref: '#/components/schemas/v1Meta_query'
+      required:
+      - ms
+      - node
+      - trace
+      type: object
+    v1ResultSearch:
+      example:
+        snippet: snippet
+        image:
+          width: 1
+          url: url
+          height: 6
+        time: time
+        title: title
+        url: url
+        props:
+          language_probability: 2.3021358869347655
+          sort_normalize_url: sort_normalize_url
+          sort_group_id: sort_group_id
+          language: language
+          thumbnail_image:
+            width: 5
+            url: url
+            height: 5
+          paywalled: true
+          source_history:
+          - source_history
+          - source_history
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        snippet:
+          type: string
+        time:
+          type: string
+        image:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+        props:
+          $ref: '#/components/schemas/v1ResultSearch_props'
+      required:
+      - title
+      - url
+      type: object
+    v1ResultVideo:
+      example:
+        snippet: snippet
+        image:
+          width: 1
+          url: url
+          height: 6
+        time: time
+        title: title
+        url: url
+        props:
+          hires_thumbnail_url: hires_thumbnail_url
+          language_probability: 7.061401241503109
+          sort_normalize_url: sort_normalize_url
+          sort_group_id: sort_group_id
+          language: language
+          source_history:
+          - source_history
+          - source_history
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        snippet:
+          type: string
+        time:
+          type: string
+        image:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+        props:
+          $ref: '#/components/schemas/v1ResultVideo_props'
+      required:
+      - title
+      - url
+      type: object
+    v1ResultAdjacentQuestion:
+      example:
+        snippet: snippet
+        image:
+          width: 1
+          url: url
+          height: 6
+        time: time
+        title: title
+        url: url
+        props:
+          question: question
+          language_probability: 9.301444243932576
+          language: language
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        snippet:
+          type: string
+        time:
+          type: string
+        image:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+        props:
+          $ref: '#/components/schemas/v1ResultAdjacentQuestion_props'
+      required:
+      - snippet
+      - title
+      - url
+      type: object
+    v1ResultInfobox:
+      example:
+        snippet: snippet
+        image:
+          width: 1
+          url: url
+          height: 6
+        time: time
+        title: title
+        url: url
+        props:
+          wikipedia.page_id: 3
+          language_probability: 2.027123023002322
+          infobox:
+          - merged: true
+            header: header
+            value: value
+          - merged: true
+            header: header
+            value: value
+          sort_normalize_url: sort_normalize_url
+          sort_group_id: sort_group_id
+          language: language
+          wikipedia.subtext: wikipedia.subtext
+          source_history:
+          - source_history
+          - source_history
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        snippet:
+          type: string
+        time:
+          type: string
+        image:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+        props:
+          $ref: '#/components/schemas/v1ResultInfobox_props'
+      required:
+      - snippet
+      - title
+      - url
+      type: object
+    v1ResultWebArchive:
+      example:
+        snippet: snippet
+        image:
+          width: 1
+          url: url
+          height: 6
+        time: time
+        title: title
+        url: url
+        props:
+          language_probability: 4.145608029883936
+          web_archive_domain: web_archive_domain
+          language: language
+      properties:
+        url:
+          type: string
+        title:
+          type: string
+        snippet:
+          type: string
+        time:
+          type: string
+        image:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+        props:
+          $ref: '#/components/schemas/v1ResultWebArchive_props'
+      required:
+      - snippet
+      - title
+      - url
+      type: object
+    meta:
+      example:
+        node: node
+        api_balance: 1.2315135367772556
+        ms: 7
+        id: id
+      properties:
+        id:
+          type: string
+        node:
+          type: string
+        ms:
+          type: integer
+        api_balance:
+          type: number
+      required:
+      - id
+      - ms
+      - node
+      type: object
+    exampleError:
+      description: I need an example error to appease the linter. Please accept my
+        offering
+      example:
+        meta:
+          node: node
+          api_balance: 1.2315135367772556
+          ms: 7
+          id: id
+        error:
+          msg: msg
+          ref: ref
+          code: 1
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        error:
+          $ref: '#/components/schemas/exampleError_error'
+      required:
+      - error
+      - meta
+      type: object
+    searchObject:
+      example:
+        snippet: snippet
+        image:
+          width: 1
+          url: url
+          height: 6
+        thumbnail:
+          width: 1
+          url: url
+          height: 6
+        t: 0
+        rank: 6
+        published: published
+        title: title
+        url: url
+      properties:
+        t:
+          type: integer
+        rank:
+          type: integer
+        url:
+          type: string
+        title:
+          type: string
+        snippet:
+          type: string
+        published:
+          type: string
+        thumbnail:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+        image:
+          $ref: '#/components/schemas/v1ResultSearch_image'
+      required:
+      - title
+      - url
+      type: object
+    searchRelated:
+      properties:
+        t:
+          type: integer
+        list:
+          items:
+            type: string
+          type: array
+      required:
+      - list
+      - t
+      type: object
+    summary:
+      description: A summary of the text or url provided
+      example:
+        data:
+          output: output
+          tokens: 0
+        meta:
+          node: node
+          api_balance: 1.2315135367772556
+          ms: 7
+          id: id
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          $ref: '#/components/schemas/summary_data'
+      required:
+      - data
+      - meta
+      type: object
+    uploadText:
+      description: Used to upload text to be summarized
+      properties:
+        text:
+          type: string
+      required:
+      - text
+      type: object
+    superSearch_request:
+      description: Used to upload the search query
+      properties:
+        query:
+          type: string
+        workflow:
+          enum:
+          - search
+          - images
+          - videos
+          - news
+          - podcats
+          type: string
+      required:
+      - query
+      type: object
+    superSearch_200_response_data:
+      example:
+        search:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            language_probability: 2.3021358869347655
+            sort_normalize_url: sort_normalize_url
+            sort_group_id: sort_group_id
+            language: language
+            thumbnail_image:
+              width: 5
+              url: url
+              height: 5
+            paywalled: true
+            source_history:
+            - source_history
+            - source_history
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            language_probability: 2.3021358869347655
+            sort_normalize_url: sort_normalize_url
+            sort_group_id: sort_group_id
+            language: language
+            thumbnail_image:
+              width: 5
+              url: url
+              height: 5
+            paywalled: true
+            source_history:
+            - source_history
+            - source_history
+        adjacent_question:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            question: question
+            language_probability: 9.301444243932576
+            language: language
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            question: question
+            language_probability: 9.301444243932576
+            language: language
+        web_archive:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            language_probability: 4.145608029883936
+            web_archive_domain: web_archive_domain
+            language: language
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            language_probability: 4.145608029883936
+            web_archive_domain: web_archive_domain
+            language: language
+        infobox:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            wikipedia.page_id: 3
+            language_probability: 2.027123023002322
+            infobox:
+            - merged: true
+              header: header
+              value: value
+            - merged: true
+              header: header
+              value: value
+            sort_normalize_url: sort_normalize_url
+            sort_group_id: sort_group_id
+            language: language
+            wikipedia.subtext: wikipedia.subtext
+            source_history:
+            - source_history
+            - source_history
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            wikipedia.page_id: 3
+            language_probability: 2.027123023002322
+            infobox:
+            - merged: true
+              header: header
+              value: value
+            - merged: true
+              header: header
+              value: value
+            sort_normalize_url: sort_normalize_url
+            sort_group_id: sort_group_id
+            language: language
+            wikipedia.subtext: wikipedia.subtext
+            source_history:
+            - source_history
+            - source_history
+        video:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            hires_thumbnail_url: hires_thumbnail_url
+            language_probability: 7.061401241503109
+            sort_normalize_url: sort_normalize_url
+            sort_group_id: sort_group_id
+            language: language
+            source_history:
+            - source_history
+            - source_history
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            hires_thumbnail_url: hires_thumbnail_url
+            language_probability: 7.061401241503109
+            sort_normalize_url: sort_normalize_url
+            sort_group_id: sort_group_id
+            language: language
+            source_history:
+            - source_history
+            - source_history
+      properties:
+        search:
+          items:
+            $ref: '#/components/schemas/v1ResultSearch'
+          type: array
+        video:
+          items:
+            $ref: '#/components/schemas/v1ResultVideo'
+          type: array
+        adjacent_question:
+          items:
+            $ref: '#/components/schemas/v1ResultAdjacentQuestion'
+          type: array
+        infobox:
+          items:
+            $ref: '#/components/schemas/v1ResultInfobox'
+          type: array
+        web_archive:
+          items:
+            $ref: '#/components/schemas/v1ResultWebArchive'
+          type: array
+      type: object
+    superSearch_200_response:
+      description: A response with a description and results references used
+      example:
+        data:
+          search:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              language_probability: 2.3021358869347655
+              sort_normalize_url: sort_normalize_url
+              sort_group_id: sort_group_id
+              language: language
+              thumbnail_image:
+                width: 5
+                url: url
+                height: 5
+              paywalled: true
+              source_history:
+              - source_history
+              - source_history
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              language_probability: 2.3021358869347655
+              sort_normalize_url: sort_normalize_url
+              sort_group_id: sort_group_id
+              language: language
+              thumbnail_image:
+                width: 5
+                url: url
+                height: 5
+              paywalled: true
+              source_history:
+              - source_history
+              - source_history
+          adjacent_question:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              question: question
+              language_probability: 9.301444243932576
+              language: language
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              question: question
+              language_probability: 9.301444243932576
+              language: language
+          web_archive:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              language_probability: 4.145608029883936
+              web_archive_domain: web_archive_domain
+              language: language
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              language_probability: 4.145608029883936
+              web_archive_domain: web_archive_domain
+              language: language
+          infobox:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              wikipedia.page_id: 3
+              language_probability: 2.027123023002322
+              infobox:
+              - merged: true
+                header: header
+                value: value
+              - merged: true
+                header: header
+                value: value
+              sort_normalize_url: sort_normalize_url
+              sort_group_id: sort_group_id
+              language: language
+              wikipedia.subtext: wikipedia.subtext
+              source_history:
+              - source_history
+              - source_history
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              wikipedia.page_id: 3
+              language_probability: 2.027123023002322
+              infobox:
+              - merged: true
+                header: header
+                value: value
+              - merged: true
+                header: header
+                value: value
+              sort_normalize_url: sort_normalize_url
+              sort_group_id: sort_group_id
+              language: language
+              wikipedia.subtext: wikipedia.subtext
+              source_history:
+              - source_history
+              - source_history
+          video:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              hires_thumbnail_url: hires_thumbnail_url
+              language_probability: 7.061401241503109
+              sort_normalize_url: sort_normalize_url
+              sort_group_id: sort_group_id
+              language: language
+              source_history:
+              - source_history
+              - source_history
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              hires_thumbnail_url: hires_thumbnail_url
+              language_probability: 7.061401241503109
+              sort_normalize_url: sort_normalize_url
+              sort_group_id: sort_group_id
+              language: language
+              source_history:
+              - source_history
+              - source_history
+        meta:
+          node: node
+          trace: trace
+          ms: 0
+          query:
+            workflow: workflow
+            terms: terms
+            raw: raw
+            fields:
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+            - kind: kind
+              negate: true
+              name: name
+              value: value
+      properties:
+        meta:
+          $ref: '#/components/schemas/v1Meta'
+        data:
+          $ref: '#/components/schemas/superSearch_200_response_data'
+      type: object
+    search_200_response_data_inner:
+      anyOf:
+      - $ref: '#/components/schemas/searchObject'
+      - $ref: '#/components/schemas/searchRelated'
+    search_200_response:
+      description: A response with a description and results references used
+      example:
+        data:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          thumbnail:
+            width: 1
+            url: url
+            height: 6
+          t: 0
+          rank: 6
+          published: published
+          title: title
+          url: url
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          thumbnail:
+            width: 1
+            url: url
+            height: 6
+          t: 0
+          rank: 6
+          published: published
+          title: title
+          url: url
+        meta:
+          node: node
+          api_balance: 1.2315135367772556
+          ms: 7
+          id: id
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          items:
+            $ref: '#/components/schemas/search_200_response_data_inner'
+          type: array
+      type: object
+    enrichSearch_200_response:
+      description: An array of search objects that can enrich a search query
+      example:
+        data:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          thumbnail:
+            width: 1
+            url: url
+            height: 6
+          t: 0
+          rank: 6
+          published: published
+          title: title
+          url: url
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          thumbnail:
+            width: 1
+            url: url
+            height: 6
+          t: 0
+          rank: 6
+          published: published
+          title: title
+          url: url
+        meta:
+          node: node
+          api_balance: 1.2315135367772556
+          ms: 7
+          id: id
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          items:
+            $ref: '#/components/schemas/searchObject'
+          type: array
+      type: object
+    fastGPT_request:
+      description: Used to upload text to be summarized
+      properties:
+        text:
+          type: string
+        cache:
+          default: true
+          type: boolean
+      required:
+      - query
+      type: object
+    fastGPT_200_response_data:
+      example:
+        output: output
+        references:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          thumbnail:
+            width: 1
+            url: url
+            height: 6
+          t: 0
+          rank: 6
+          published: published
+          title: title
+          url: url
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          thumbnail:
+            width: 1
+            url: url
+            height: 6
+          t: 0
+          rank: 6
+          published: published
+          title: title
+          url: url
+        tokens: 0
+      properties:
+        output:
+          type: string
+        tokens:
+          type: integer
+        references:
+          items:
+            $ref: '#/components/schemas/searchObject'
+          type: array
+      type: object
+    fastGPT_200_response:
+      description: A response with a description and results references used
+      example:
+        data:
+          output: output
+          references:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            thumbnail:
+              width: 1
+              url: url
+              height: 6
+            t: 0
+            rank: 6
+            published: published
+            title: title
+            url: url
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            thumbnail:
+              width: 1
+              url: url
+              height: 6
+            t: 0
+            rank: 6
+            published: published
+            title: title
+            url: url
+          tokens: 0
+        meta:
+          node: node
+          api_balance: 1.2315135367772556
+          ms: 7
+          id: id
+      properties:
+        meta:
+          $ref: '#/components/schemas/meta'
+        data:
+          $ref: '#/components/schemas/fastGPT_200_response_data'
+      type: object
+    v1Meta_query_fields_inner:
+      example:
+        kind: kind
+        negate: true
+        name: name
+        value: value
+      properties:
+        kind:
+          type: string
+        value:
+          type: string
+        name:
+          type: string
+        negate:
+          type: boolean
+      type: object
+    v1Meta_query:
+      example:
+        workflow: workflow
+        terms: terms
+        raw: raw
+        fields:
+        - kind: kind
+          negate: true
+          name: name
+          value: value
+        - kind: kind
+          negate: true
+          name: name
+          value: value
+      properties:
+        raw:
+          type: string
+        terms:
+          type: string
+        fields:
+          items:
+            $ref: '#/components/schemas/v1Meta_query_fields_inner'
+          type: array
+        workflow:
+          type: string
+      type: object
+    v1ResultSearch_image:
+      example:
+        width: 1
+        url: url
+        height: 6
+      properties:
+        url:
+          type: string
+        height:
+          type: integer
+        width:
+          type: integer
+      required:
+      - url
+      type: object
+    v1ResultSearch_props_thumbnail_image:
+      example:
+        width: 5
+        url: url
+        height: 5
+      properties:
+        url:
+          type: string
+        height:
+          type: integer
+        width:
+          type: integer
+      required:
+      - url
+    v1ResultSearch_props:
+      example:
+        language_probability: 2.3021358869347655
+        sort_normalize_url: sort_normalize_url
+        sort_group_id: sort_group_id
+        language: language
+        thumbnail_image:
+          width: 5
+          url: url
+          height: 5
+        paywalled: true
+        source_history:
+        - source_history
+        - source_history
+      properties:
+        thumbnail_image:
+          $ref: '#/components/schemas/v1ResultSearch_props_thumbnail_image'
+        language:
+          type: string
+        language_probability:
+          type: number
+        paywalled:
+          type: boolean
+        sort_normalize_url:
+          type: string
+        sort_group_id:
+          type: string
+        source_history:
+          items:
+            type: string
+          type: array
+      type: object
+    v1ResultVideo_props:
+      example:
+        hires_thumbnail_url: hires_thumbnail_url
+        language_probability: 7.061401241503109
+        sort_normalize_url: sort_normalize_url
+        sort_group_id: sort_group_id
+        language: language
+        source_history:
+        - source_history
+        - source_history
+      properties:
+        hires_thumbnail_url:
+          type: string
+        sort_normalize_url:
+          type: string
+        sort_group_id:
+          type: string
+        language:
+          type: string
+        language_probability:
+          type: number
+        source_history:
+          items:
+            type: string
+          type: array
+      type: object
+    v1ResultAdjacentQuestion_props:
+      example:
+        question: question
+        language_probability: 9.301444243932576
+        language: language
+      properties:
+        question:
+          type: string
+        language:
+          type: string
+        language_probability:
+          type: number
+      type: object
+    v1ResultInfobox_props_infobox_inner:
+      example:
+        merged: true
+        header: header
+        value: value
+      properties:
+        header:
+          type: string
+        value:
+          type: string
+        merged:
+          type: boolean
+      required:
+      - header
+      - merged
+      - value
+      type: object
+    v1ResultInfobox_props:
+      example:
+        wikipedia.page_id: 3
+        language_probability: 2.027123023002322
+        infobox:
+        - merged: true
+          header: header
+          value: value
+        - merged: true
+          header: header
+          value: value
+        sort_normalize_url: sort_normalize_url
+        sort_group_id: sort_group_id
+        language: language
+        wikipedia.subtext: wikipedia.subtext
+        source_history:
+        - source_history
+        - source_history
+      properties:
+        infobox:
+          items:
+            $ref: '#/components/schemas/v1ResultInfobox_props_infobox_inner'
+          type: array
+        wikipedia.subtext:
+          type: string
+        wikipedia.page_id:
+          type: integer
+        language:
+          type: string
+        language_probability:
+          type: number
+        sort_normalize_url:
+          type: string
+        sort_group_id:
+          type: string
+        source_history:
+          items:
+            type: string
+          type: array
+      type: object
+    v1ResultWebArchive_props:
+      example:
+        language_probability: 4.145608029883936
+        web_archive_domain: web_archive_domain
+        language: language
+      properties:
+        web_archive_domain:
+          type: string
+        language:
+          type: string
+        language_probability:
+          type: number
+      type: object
+    exampleError_error:
+      example:
+        msg: msg
+        ref: ref
+        code: 1
+      properties:
+        code:
+          type: integer
+        msg:
+          type: string
+        ref:
+          type: string
+      required:
+      - code
+      - msg
+      type: object
+    summary_data:
+      example:
+        output: output
+        tokens: 0
+      properties:
+        output:
+          type: string
+        tokens:
+          type: integer
+      required:
+      - output
+      - tokens
+  securitySchemes:
+    kagi:
+      description: "Kagi Bot token for automated access, Please prefix with `Bot `.\
+        \ It should match the format `Bot {value}`"
+      in: header
+      name: Authorization
+      type: apiKey
+    ApiKeyAuth:
+      description: "Kagi Bearer authentication. It should match the format `Bearer\
+        \ {value}`"
+      scheme: bearer
+      type: http

@@ -1,4 +1,4 @@
-module github.com/kagisearch/api-clients/out/go
+module github.com/kagisearch/kagi-api-golang
 
 go 1.18
 

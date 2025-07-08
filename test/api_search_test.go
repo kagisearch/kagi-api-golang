@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"
-	openapiclient "github.com/kagisearch/api-clients/out/go"
+	openapiclient "github.com/kagisearch/kagi-api-golang"
 )
 
 func Test_openapi_SearchAPIService(t *testing.T) {

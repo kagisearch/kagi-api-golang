@@ -25,7 +25,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	openapiclient "github.com/kagisearch/api-clients/out/go"
+	openapiclient "github.com/kagisearch/kagi-api-golang"
 )
 
 func main() {

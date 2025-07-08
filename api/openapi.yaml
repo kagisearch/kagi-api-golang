@@ -116,7 +116,7 @@ tags:
   x-displayName: Translate API
 paths:
   /search:
-    get:
+    post:
       operationId: search
       requestBody:
         content:

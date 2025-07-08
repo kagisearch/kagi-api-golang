@@ -56,7 +56,7 @@ func (a *SearchAPIService) Search(ctx context.Context) ApiSearchRequest {
 //  @return Search200Response
 func (a *SearchAPIService) SearchExecute(r ApiSearchRequest) (*Search200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
+		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
 		localVarReturnValue  *Search200Response

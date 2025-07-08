@@ -57,6 +57,8 @@ type APIClient struct {
 	SearchAPI *SearchAPIService
 
 	SummarizerAPI *SummarizerAPIService
+
+	TranslateAPI *TranslateAPIService
 }
 
 type service struct {
@@ -79,6 +81,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.FastGPTAPI = (*FastGPTAPIService)(&c.common)
 	c.SearchAPI = (*SearchAPIService)(&c.common)
 	c.SummarizerAPI = (*SummarizerAPIService)(&c.common)
+	c.TranslateAPI = (*TranslateAPIService)(&c.common)
 
 	return c
 }
@@ -427,6 +430,11 @@ func (c *APIClient) prepareRequest(
 		localVarRequest = localVarRequest.WithContext(ctx)
 
 		// Walk through any authentication.
+
+		// AccessToken Authentication
+		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
+			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
+		}
 
 	}
 

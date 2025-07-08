@@ -13,8 +13,6 @@ package openapi
 
 import (
 	"encoding/json"
-	"bytes"
-	"fmt"
 )
 
 // checks if the Meta type satisfies the MappedNullable interface at compile time
@@ -24,21 +22,17 @@ var _ MappedNullable = &Meta{}
 type Meta struct {
 	Trace *string `json:"trace,omitempty"`
 	Id *string `json:"id,omitempty"`
-	Node string `json:"node"`
-	Ms int32 `json:"ms"`
+	Node *string `json:"node,omitempty"`
+	Ms *int32 `json:"ms,omitempty"`
 	Query *MetaQuery `json:"query,omitempty"`
 }
-
-type _Meta Meta
 
 // NewMeta instantiates a new Meta object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMeta(node string, ms int32) *Meta {
+func NewMeta() *Meta {
 	this := Meta{}
-	this.Node = node
-	this.Ms = ms
 	return &this
 }
 
@@ -114,52 +108,68 @@ func (o *Meta) SetId(v string) {
 	o.Id = &v
 }
 
-// GetNode returns the Node field value
+// GetNode returns the Node field value if set, zero value otherwise.
 func (o *Meta) GetNode() string {
-	if o == nil {
+	if o == nil || IsNil(o.Node) {
 		var ret string
 		return ret
 	}
-
-	return o.Node
+	return *o.Node
 }
 
-// GetNodeOk returns a tuple with the Node field value
+// GetNodeOk returns a tuple with the Node field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meta) GetNodeOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Node) {
 		return nil, false
 	}
-	return &o.Node, true
+	return o.Node, true
 }
 
-// SetNode sets field value
+// HasNode returns a boolean if a field has been set.
+func (o *Meta) HasNode() bool {
+	if o != nil && !IsNil(o.Node) {
+		return true
+	}
+
+	return false
+}
+
+// SetNode gets a reference to the given string and assigns it to the Node field.
 func (o *Meta) SetNode(v string) {
-	o.Node = v
+	o.Node = &v
 }
 
-// GetMs returns the Ms field value
+// GetMs returns the Ms field value if set, zero value otherwise.
 func (o *Meta) GetMs() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Ms) {
 		var ret int32
 		return ret
 	}
-
-	return o.Ms
+	return *o.Ms
 }
 
-// GetMsOk returns a tuple with the Ms field value
+// GetMsOk returns a tuple with the Ms field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Meta) GetMsOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Ms) {
 		return nil, false
 	}
-	return &o.Ms, true
+	return o.Ms, true
 }
 
-// SetMs sets field value
+// HasMs returns a boolean if a field has been set.
+func (o *Meta) HasMs() bool {
+	if o != nil && !IsNil(o.Ms) {
+		return true
+	}
+
+	return false
+}
+
+// SetMs gets a reference to the given int32 and assigns it to the Ms field.
 func (o *Meta) SetMs(v int32) {
-	o.Ms = v
+	o.Ms = &v
 }
 
 // GetQuery returns the Query field value if set, zero value otherwise.
@@ -210,50 +220,16 @@ func (o Meta) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
 	}
-	toSerialize["node"] = o.Node
-	toSerialize["ms"] = o.Ms
+	if !IsNil(o.Node) {
+		toSerialize["node"] = o.Node
+	}
+	if !IsNil(o.Ms) {
+		toSerialize["ms"] = o.Ms
+	}
 	if !IsNil(o.Query) {
 		toSerialize["query"] = o.Query
 	}
 	return toSerialize, nil
-}
-
-func (o *Meta) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"node",
-		"ms",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varMeta := _Meta{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varMeta)
-
-	if err != nil {
-		return err
-	}
-
-	*o = Meta(varMeta)
-
-	return err
 }
 
 type NullableMeta struct {

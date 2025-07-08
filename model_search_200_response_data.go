@@ -20,11 +20,24 @@ var _ MappedNullable = &Search200ResponseData{}
 
 // Search200ResponseData struct for Search200ResponseData
 type Search200ResponseData struct {
-	Search []ResultSearch `json:"search,omitempty"`
-	Video []ResultVideo `json:"video,omitempty"`
-	AdjacentQuestion []ResultAdjacentQuestion `json:"adjacent_question,omitempty"`
-	Infobox []ResultInfobox `json:"infobox,omitempty"`
-	WebArchive []ResultWebArchive `json:"web_archive,omitempty"`
+	Search []SearchResult `json:"search,omitempty"`
+	Image []SearchResult `json:"image,omitempty"`
+	Video []SearchResult `json:"video,omitempty"`
+	Podcast []SearchResult `json:"podcast,omitempty"`
+	PodcastCreator []SearchResult `json:"podcast_creator,omitempty"`
+	News []SearchResult `json:"news,omitempty"`
+	AdjacentQuestion []SearchResult `json:"adjacent_question,omitempty"`
+	DirectAnswer []SearchResult `json:"direct_answer,omitempty"`
+	InterestingNews []SearchResult `json:"interesting_news,omitempty"`
+	InterestingFinds []SearchResult `json:"interesting_finds,omitempty"`
+	Infobox []SearchResult `json:"infobox,omitempty"`
+	Code []SearchResult `json:"code,omitempty"`
+	PackageTracking []SearchResult `json:"package_tracking,omitempty"`
+	PublicRecords []SearchResult `json:"public_records,omitempty"`
+	Weather []SearchResult `json:"weather,omitempty"`
+	RelatedSearch []SearchResult `json:"related_search,omitempty"`
+	Listicle []SearchResult `json:"listicle,omitempty"`
+	WebArchive []SearchResult `json:"web_archive,omitempty"`
 }
 
 // NewSearch200ResponseData instantiates a new Search200ResponseData object
@@ -45,9 +58,9 @@ func NewSearch200ResponseDataWithDefaults() *Search200ResponseData {
 }
 
 // GetSearch returns the Search field value if set, zero value otherwise.
-func (o *Search200ResponseData) GetSearch() []ResultSearch {
+func (o *Search200ResponseData) GetSearch() []SearchResult {
 	if o == nil || IsNil(o.Search) {
-		var ret []ResultSearch
+		var ret []SearchResult
 		return ret
 	}
 	return o.Search
@@ -55,7 +68,7 @@ func (o *Search200ResponseData) GetSearch() []ResultSearch {
 
 // GetSearchOk returns a tuple with the Search field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Search200ResponseData) GetSearchOk() ([]ResultSearch, bool) {
+func (o *Search200ResponseData) GetSearchOk() ([]SearchResult, bool) {
 	if o == nil || IsNil(o.Search) {
 		return nil, false
 	}
@@ -71,15 +84,47 @@ func (o *Search200ResponseData) HasSearch() bool {
 	return false
 }
 
-// SetSearch gets a reference to the given []ResultSearch and assigns it to the Search field.
-func (o *Search200ResponseData) SetSearch(v []ResultSearch) {
+// SetSearch gets a reference to the given []SearchResult and assigns it to the Search field.
+func (o *Search200ResponseData) SetSearch(v []SearchResult) {
 	o.Search = v
 }
 
+// GetImage returns the Image field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetImage() []SearchResult {
+	if o == nil || IsNil(o.Image) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.Image
+}
+
+// GetImageOk returns a tuple with the Image field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetImageOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.Image) {
+		return nil, false
+	}
+	return o.Image, true
+}
+
+// HasImage returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasImage() bool {
+	if o != nil && !IsNil(o.Image) {
+		return true
+	}
+
+	return false
+}
+
+// SetImage gets a reference to the given []SearchResult and assigns it to the Image field.
+func (o *Search200ResponseData) SetImage(v []SearchResult) {
+	o.Image = v
+}
+
 // GetVideo returns the Video field value if set, zero value otherwise.
-func (o *Search200ResponseData) GetVideo() []ResultVideo {
+func (o *Search200ResponseData) GetVideo() []SearchResult {
 	if o == nil || IsNil(o.Video) {
-		var ret []ResultVideo
+		var ret []SearchResult
 		return ret
 	}
 	return o.Video
@@ -87,7 +132,7 @@ func (o *Search200ResponseData) GetVideo() []ResultVideo {
 
 // GetVideoOk returns a tuple with the Video field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Search200ResponseData) GetVideoOk() ([]ResultVideo, bool) {
+func (o *Search200ResponseData) GetVideoOk() ([]SearchResult, bool) {
 	if o == nil || IsNil(o.Video) {
 		return nil, false
 	}
@@ -103,15 +148,111 @@ func (o *Search200ResponseData) HasVideo() bool {
 	return false
 }
 
-// SetVideo gets a reference to the given []ResultVideo and assigns it to the Video field.
-func (o *Search200ResponseData) SetVideo(v []ResultVideo) {
+// SetVideo gets a reference to the given []SearchResult and assigns it to the Video field.
+func (o *Search200ResponseData) SetVideo(v []SearchResult) {
 	o.Video = v
 }
 
+// GetPodcast returns the Podcast field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetPodcast() []SearchResult {
+	if o == nil || IsNil(o.Podcast) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.Podcast
+}
+
+// GetPodcastOk returns a tuple with the Podcast field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetPodcastOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.Podcast) {
+		return nil, false
+	}
+	return o.Podcast, true
+}
+
+// HasPodcast returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasPodcast() bool {
+	if o != nil && !IsNil(o.Podcast) {
+		return true
+	}
+
+	return false
+}
+
+// SetPodcast gets a reference to the given []SearchResult and assigns it to the Podcast field.
+func (o *Search200ResponseData) SetPodcast(v []SearchResult) {
+	o.Podcast = v
+}
+
+// GetPodcastCreator returns the PodcastCreator field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetPodcastCreator() []SearchResult {
+	if o == nil || IsNil(o.PodcastCreator) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.PodcastCreator
+}
+
+// GetPodcastCreatorOk returns a tuple with the PodcastCreator field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetPodcastCreatorOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.PodcastCreator) {
+		return nil, false
+	}
+	return o.PodcastCreator, true
+}
+
+// HasPodcastCreator returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasPodcastCreator() bool {
+	if o != nil && !IsNil(o.PodcastCreator) {
+		return true
+	}
+
+	return false
+}
+
+// SetPodcastCreator gets a reference to the given []SearchResult and assigns it to the PodcastCreator field.
+func (o *Search200ResponseData) SetPodcastCreator(v []SearchResult) {
+	o.PodcastCreator = v
+}
+
+// GetNews returns the News field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetNews() []SearchResult {
+	if o == nil || IsNil(o.News) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.News
+}
+
+// GetNewsOk returns a tuple with the News field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetNewsOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.News) {
+		return nil, false
+	}
+	return o.News, true
+}
+
+// HasNews returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasNews() bool {
+	if o != nil && !IsNil(o.News) {
+		return true
+	}
+
+	return false
+}
+
+// SetNews gets a reference to the given []SearchResult and assigns it to the News field.
+func (o *Search200ResponseData) SetNews(v []SearchResult) {
+	o.News = v
+}
+
 // GetAdjacentQuestion returns the AdjacentQuestion field value if set, zero value otherwise.
-func (o *Search200ResponseData) GetAdjacentQuestion() []ResultAdjacentQuestion {
+func (o *Search200ResponseData) GetAdjacentQuestion() []SearchResult {
 	if o == nil || IsNil(o.AdjacentQuestion) {
-		var ret []ResultAdjacentQuestion
+		var ret []SearchResult
 		return ret
 	}
 	return o.AdjacentQuestion
@@ -119,7 +260,7 @@ func (o *Search200ResponseData) GetAdjacentQuestion() []ResultAdjacentQuestion {
 
 // GetAdjacentQuestionOk returns a tuple with the AdjacentQuestion field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Search200ResponseData) GetAdjacentQuestionOk() ([]ResultAdjacentQuestion, bool) {
+func (o *Search200ResponseData) GetAdjacentQuestionOk() ([]SearchResult, bool) {
 	if o == nil || IsNil(o.AdjacentQuestion) {
 		return nil, false
 	}
@@ -135,15 +276,111 @@ func (o *Search200ResponseData) HasAdjacentQuestion() bool {
 	return false
 }
 
-// SetAdjacentQuestion gets a reference to the given []ResultAdjacentQuestion and assigns it to the AdjacentQuestion field.
-func (o *Search200ResponseData) SetAdjacentQuestion(v []ResultAdjacentQuestion) {
+// SetAdjacentQuestion gets a reference to the given []SearchResult and assigns it to the AdjacentQuestion field.
+func (o *Search200ResponseData) SetAdjacentQuestion(v []SearchResult) {
 	o.AdjacentQuestion = v
 }
 
+// GetDirectAnswer returns the DirectAnswer field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetDirectAnswer() []SearchResult {
+	if o == nil || IsNil(o.DirectAnswer) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.DirectAnswer
+}
+
+// GetDirectAnswerOk returns a tuple with the DirectAnswer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetDirectAnswerOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.DirectAnswer) {
+		return nil, false
+	}
+	return o.DirectAnswer, true
+}
+
+// HasDirectAnswer returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasDirectAnswer() bool {
+	if o != nil && !IsNil(o.DirectAnswer) {
+		return true
+	}
+
+	return false
+}
+
+// SetDirectAnswer gets a reference to the given []SearchResult and assigns it to the DirectAnswer field.
+func (o *Search200ResponseData) SetDirectAnswer(v []SearchResult) {
+	o.DirectAnswer = v
+}
+
+// GetInterestingNews returns the InterestingNews field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetInterestingNews() []SearchResult {
+	if o == nil || IsNil(o.InterestingNews) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.InterestingNews
+}
+
+// GetInterestingNewsOk returns a tuple with the InterestingNews field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetInterestingNewsOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.InterestingNews) {
+		return nil, false
+	}
+	return o.InterestingNews, true
+}
+
+// HasInterestingNews returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasInterestingNews() bool {
+	if o != nil && !IsNil(o.InterestingNews) {
+		return true
+	}
+
+	return false
+}
+
+// SetInterestingNews gets a reference to the given []SearchResult and assigns it to the InterestingNews field.
+func (o *Search200ResponseData) SetInterestingNews(v []SearchResult) {
+	o.InterestingNews = v
+}
+
+// GetInterestingFinds returns the InterestingFinds field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetInterestingFinds() []SearchResult {
+	if o == nil || IsNil(o.InterestingFinds) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.InterestingFinds
+}
+
+// GetInterestingFindsOk returns a tuple with the InterestingFinds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetInterestingFindsOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.InterestingFinds) {
+		return nil, false
+	}
+	return o.InterestingFinds, true
+}
+
+// HasInterestingFinds returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasInterestingFinds() bool {
+	if o != nil && !IsNil(o.InterestingFinds) {
+		return true
+	}
+
+	return false
+}
+
+// SetInterestingFinds gets a reference to the given []SearchResult and assigns it to the InterestingFinds field.
+func (o *Search200ResponseData) SetInterestingFinds(v []SearchResult) {
+	o.InterestingFinds = v
+}
+
 // GetInfobox returns the Infobox field value if set, zero value otherwise.
-func (o *Search200ResponseData) GetInfobox() []ResultInfobox {
+func (o *Search200ResponseData) GetInfobox() []SearchResult {
 	if o == nil || IsNil(o.Infobox) {
-		var ret []ResultInfobox
+		var ret []SearchResult
 		return ret
 	}
 	return o.Infobox
@@ -151,7 +388,7 @@ func (o *Search200ResponseData) GetInfobox() []ResultInfobox {
 
 // GetInfoboxOk returns a tuple with the Infobox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Search200ResponseData) GetInfoboxOk() ([]ResultInfobox, bool) {
+func (o *Search200ResponseData) GetInfoboxOk() ([]SearchResult, bool) {
 	if o == nil || IsNil(o.Infobox) {
 		return nil, false
 	}
@@ -167,15 +404,207 @@ func (o *Search200ResponseData) HasInfobox() bool {
 	return false
 }
 
-// SetInfobox gets a reference to the given []ResultInfobox and assigns it to the Infobox field.
-func (o *Search200ResponseData) SetInfobox(v []ResultInfobox) {
+// SetInfobox gets a reference to the given []SearchResult and assigns it to the Infobox field.
+func (o *Search200ResponseData) SetInfobox(v []SearchResult) {
 	o.Infobox = v
 }
 
+// GetCode returns the Code field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetCode() []SearchResult {
+	if o == nil || IsNil(o.Code) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.Code
+}
+
+// GetCodeOk returns a tuple with the Code field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetCodeOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.Code) {
+		return nil, false
+	}
+	return o.Code, true
+}
+
+// HasCode returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasCode() bool {
+	if o != nil && !IsNil(o.Code) {
+		return true
+	}
+
+	return false
+}
+
+// SetCode gets a reference to the given []SearchResult and assigns it to the Code field.
+func (o *Search200ResponseData) SetCode(v []SearchResult) {
+	o.Code = v
+}
+
+// GetPackageTracking returns the PackageTracking field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetPackageTracking() []SearchResult {
+	if o == nil || IsNil(o.PackageTracking) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.PackageTracking
+}
+
+// GetPackageTrackingOk returns a tuple with the PackageTracking field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetPackageTrackingOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.PackageTracking) {
+		return nil, false
+	}
+	return o.PackageTracking, true
+}
+
+// HasPackageTracking returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasPackageTracking() bool {
+	if o != nil && !IsNil(o.PackageTracking) {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageTracking gets a reference to the given []SearchResult and assigns it to the PackageTracking field.
+func (o *Search200ResponseData) SetPackageTracking(v []SearchResult) {
+	o.PackageTracking = v
+}
+
+// GetPublicRecords returns the PublicRecords field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetPublicRecords() []SearchResult {
+	if o == nil || IsNil(o.PublicRecords) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.PublicRecords
+}
+
+// GetPublicRecordsOk returns a tuple with the PublicRecords field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetPublicRecordsOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.PublicRecords) {
+		return nil, false
+	}
+	return o.PublicRecords, true
+}
+
+// HasPublicRecords returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasPublicRecords() bool {
+	if o != nil && !IsNil(o.PublicRecords) {
+		return true
+	}
+
+	return false
+}
+
+// SetPublicRecords gets a reference to the given []SearchResult and assigns it to the PublicRecords field.
+func (o *Search200ResponseData) SetPublicRecords(v []SearchResult) {
+	o.PublicRecords = v
+}
+
+// GetWeather returns the Weather field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetWeather() []SearchResult {
+	if o == nil || IsNil(o.Weather) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.Weather
+}
+
+// GetWeatherOk returns a tuple with the Weather field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetWeatherOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.Weather) {
+		return nil, false
+	}
+	return o.Weather, true
+}
+
+// HasWeather returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasWeather() bool {
+	if o != nil && !IsNil(o.Weather) {
+		return true
+	}
+
+	return false
+}
+
+// SetWeather gets a reference to the given []SearchResult and assigns it to the Weather field.
+func (o *Search200ResponseData) SetWeather(v []SearchResult) {
+	o.Weather = v
+}
+
+// GetRelatedSearch returns the RelatedSearch field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetRelatedSearch() []SearchResult {
+	if o == nil || IsNil(o.RelatedSearch) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.RelatedSearch
+}
+
+// GetRelatedSearchOk returns a tuple with the RelatedSearch field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetRelatedSearchOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.RelatedSearch) {
+		return nil, false
+	}
+	return o.RelatedSearch, true
+}
+
+// HasRelatedSearch returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasRelatedSearch() bool {
+	if o != nil && !IsNil(o.RelatedSearch) {
+		return true
+	}
+
+	return false
+}
+
+// SetRelatedSearch gets a reference to the given []SearchResult and assigns it to the RelatedSearch field.
+func (o *Search200ResponseData) SetRelatedSearch(v []SearchResult) {
+	o.RelatedSearch = v
+}
+
+// GetListicle returns the Listicle field value if set, zero value otherwise.
+func (o *Search200ResponseData) GetListicle() []SearchResult {
+	if o == nil || IsNil(o.Listicle) {
+		var ret []SearchResult
+		return ret
+	}
+	return o.Listicle
+}
+
+// GetListicleOk returns a tuple with the Listicle field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Search200ResponseData) GetListicleOk() ([]SearchResult, bool) {
+	if o == nil || IsNil(o.Listicle) {
+		return nil, false
+	}
+	return o.Listicle, true
+}
+
+// HasListicle returns a boolean if a field has been set.
+func (o *Search200ResponseData) HasListicle() bool {
+	if o != nil && !IsNil(o.Listicle) {
+		return true
+	}
+
+	return false
+}
+
+// SetListicle gets a reference to the given []SearchResult and assigns it to the Listicle field.
+func (o *Search200ResponseData) SetListicle(v []SearchResult) {
+	o.Listicle = v
+}
+
 // GetWebArchive returns the WebArchive field value if set, zero value otherwise.
-func (o *Search200ResponseData) GetWebArchive() []ResultWebArchive {
+func (o *Search200ResponseData) GetWebArchive() []SearchResult {
 	if o == nil || IsNil(o.WebArchive) {
-		var ret []ResultWebArchive
+		var ret []SearchResult
 		return ret
 	}
 	return o.WebArchive
@@ -183,7 +612,7 @@ func (o *Search200ResponseData) GetWebArchive() []ResultWebArchive {
 
 // GetWebArchiveOk returns a tuple with the WebArchive field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Search200ResponseData) GetWebArchiveOk() ([]ResultWebArchive, bool) {
+func (o *Search200ResponseData) GetWebArchiveOk() ([]SearchResult, bool) {
 	if o == nil || IsNil(o.WebArchive) {
 		return nil, false
 	}
@@ -199,8 +628,8 @@ func (o *Search200ResponseData) HasWebArchive() bool {
 	return false
 }
 
-// SetWebArchive gets a reference to the given []ResultWebArchive and assigns it to the WebArchive field.
-func (o *Search200ResponseData) SetWebArchive(v []ResultWebArchive) {
+// SetWebArchive gets a reference to the given []SearchResult and assigns it to the WebArchive field.
+func (o *Search200ResponseData) SetWebArchive(v []SearchResult) {
 	o.WebArchive = v
 }
 
@@ -217,14 +646,53 @@ func (o Search200ResponseData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Search) {
 		toSerialize["search"] = o.Search
 	}
+	if !IsNil(o.Image) {
+		toSerialize["image"] = o.Image
+	}
 	if !IsNil(o.Video) {
 		toSerialize["video"] = o.Video
+	}
+	if !IsNil(o.Podcast) {
+		toSerialize["podcast"] = o.Podcast
+	}
+	if !IsNil(o.PodcastCreator) {
+		toSerialize["podcast_creator"] = o.PodcastCreator
+	}
+	if !IsNil(o.News) {
+		toSerialize["news"] = o.News
 	}
 	if !IsNil(o.AdjacentQuestion) {
 		toSerialize["adjacent_question"] = o.AdjacentQuestion
 	}
+	if !IsNil(o.DirectAnswer) {
+		toSerialize["direct_answer"] = o.DirectAnswer
+	}
+	if !IsNil(o.InterestingNews) {
+		toSerialize["interesting_news"] = o.InterestingNews
+	}
+	if !IsNil(o.InterestingFinds) {
+		toSerialize["interesting_finds"] = o.InterestingFinds
+	}
 	if !IsNil(o.Infobox) {
 		toSerialize["infobox"] = o.Infobox
+	}
+	if !IsNil(o.Code) {
+		toSerialize["code"] = o.Code
+	}
+	if !IsNil(o.PackageTracking) {
+		toSerialize["package_tracking"] = o.PackageTracking
+	}
+	if !IsNil(o.PublicRecords) {
+		toSerialize["public_records"] = o.PublicRecords
+	}
+	if !IsNil(o.Weather) {
+		toSerialize["weather"] = o.Weather
+	}
+	if !IsNil(o.RelatedSearch) {
+		toSerialize["related_search"] = o.RelatedSearch
+	}
+	if !IsNil(o.Listicle) {
+		toSerialize["listicle"] = o.Listicle
 	}
 	if !IsNil(o.WebArchive) {
 		toSerialize["web_archive"] = o.WebArchive

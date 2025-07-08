@@ -17,108 +17,43 @@ import (
 	"fmt"
 )
 
-// checks if the SearchObject type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &SearchObject{}
+// checks if the SearchResult type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &SearchResult{}
 
-// SearchObject struct for SearchObject
-type SearchObject struct {
-	T *int32 `json:"t,omitempty"`
-	Rank *int32 `json:"rank,omitempty"`
+// SearchResult struct for SearchResult
+type SearchResult struct {
 	Url string `json:"url"`
 	Title string `json:"title"`
 	Snippet *string `json:"snippet,omitempty"`
-	Published *string `json:"published,omitempty"`
-	Thumbnail *SearchResultImage `json:"thumbnail,omitempty"`
+	Time *string `json:"time,omitempty"`
 	Image *SearchResultImage `json:"image,omitempty"`
+	// Holds arbitrary result metadata
+	Props map[string]interface{} `json:"props,omitempty"`
 }
 
-type _SearchObject SearchObject
+type _SearchResult SearchResult
 
-// NewSearchObject instantiates a new SearchObject object
+// NewSearchResult instantiates a new SearchResult object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSearchObject(url string, title string) *SearchObject {
-	this := SearchObject{}
+func NewSearchResult(url string, title string) *SearchResult {
+	this := SearchResult{}
 	this.Url = url
 	this.Title = title
 	return &this
 }
 
-// NewSearchObjectWithDefaults instantiates a new SearchObject object
+// NewSearchResultWithDefaults instantiates a new SearchResult object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewSearchObjectWithDefaults() *SearchObject {
-	this := SearchObject{}
+func NewSearchResultWithDefaults() *SearchResult {
+	this := SearchResult{}
 	return &this
 }
 
-// GetT returns the T field value if set, zero value otherwise.
-func (o *SearchObject) GetT() int32 {
-	if o == nil || IsNil(o.T) {
-		var ret int32
-		return ret
-	}
-	return *o.T
-}
-
-// GetTOk returns a tuple with the T field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SearchObject) GetTOk() (*int32, bool) {
-	if o == nil || IsNil(o.T) {
-		return nil, false
-	}
-	return o.T, true
-}
-
-// HasT returns a boolean if a field has been set.
-func (o *SearchObject) HasT() bool {
-	if o != nil && !IsNil(o.T) {
-		return true
-	}
-
-	return false
-}
-
-// SetT gets a reference to the given int32 and assigns it to the T field.
-func (o *SearchObject) SetT(v int32) {
-	o.T = &v
-}
-
-// GetRank returns the Rank field value if set, zero value otherwise.
-func (o *SearchObject) GetRank() int32 {
-	if o == nil || IsNil(o.Rank) {
-		var ret int32
-		return ret
-	}
-	return *o.Rank
-}
-
-// GetRankOk returns a tuple with the Rank field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SearchObject) GetRankOk() (*int32, bool) {
-	if o == nil || IsNil(o.Rank) {
-		return nil, false
-	}
-	return o.Rank, true
-}
-
-// HasRank returns a boolean if a field has been set.
-func (o *SearchObject) HasRank() bool {
-	if o != nil && !IsNil(o.Rank) {
-		return true
-	}
-
-	return false
-}
-
-// SetRank gets a reference to the given int32 and assigns it to the Rank field.
-func (o *SearchObject) SetRank(v int32) {
-	o.Rank = &v
-}
-
 // GetUrl returns the Url field value
-func (o *SearchObject) GetUrl() string {
+func (o *SearchResult) GetUrl() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -129,7 +64,7 @@ func (o *SearchObject) GetUrl() string {
 
 // GetUrlOk returns a tuple with the Url field value
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetUrlOk() (*string, bool) {
+func (o *SearchResult) GetUrlOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -137,12 +72,12 @@ func (o *SearchObject) GetUrlOk() (*string, bool) {
 }
 
 // SetUrl sets field value
-func (o *SearchObject) SetUrl(v string) {
+func (o *SearchResult) SetUrl(v string) {
 	o.Url = v
 }
 
 // GetTitle returns the Title field value
-func (o *SearchObject) GetTitle() string {
+func (o *SearchResult) GetTitle() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -153,7 +88,7 @@ func (o *SearchObject) GetTitle() string {
 
 // GetTitleOk returns a tuple with the Title field value
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetTitleOk() (*string, bool) {
+func (o *SearchResult) GetTitleOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -161,12 +96,12 @@ func (o *SearchObject) GetTitleOk() (*string, bool) {
 }
 
 // SetTitle sets field value
-func (o *SearchObject) SetTitle(v string) {
+func (o *SearchResult) SetTitle(v string) {
 	o.Title = v
 }
 
 // GetSnippet returns the Snippet field value if set, zero value otherwise.
-func (o *SearchObject) GetSnippet() string {
+func (o *SearchResult) GetSnippet() string {
 	if o == nil || IsNil(o.Snippet) {
 		var ret string
 		return ret
@@ -176,7 +111,7 @@ func (o *SearchObject) GetSnippet() string {
 
 // GetSnippetOk returns a tuple with the Snippet field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetSnippetOk() (*string, bool) {
+func (o *SearchResult) GetSnippetOk() (*string, bool) {
 	if o == nil || IsNil(o.Snippet) {
 		return nil, false
 	}
@@ -184,7 +119,7 @@ func (o *SearchObject) GetSnippetOk() (*string, bool) {
 }
 
 // HasSnippet returns a boolean if a field has been set.
-func (o *SearchObject) HasSnippet() bool {
+func (o *SearchResult) HasSnippet() bool {
 	if o != nil && !IsNil(o.Snippet) {
 		return true
 	}
@@ -193,76 +128,44 @@ func (o *SearchObject) HasSnippet() bool {
 }
 
 // SetSnippet gets a reference to the given string and assigns it to the Snippet field.
-func (o *SearchObject) SetSnippet(v string) {
+func (o *SearchResult) SetSnippet(v string) {
 	o.Snippet = &v
 }
 
-// GetPublished returns the Published field value if set, zero value otherwise.
-func (o *SearchObject) GetPublished() string {
-	if o == nil || IsNil(o.Published) {
+// GetTime returns the Time field value if set, zero value otherwise.
+func (o *SearchResult) GetTime() string {
+	if o == nil || IsNil(o.Time) {
 		var ret string
 		return ret
 	}
-	return *o.Published
+	return *o.Time
 }
 
-// GetPublishedOk returns a tuple with the Published field value if set, nil otherwise
+// GetTimeOk returns a tuple with the Time field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetPublishedOk() (*string, bool) {
-	if o == nil || IsNil(o.Published) {
+func (o *SearchResult) GetTimeOk() (*string, bool) {
+	if o == nil || IsNil(o.Time) {
 		return nil, false
 	}
-	return o.Published, true
+	return o.Time, true
 }
 
-// HasPublished returns a boolean if a field has been set.
-func (o *SearchObject) HasPublished() bool {
-	if o != nil && !IsNil(o.Published) {
+// HasTime returns a boolean if a field has been set.
+func (o *SearchResult) HasTime() bool {
+	if o != nil && !IsNil(o.Time) {
 		return true
 	}
 
 	return false
 }
 
-// SetPublished gets a reference to the given string and assigns it to the Published field.
-func (o *SearchObject) SetPublished(v string) {
-	o.Published = &v
-}
-
-// GetThumbnail returns the Thumbnail field value if set, zero value otherwise.
-func (o *SearchObject) GetThumbnail() SearchResultImage {
-	if o == nil || IsNil(o.Thumbnail) {
-		var ret SearchResultImage
-		return ret
-	}
-	return *o.Thumbnail
-}
-
-// GetThumbnailOk returns a tuple with the Thumbnail field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SearchObject) GetThumbnailOk() (*SearchResultImage, bool) {
-	if o == nil || IsNil(o.Thumbnail) {
-		return nil, false
-	}
-	return o.Thumbnail, true
-}
-
-// HasThumbnail returns a boolean if a field has been set.
-func (o *SearchObject) HasThumbnail() bool {
-	if o != nil && !IsNil(o.Thumbnail) {
-		return true
-	}
-
-	return false
-}
-
-// SetThumbnail gets a reference to the given SearchResultImage and assigns it to the Thumbnail field.
-func (o *SearchObject) SetThumbnail(v SearchResultImage) {
-	o.Thumbnail = &v
+// SetTime gets a reference to the given string and assigns it to the Time field.
+func (o *SearchResult) SetTime(v string) {
+	o.Time = &v
 }
 
 // GetImage returns the Image field value if set, zero value otherwise.
-func (o *SearchObject) GetImage() SearchResultImage {
+func (o *SearchResult) GetImage() SearchResultImage {
 	if o == nil || IsNil(o.Image) {
 		var ret SearchResultImage
 		return ret
@@ -272,7 +175,7 @@ func (o *SearchObject) GetImage() SearchResultImage {
 
 // GetImageOk returns a tuple with the Image field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetImageOk() (*SearchResultImage, bool) {
+func (o *SearchResult) GetImageOk() (*SearchResultImage, bool) {
 	if o == nil || IsNil(o.Image) {
 		return nil, false
 	}
@@ -280,7 +183,7 @@ func (o *SearchObject) GetImageOk() (*SearchResultImage, bool) {
 }
 
 // HasImage returns a boolean if a field has been set.
-func (o *SearchObject) HasImage() bool {
+func (o *SearchResult) HasImage() bool {
 	if o != nil && !IsNil(o.Image) {
 		return true
 	}
@@ -289,11 +192,43 @@ func (o *SearchObject) HasImage() bool {
 }
 
 // SetImage gets a reference to the given SearchResultImage and assigns it to the Image field.
-func (o *SearchObject) SetImage(v SearchResultImage) {
+func (o *SearchResult) SetImage(v SearchResultImage) {
 	o.Image = &v
 }
 
-func (o SearchObject) MarshalJSON() ([]byte, error) {
+// GetProps returns the Props field value if set, zero value otherwise.
+func (o *SearchResult) GetProps() map[string]interface{} {
+	if o == nil || IsNil(o.Props) {
+		var ret map[string]interface{}
+		return ret
+	}
+	return o.Props
+}
+
+// GetPropsOk returns a tuple with the Props field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchResult) GetPropsOk() (map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Props) {
+		return map[string]interface{}{}, false
+	}
+	return o.Props, true
+}
+
+// HasProps returns a boolean if a field has been set.
+func (o *SearchResult) HasProps() bool {
+	if o != nil && !IsNil(o.Props) {
+		return true
+	}
+
+	return false
+}
+
+// SetProps gets a reference to the given map[string]interface{} and assigns it to the Props field.
+func (o *SearchResult) SetProps(v map[string]interface{}) {
+	o.Props = v
+}
+
+func (o SearchResult) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -301,32 +236,26 @@ func (o SearchObject) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o SearchObject) ToMap() (map[string]interface{}, error) {
+func (o SearchResult) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.T) {
-		toSerialize["t"] = o.T
-	}
-	if !IsNil(o.Rank) {
-		toSerialize["rank"] = o.Rank
-	}
 	toSerialize["url"] = o.Url
 	toSerialize["title"] = o.Title
 	if !IsNil(o.Snippet) {
 		toSerialize["snippet"] = o.Snippet
 	}
-	if !IsNil(o.Published) {
-		toSerialize["published"] = o.Published
-	}
-	if !IsNil(o.Thumbnail) {
-		toSerialize["thumbnail"] = o.Thumbnail
+	if !IsNil(o.Time) {
+		toSerialize["time"] = o.Time
 	}
 	if !IsNil(o.Image) {
 		toSerialize["image"] = o.Image
 	}
+	if !IsNil(o.Props) {
+		toSerialize["props"] = o.Props
+	}
 	return toSerialize, nil
 }
 
-func (o *SearchObject) UnmarshalJSON(data []byte) (err error) {
+func (o *SearchResult) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -349,53 +278,53 @@ func (o *SearchObject) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varSearchObject := _SearchObject{}
+	varSearchResult := _SearchResult{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSearchObject)
+	err = decoder.Decode(&varSearchResult)
 
 	if err != nil {
 		return err
 	}
 
-	*o = SearchObject(varSearchObject)
+	*o = SearchResult(varSearchResult)
 
 	return err
 }
 
-type NullableSearchObject struct {
-	value *SearchObject
+type NullableSearchResult struct {
+	value *SearchResult
 	isSet bool
 }
 
-func (v NullableSearchObject) Get() *SearchObject {
+func (v NullableSearchResult) Get() *SearchResult {
 	return v.value
 }
 
-func (v *NullableSearchObject) Set(val *SearchObject) {
+func (v *NullableSearchResult) Set(val *SearchResult) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableSearchObject) IsSet() bool {
+func (v NullableSearchResult) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableSearchObject) Unset() {
+func (v *NullableSearchResult) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableSearchObject(val *SearchObject) *NullableSearchObject {
-	return &NullableSearchObject{value: val, isSet: true}
+func NewNullableSearchResult(val *SearchResult) *NullableSearchResult {
+	return &NullableSearchResult{value: val, isSet: true}
 }
 
-func (v NullableSearchObject) MarshalJSON() ([]byte, error) {
+func (v NullableSearchResult) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableSearchObject) UnmarshalJSON(src []byte) error {
+func (v *NullableSearchResult) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

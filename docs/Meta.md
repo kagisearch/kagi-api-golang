@@ -6,15 +6,15 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Trace** | Pointer to **string** |  | [optional] 
 **Id** | Pointer to **string** |  | [optional] 
-**Node** | **string** |  | 
-**Ms** | **int32** |  | 
+**Node** | Pointer to **string** |  | [optional] 
+**Ms** | Pointer to **int32** |  | [optional] 
 **Query** | Pointer to [**MetaQuery**](MetaQuery.md) |  | [optional] 
 
 ## Methods
 
 ### NewMeta
 
-`func NewMeta(node string, ms int32, ) *Meta`
+`func NewMeta() *Meta`
 
 NewMeta instantiates a new Meta object
 This constructor will assign default values to properties that have it defined,
@@ -98,6 +98,11 @@ and a boolean to check if the value has been set.
 
 SetNode sets Node field to given value.
 
+### HasNode
+
+`func (o *Meta) HasNode() bool`
+
+HasNode returns a boolean if a field has been set.
 
 ### GetMs
 
@@ -118,6 +123,11 @@ and a boolean to check if the value has been set.
 
 SetMs sets Ms field to given value.
 
+### HasMs
+
+`func (o *Meta) HasMs() bool`
+
+HasMs returns a boolean if a field has been set.
 
 ### GetQuery
 

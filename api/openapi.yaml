@@ -110,6 +110,10 @@ tags:
     1.5¢ per query ($15 USD per 1000 queries).
   name: FastGPT
   x-displayName: FastGPT API
+- description: |
+    The Translate APIs are a collection of endpoints that can be used to translate webpages, documents, and text into different laguages. You can try our amazing [web app here](https://translate.kagi.com/) to get a good idea of what is possible when you don't have to worry about the language of online communication.
+  name: Translate
+  x-displayName: Translate API
 paths:
   /search:
     get:
@@ -185,8 +189,6 @@ paths:
                           paywalled: true
                           sort_normalize_url: //billboard.com/pro/iphone-turns-10-steve-jobs-introduction-apple-ads
                           sort_group_id: billboard.com
-                          source_history:
-                          - bing16
                       video:
                       - url: https://www.youtube.com/watch?v=UF8uR6Z6KLc
                         title: Steve Jobs&#39; 2005 Stanford Commencement Address
@@ -202,9 +204,6 @@ paths:
                           hires_thumbnail_url: https://i.ytimg.com/vi/UF8uR6Z6KLc/hqdefault.jpg
                           sort_normalize_url: //youtube.com/watch?v=UF8uR6Z6KLc
                           sort_group_id: youtube.com
-                          source_history:
-                          - mojeek4
-                          - serper8
                           language: en
                           language_probability: 0.9551553726196289
                       web_archive:
@@ -733,6 +732,887 @@ paths:
       - FastGPT
     summary: FastGPT is a Kagi service using powerful LLMs to answer user queries
       running a full search engine underneath.
+  /alternative-translations:
+    post:
+      description: "Provides alternative translation options for a given text with\
+        \ explanations. Supports two modes: standard mode (alternatives for a full\
+        \ translation) and partial mode (alternative ways to phrase a specific part\
+        \ of a translation)."
+      operationId: translateAlternatives
+      requestBody:
+        content:
+          multipart/form-data:
+            examples:
+              standardMode:
+                description: Getting alternative full translations
+                summary: Standard Mode
+                value:
+                  original_text: Hello world
+                  existing_translation: Hola mundo
+                  source_lang: en
+                  target_lang: es
+                  target_explanation_language: en
+                  partial_translation: "false"
+              partialMode:
+                description: Getting alternative phrasings for a specific part
+                summary: Partial Mode
+                value:
+                  original_text: We need to inform our team about a schedule change.
+                    The meeting is postponed. It will be rescheduled to 10am tomorrow.
+                  existing_translation: La riunione è stata posticipata
+                  source_lang: en
+                  target_lang: it
+                  target_explanation_language: en
+                  partial_translation: "true"
+              withOptions:
+                description: Using translation options for customized alternatives
+                summary: With Translation Options
+                value:
+                  original_text: I am pleased to meet you
+                  existing_translation: Encantado de conocerte
+                  source_lang: en
+                  target_lang: es
+                  target_explanation_language: en
+                  partial_translation: "false"
+                  translation_options: "{\"formality\":\"more\",\"speaker_gender\"\
+                    :\"masculine\"}"
+            schema:
+              $ref: '#/components/schemas/translateAlternatives_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                standardModeResponse:
+                  summary: Standard Mode Response
+                  value:
+                    originalDescription: "Standard greeting in Spanish, informal but\
+                      \ polite, commonly used in everyday situations"
+                    elements:
+                    - translation: Saludos al mundo
+                      explanation: This alternative uses 'Saludos' (Greetings) instead
+                        of 'Hola' for a slightly more formal greeting.
+                    - translation: "Qué tal, mundo"
+                      explanation: "Uses the informal greeting 'Qué tal' which is\
+                        \ similar to 'What's up' in English, making it more casual."
+                partialModeResponse:
+                  summary: Partial Mode Response
+                  value:
+                    originalDescription: Italian phrase indicating that a meeting
+                      has been postponed
+                    elements:
+                    - translation: L'incontro è stato rinviato
+                      explanation: Uses 'l'incontro' (the meeting) and 'rinviato'
+                        (postponed/rescheduled) for a slightly more formal tone.
+                    - translation: La riunione è rimandata
+                      explanation: "Uses 'rimandata' (delayed/postponed) which has\
+                        \ a slightly different connotation, implying a brief delay."
+              schema:
+                $ref: '#/components/schemas/translateAlternatives_200_response'
+          description: Alternative translations with explanations
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateAlternatives_401_response'
+          description: Unauthorized
+        "402":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateAlternatives_402_response'
+          description: Payment Required
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateAlternatives_500_response'
+          description: Server error
+      security:
+      - kagi-translate: []
+      summary: Alternative Translations
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl (Standard Mode)
+        source: |
+          curl -X POST "https://translate.kagi.com/api/alternative-translations" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -F "original_text=Hello world" \
+            -F "existing_translation=Hola mundo" \
+            -F "source_lang=en" \
+            -F "target_lang=es" \
+            -F "target_explanation_language=en" \
+            -F "partial_translation=false" \
+            -F 'translation_options={"formality":"more","speaker_gender":"feminine"}'
+      - lang: curl
+        label: Curl (Partial Mode)
+        source: |
+          curl -X POST "https://translate.kagi.com/api/alternative-translations" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -F "original_text=We need to inform our team about a schedule change. The meeting is postponed. It will be rescheduled to 10am tomorrow." \
+            -F "existing_translation=La riunione è stata posticipata" \
+            -F "source_lang=en" \
+            -F "target_lang=it" \
+            -F "target_explanation_language=en" \
+            -F "partial_translation=true"
+      - lang: JavaScript
+        label: JavaScript (Standard Mode)
+        source: |
+          const formData = new FormData();
+          formData.append('original_text', 'Hello world');
+          formData.append('existing_translation', 'Hola mundo');
+          formData.append('source_lang', 'en');
+          formData.append('target_lang', 'es');
+          formData.append('target_explanation_language', 'en');
+          formData.append('partial_translation', 'false');
+
+          // Optional: Add translation options for more control
+          const translationOptions = {
+            formality: 'more',            // Controls formality level
+            speaker_gender: 'feminine',    // For gender-specific languages
+            addressee_gender: 'masculine', // For languages with gendered address forms
+            style: 'natural'              // Translation style preference
+          };
+          formData.append('translation_options', JSON.stringify(translationOptions));
+
+          const response = await fetch(
+            'https://translate.kagi.com/api/alternative-translations',
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer YOUR_API_KEY'
+              },
+              body: formData
+            }
+          );
+
+          const data = await response.json();
+          console.log(data.elements);
+      - lang: JavaScript
+        label: JavaScript (Partial Mode)
+        source: |
+          const formData = new FormData();
+          // Original text provides context but may not be needed in partial mode
+          formData.append('original_text', 'We need to inform our team about a schedule change. The meeting is postponed. It will be rescheduled to 10am tomorrow.');
+          // In partial mode, this is the phrase you want alternative phrasings for
+          formData.append('existing_translation', 'La riunione è stata posticipata');
+          formData.append('source_lang', 'en');
+          formData.append('target_lang', 'it');
+          formData.append('target_explanation_language', 'en');
+          formData.append('partial_translation', 'true');
+
+          const response = await fetch(
+            'https://translate.kagi.com/api/alternative-translations',
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer YOUR_API_KEY'
+              },
+              body: formData
+            }
+          );
+
+          const data = await response.json();
+          console.log(data.elements);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
+  /api/detect:
+    post:
+      description: Detects the language of the provided text.
+      operationId: translateDetect
+      requestBody:
+        content:
+          application/json:
+            examples:
+              englishDetection:
+                value:
+                  text: Hello world
+              spanishDetection:
+                value:
+                  text: Hola mundo
+              frenchDetection:
+                value:
+                  text: Bonjour le monde
+            schema:
+              $ref: '#/components/schemas/translateDetect_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                englishDetection:
+                  value:
+                    iso: en
+                    label: English
+                spanishDetection:
+                  value:
+                    iso: es
+                    label: Spanish
+                frenchDetection:
+                  value:
+                    iso: fr
+                    label: French
+              schema:
+                $ref: '#/components/schemas/translateDetect_200_response'
+          description: Successful language detection
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateDetect_400_response'
+          description: Bad request
+      security:
+      - kagi-translate: []
+      summary: Language Detection
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X POST "https://translate.kagi.com/api/detect" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"text": "Hello world"}'
+      - lang: JavaScript
+        label: JavaScript
+        source: |
+          const response = await fetch('https://translate.kagi.com/api/detect', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer YOUR_API_KEY',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              text: 'Hello world'
+            })
+          });
+          const data = await response.json();
+          console.log(data);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
+  /api/dictionary:
+    post:
+      description: Provides dictionary definitions for words in different languages.
+      operationId: translateDictionary
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basicDefinition:
+                description: Simple word definition lookup
+                summary: Basic Definition
+                value:
+                  word: hello
+                  word_language: en
+                  definition_language: en
+              crossLanguageDefinition:
+                description: Get definition in a different language
+                summary: Cross-language Definition
+                value:
+                  word: hola
+                  word_language: es
+                  definition_language: en
+            schema:
+              $ref: '#/components/schemas/translateDictionary_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                jsonDefinition:
+                  description: Word definition as structured JSON
+                  summary: JSON Definition
+                  value:
+                    definition:
+                      word: hello
+                      part_of_speech:
+                      - exclamation
+                      - noun
+                      usage_level:
+                      - standard
+                      - common
+                      primary_meaning:
+                        definition: Used as a greeting or to begin a phone conversation
+                        part_of_speech:
+                        - exclamation
+                      secondary_meanings:
+                      - definition: An expression of surprise
+                        part_of_speech:
+                        - exclamation
+                      - definition: A call for attention
+                        part_of_speech:
+                        - noun
+                      examples:
+                      - "Hello, how are you?"
+                      - Hello! I didn't see you there.
+                      pronunciation: həˈloʊ
+                      etymology: "From earlier hallo, hollo, which is from Old High\
+                        \ German halâ, holâ"
+                    language:
+                      iso: en
+                      label: English
+              schema:
+                $ref: '#/components/schemas/translateDictionary_200_response'
+          description: Successful dictionary lookup
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateDictionary_400_response'
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateDictionary_500_response'
+          description: Server error
+      security:
+      - kagi-translate: []
+      summary: Dictionary
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X POST "https://translate.kagi.com/api/dictionary" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "word": "hello",
+              "word_language": "en",
+              "definition_language": "en"
+            }'
+      - lang: JavaScript
+        label: JavaScript
+        source: |
+          const response = await fetch('https://translate.kagi.com/api/dictionary', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer YOUR_API_KEY',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              word: 'hello',
+              word_language: 'en',
+              definition_language: 'en'
+            })
+          });
+          const data = await response.json();
+          console.log(data.definition);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
+  /api/list-languages:
+    get:
+      description: |
+        Returns a list of languages supported by the translation API.
+
+        The response includes language codes, names, and whether each language supports formality settings.
+      operationId: translateListLanguages
+      parameters:
+      - description: Type of languages to return ('source' or 'target')
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          enum:
+          - source
+          - target
+          type: string
+        style: form
+      - description: "Locale code to use for language names (e.g., 'en', 'de', 'fr')"
+        explode: true
+        in: query
+        name: locale
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                target:
+                  summary: Example response for target languages
+                  value:
+                  - language: EN
+                    name: English
+                    supports_formality: false
+                  - language: DE
+                    name: German
+                    supports_formality: true
+                  - language: FR
+                    name: French
+                    supports_formality: true
+              schema:
+                items:
+                  $ref: '#/components/schemas/translateListLanguages_200_response_inner'
+                type: array
+          description: A list of supported languages
+        "401":
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: '#/components/schemas/exampleError'
+          description: Access token is missing or invalid
+      security:
+      - kagi-translate: []
+      summary: List Supported Languages
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET "https://translate.kagi.com/api/list-languages?type=target" \
+            -H "Authorization: Bearer YOUR_API_KEY"
+      - lang: JavaScript
+        label: JavaScript
+        source: |
+          const response = await fetch(
+            'https://translate.kagi.com/api/list-languages?type=target',
+            {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer YOUR_API_KEY'
+              }
+            }
+          );
+          const languages = await response.json();
+          console.log(languages);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
+  /api/romanize:
+    get:
+      description: "Converts non-Latin script text to Latin script (romanization/transliteration).\
+        \ Uses standardized romanization styles for each language: Hepburn for Japanese,\
+        \ Pinyin for Chinese, ALA-LC for Arabic, etc."
+      operationId: translateRomanize
+      parameters:
+      - description: Text to romanize
+        examples:
+          japaneseText:
+            value: こんにちは
+          russianText:
+            value: Привет мир
+          chineseText:
+            value: 你好世界
+        explode: true
+        in: query
+        name: text
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Language code (ISO-639) of the source text
+        examples:
+          japaneseText:
+            value: ja
+          russianText:
+            value: ru
+          chineseText:
+            value: zh
+        explode: true
+        in: query
+        name: language
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                japaneseText:
+                  value:
+                    romanization: konnichiwa
+                russianText:
+                  value:
+                    romanization: Privet mir
+                chineseText:
+                  value:
+                    romanization: nǐ hǎo shì jiè
+                arabicText:
+                  value:
+                    romanization: marḥaban bil-ʿālam
+                hebrewText:
+                  value:
+                    romanization: shalom olam
+                thaiText:
+                  value:
+                    romanization: sawatdi chao lok
+                koreanText:
+                  value:
+                    romanization: annyeonghaseyo segye
+                greekText:
+                  value:
+                    romanization: geia sou kosme
+              schema:
+                $ref: '#/components/schemas/translateRomanize_200_response'
+          description: Successful romanization
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateDetect_400_response'
+          description: Bad request
+      security:
+      - kagi-translate: []
+      summary: Text Romanization
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET "https://translate.kagi.com/api/romanize?text=こんにちは&language=ja" \
+            -H "Authorization: Bearer YOUR_API_KEY"
+      - lang: JavaScript
+        label: JavaScript
+        source: |
+          const response = await fetch(
+            'https://translate.kagi.com/api/romanize?text=こんにちは&language=ja',
+            {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer YOUR_API_KEY'
+              }
+            }
+          );
+          const data = await response.json();
+          console.log(data.romanization);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
+  /api/word-insights:
+    post:
+      description: |
+        Provides detailed linguistic insights and alternatives for translated text. The API identifies 3-5 key
+        words or phrases in the translated text that have meaningful alternative expressions, and returns:
+
+        1. A marked version of the translation with insight markers
+        2. Alternative expressions for each identified word/phrase
+        3. Brief explanations for each alternative in the target explanation language
+        4. Type labels categorizing each insight (e.g., "Lexical choice", "Cultural reference")
+      operationId: translateWordInsights
+      requestBody:
+        content:
+          multipart/form-data:
+            examples:
+              englishToSpanish:
+                value:
+                  original_text: Hello world
+                  translated_text: Hola mundo
+                  target_explanation_language: en
+            schema:
+              $ref: '#/components/schemas/translateWordInsights_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                spanishInsight:
+                  value:
+                    marked_translation: <<INSIGHT_1>> <<INSIGHT_2>>
+                    insights:
+                    - id: INSIGHT_1
+                      original_text: Hola
+                      variations:
+                      - text: Hola
+                        explanation: "Casual, everyday greeting"
+                      - text: Saludos
+                        explanation: "More formal, broader greeting"
+                      - text: Qué tal
+                        explanation: "Casual, implies 'how are you'"
+                      type: Greeting style
+                    - id: INSIGHT_2
+                      original_text: mundo
+                      variations:
+                      - text: mundo
+                        explanation: Literal translation of 'world'
+                      - text: a todos
+                        explanation: Addresses people directly
+                      type: Object reference
+              schema:
+                $ref: '#/components/schemas/translateWordInsights_200_response'
+          description: Detailed linguistic insights for the translated text
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateWordInsights_400_response'
+          description: Bad Request
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateAlternatives_401_response'
+          description: Unauthorized
+        "402":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateAlternatives_402_response'
+          description: Payment Required
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translateWordInsights_500_response'
+          description: Server error
+      security:
+      - kagi-translate: []
+      summary: Word Insights
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X POST "https://translate.kagi.com/api/word-insights" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -H "Content-Type: multipart/form-data" \
+            -F "original_text=Hello world" \
+            -F "translated_text=Hola mundo" \
+            -F "target_explanation_language=en"
+      - lang: JavaScript
+        label: JavaScript
+        source: |
+          const formData = new FormData();
+          formData.append('original_text', 'Hello world');
+          formData.append('translated_text', 'Hola mundo');
+          formData.append('target_explanation_language', 'en');
+
+          const response = await fetch(
+            'https://translate.kagi.com/api/word-insights',
+            {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer YOUR_API_KEY'
+              },
+              body: formData
+            }
+          );
+
+          const data = await response.json();
+          console.log(data);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
+  /api/translate:
+    post:
+      description: "Translates text between languages with customizable options for\
+        \ gender, formality, and style. Supports both single text translation and\
+        \ efficient batch translation of multiple text snippets with context awareness."
+      operationId: translate
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basicTranslation:
+                description: Simple text translation from English to Spanish
+                summary: Basic Translation
+                value:
+                  text: Hello world
+                  source_lang: en
+                  target_lang: es
+              batchTranslation:
+                description: Translate multiple texts at once from English to French
+                summary: Batch Translation
+                value:
+                  text:
+                  - How are you?
+                  - The sun is shining
+                  - I am happy to meet you
+                  source_lang: en
+                  target_lang: fr
+              formalTranslation:
+                description: Translation with formal language from English to German
+                summary: Formal Translation
+                value:
+                  text: Can you help me?
+                  source_lang: en
+                  target_lang: de
+                  formality: more
+              genderedTranslation:
+                description: Translation with specific gender context
+                summary: Gendered Translation
+                value:
+                  text: I am happy to meet you
+                  source_lang: en
+                  target_lang: fr
+                  speaker_gender: feminine
+              streamingTranslation:
+                description: Get translation results as a stream of text chunks
+                summary: Streaming Translation
+                value:
+                  text: Hello world
+                  source_lang: en
+                  target_lang: es
+                  stream: true
+              dictionaryLookup:
+                description: Get translation with dictionary definitions
+                summary: Dictionary Lookup
+                value:
+                  text: casa
+                  source_lang: es
+                  target_lang: en
+                  dictionary_language: en
+            schema:
+              $ref: '#/components/schemas/translate_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                basicTranslation:
+                  description: Simple text translation response
+                  summary: Basic Translation
+                  value:
+                    translation: Hola mundo
+                    detectedLanguage:
+                      iso: en
+                      label: English
+                batchTranslation:
+                  description: Response for multiple texts translated at once
+                  summary: Batch Translation
+                  value:
+                    snippets:
+                    - Comment ça va?
+                    - Le soleil brille
+                    - Je suis heureux de vous rencontrer
+                formalTranslation:
+                  description: Response with formal language translation
+                  summary: Formal Translation
+                  value:
+                    translation: Können Sie mir helfen?
+                    detectedLanguage:
+                      iso: en
+                      label: English
+                genderedTranslation:
+                  description: Response with gendered language
+                  summary: Gendered Translation
+                  value:
+                    translation: Je suis heureuse de vous rencontrer
+                    detectedLanguage:
+                      iso: en
+                      label: English
+                dictionaryLookup:
+                  description: Response with dictionary definition
+                  summary: Dictionary Lookup Response
+                  value:
+                    translation: house
+                    detectedLanguage:
+                      iso: es
+                      label: Spanish
+                    definition:
+                      word: casa
+                      phonetic: /ˈkasa/
+                      definitions:
+                      - partOfSpeech: noun
+                        meanings:
+                        - definition: "A building for human habitation, especially\
+                            \ one that is lived in by a family or small group of people"
+                          example: Vivo en una casa grande
+                          synonyms:
+                          - home
+                          - residence
+                          - dwelling
+                          - domicile
+              schema:
+                $ref: '#/components/schemas/translate_200_response'
+            text/event-stream:
+              examples:
+                streamingTranslation:
+                  description: Server-sent event stream format example
+                  summary: Streaming Translation
+                  value: |
+                    # First event contains detected language event: message data: {"detectedLanguage":{"iso":"en","label":"English"}}
+
+                    # Dictionary definition (if requested) event: message data: {"definition":{"word":"hello","phonetic":"/həˈloʊ/","definitions":[{"partOfSpeech":"exclamation","meanings":[{"definition":"Used as a greeting or to begin a phone conversation","example":"hello there, Katie!","synonyms":["hi","greetings"]}]}]}}
+
+                    # Subsequent events contain translation chunks event: message data: {"delta":"Hola"}
+
+                    event: message data: {"delta":" mundo"}
+              schema:
+                description: Server-sent events stream of translation chunks
+                type: string
+          description: Successful translation
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translate_400_response'
+          description: Bad request
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/translate_500_response'
+          description: Server error
+      security:
+      - kagi-translate: []
+      summary: Text Translation
+      tags:
+      - Translate
+      x-codeSamples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X POST "https://translate.kagi.com/api/translate" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "text": "Hello world",
+              "source_lang": "en",
+              "target_lang": "es"
+            }'
+      - lang: JavaScript
+        label: JavaScript
+        source: |
+          const response = await fetch('https://translate.kagi.com/api/translate', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer YOUR_API_KEY',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              text: 'Hello world',
+              source_lang: 'en',
+              target_lang: 'es'
+            })
+          });
+          const data = await response.json();
+          console.log(data.translation);
+    servers:
+    - description: Translate production endpoint
+      url: https://translate.kagi.com
 components:
   responses:
     unauthorized:
@@ -783,11 +1663,8 @@ components:
           type: integer
         query:
           $ref: '#/components/schemas/meta_query'
-      required:
-      - ms
-      - node
       type: object
-    resultSearch:
+    searchResult:
       example:
         snippet: snippet
         image:
@@ -798,18 +1675,7 @@ components:
         title: title
         url: url
         props:
-          language_probability: 2.3021358869347655
-          sort_normalize_url: sort_normalize_url
-          sort_group_id: sort_group_id
-          language: language
-          thumbnail_image:
-            width: 5
-            url: url
-            height: 5
-          paywalled: true
-          source_history:
-          - source_history
-          - source_history
+          key: ""
       properties:
         url:
           type: string
@@ -820,155 +1686,12 @@ components:
         time:
           type: string
         image:
-          $ref: '#/components/schemas/resultSearch_image'
+          $ref: '#/components/schemas/searchResult_image'
         props:
-          $ref: '#/components/schemas/resultSearch_props'
+          additionalProperties: true
+          description: Holds arbitrary result metadata
+          type: object
       required:
-      - title
-      - url
-      type: object
-    resultVideo:
-      example:
-        snippet: snippet
-        image:
-          width: 1
-          url: url
-          height: 6
-        time: time
-        title: title
-        url: url
-        props:
-          hires_thumbnail_url: hires_thumbnail_url
-          language_probability: 7.061401241503109
-          sort_normalize_url: sort_normalize_url
-          sort_group_id: sort_group_id
-          language: language
-          source_history:
-          - source_history
-          - source_history
-      properties:
-        url:
-          type: string
-        title:
-          type: string
-        snippet:
-          type: string
-        time:
-          type: string
-        image:
-          $ref: '#/components/schemas/resultSearch_image'
-        props:
-          $ref: '#/components/schemas/resultVideo_props'
-      required:
-      - title
-      - url
-      type: object
-    resultAdjacentQuestion:
-      example:
-        snippet: snippet
-        image:
-          width: 1
-          url: url
-          height: 6
-        time: time
-        title: title
-        url: url
-        props:
-          question: question
-          language_probability: 9.301444243932576
-          language: language
-      properties:
-        url:
-          type: string
-        title:
-          type: string
-        snippet:
-          type: string
-        time:
-          type: string
-        image:
-          $ref: '#/components/schemas/resultSearch_image'
-        props:
-          $ref: '#/components/schemas/resultAdjacentQuestion_props'
-      required:
-      - snippet
-      - title
-      - url
-      type: object
-    resultInfobox:
-      example:
-        snippet: snippet
-        image:
-          width: 1
-          url: url
-          height: 6
-        time: time
-        title: title
-        url: url
-        props:
-          wikipedia.page_id: 3
-          language_probability: 2.027123023002322
-          infobox:
-          - merged: true
-            header: header
-            value: value
-          - merged: true
-            header: header
-            value: value
-          sort_normalize_url: sort_normalize_url
-          sort_group_id: sort_group_id
-          language: language
-          wikipedia.subtext: wikipedia.subtext
-          source_history:
-          - source_history
-          - source_history
-      properties:
-        url:
-          type: string
-        title:
-          type: string
-        snippet:
-          type: string
-        time:
-          type: string
-        image:
-          $ref: '#/components/schemas/resultSearch_image'
-        props:
-          $ref: '#/components/schemas/resultInfobox_props'
-      required:
-      - snippet
-      - title
-      - url
-      type: object
-    resultWebArchive:
-      example:
-        snippet: snippet
-        image:
-          width: 1
-          url: url
-          height: 6
-        time: time
-        title: title
-        url: url
-        props:
-          language_probability: 4.145608029883936
-          web_archive_domain: web_archive_domain
-          language: language
-      properties:
-        url:
-          type: string
-        title:
-          type: string
-        snippet:
-          type: string
-        time:
-          type: string
-        image:
-          $ref: '#/components/schemas/resultSearch_image'
-        props:
-          $ref: '#/components/schemas/resultWebArchive_props'
-      required:
-      - snippet
       - title
       - url
       type: object
@@ -997,7 +1720,7 @@ components:
         error:
           msg: msg
           ref: ref
-          code: 7
+          code: 5
       properties:
         meta:
           $ref: '#/components/schemas/meta'
@@ -1078,9 +1801,9 @@ components:
         published:
           type: string
         thumbnail:
-          $ref: '#/components/schemas/resultSearch_image'
+          $ref: '#/components/schemas/searchResult_image'
         image:
-          $ref: '#/components/schemas/resultSearch_image'
+          $ref: '#/components/schemas/searchResult_image'
       required:
       - title
       - url
@@ -1106,7 +1829,7 @@ components:
       type: object
     search_200_response_data:
       example:
-        search:
+        news:
         - snippet: snippet
           image:
             width: 1
@@ -1116,18 +1839,7 @@ components:
           title: title
           url: url
           props:
-            language_probability: 2.3021358869347655
-            sort_normalize_url: sort_normalize_url
-            sort_group_id: sort_group_id
-            language: language
-            thumbnail_image:
-              width: 5
-              url: url
-              height: 5
-            paywalled: true
-            source_history:
-            - source_history
-            - source_history
+            key: ""
         - snippet: snippet
           image:
             width: 1
@@ -1137,19 +1849,8 @@ components:
           title: title
           url: url
           props:
-            language_probability: 2.3021358869347655
-            sort_normalize_url: sort_normalize_url
-            sort_group_id: sort_group_id
-            language: language
-            thumbnail_image:
-              width: 5
-              url: url
-              height: 5
-            paywalled: true
-            source_history:
-            - source_history
-            - source_history
-        adjacent_question:
+            key: ""
+        image:
         - snippet: snippet
           image:
             width: 1
@@ -1159,9 +1860,7 @@ components:
           title: title
           url: url
           props:
-            question: question
-            language_probability: 9.301444243932576
-            language: language
+            key: ""
         - snippet: snippet
           image:
             width: 1
@@ -1171,9 +1870,70 @@ components:
           title: title
           url: url
           props:
-            question: question
-            language_probability: 9.301444243932576
-            language: language
+            key: ""
+        podcast_creator:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        direct_answer:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        code:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
         web_archive:
         - snippet: snippet
           image:
@@ -1184,9 +1944,7 @@ components:
           title: title
           url: url
           props:
-            language_probability: 4.145608029883936
-            web_archive_domain: web_archive_domain
-            language: language
+            key: ""
         - snippet: snippet
           image:
             width: 1
@@ -1196,9 +1954,28 @@ components:
           title: title
           url: url
           props:
-            language_probability: 4.145608029883936
-            web_archive_domain: web_archive_domain
-            language: language
+            key: ""
+        interesting_news:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
         infobox:
         - snippet: snippet
           image:
@@ -1209,22 +1986,7 @@ components:
           title: title
           url: url
           props:
-            wikipedia.page_id: 3
-            language_probability: 2.027123023002322
-            infobox:
-            - merged: true
-              header: header
-              value: value
-            - merged: true
-              header: header
-              value: value
-            sort_normalize_url: sort_normalize_url
-            sort_group_id: sort_group_id
-            language: language
-            wikipedia.subtext: wikipedia.subtext
-            source_history:
-            - source_history
-            - source_history
+            key: ""
         - snippet: snippet
           image:
             width: 1
@@ -1234,22 +1996,28 @@ components:
           title: title
           url: url
           props:
-            wikipedia.page_id: 3
-            language_probability: 2.027123023002322
-            infobox:
-            - merged: true
-              header: header
-              value: value
-            - merged: true
-              header: header
-              value: value
-            sort_normalize_url: sort_normalize_url
-            sort_group_id: sort_group_id
-            language: language
-            wikipedia.subtext: wikipedia.subtext
-            source_history:
-            - source_history
-            - source_history
+            key: ""
+        related_search:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
         video:
         - snippet: snippet
           image:
@@ -1260,14 +2028,7 @@ components:
           title: title
           url: url
           props:
-            hires_thumbnail_url: hires_thumbnail_url
-            language_probability: 7.061401241503109
-            sort_normalize_url: sort_normalize_url
-            sort_group_id: sort_group_id
-            language: language
-            source_history:
-            - source_history
-            - source_history
+            key: ""
         - snippet: snippet
           image:
             width: 1
@@ -1277,41 +2038,254 @@ components:
           title: title
           url: url
           props:
-            hires_thumbnail_url: hires_thumbnail_url
-            language_probability: 7.061401241503109
-            sort_normalize_url: sort_normalize_url
-            sort_group_id: sort_group_id
-            language: language
-            source_history:
-            - source_history
-            - source_history
+            key: ""
+        interesting_finds:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        listicle:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        search:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        adjacent_question:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        podcast:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        weather:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        package_tracking:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        public_records:
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
+        - snippet: snippet
+          image:
+            width: 1
+            url: url
+            height: 6
+          time: time
+          title: title
+          url: url
+          props:
+            key: ""
       properties:
         search:
           items:
-            $ref: '#/components/schemas/resultSearch'
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        image:
+          items:
+            $ref: '#/components/schemas/searchResult'
           type: array
         video:
           items:
-            $ref: '#/components/schemas/resultVideo'
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        podcast:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        podcast_creator:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        news:
+          items:
+            $ref: '#/components/schemas/searchResult'
           type: array
         adjacent_question:
           items:
-            $ref: '#/components/schemas/resultAdjacentQuestion'
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        direct_answer:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        interesting_news:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        interesting_finds:
+          items:
+            $ref: '#/components/schemas/searchResult'
           type: array
         infobox:
           items:
-            $ref: '#/components/schemas/resultInfobox'
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        code:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        package_tracking:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        public_records:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        weather:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        related_search:
+          items:
+            $ref: '#/components/schemas/searchResult'
+          type: array
+        listicle:
+          items:
+            $ref: '#/components/schemas/searchResult'
           type: array
         web_archive:
           items:
-            $ref: '#/components/schemas/resultWebArchive'
+            $ref: '#/components/schemas/searchResult'
           type: array
       type: object
     search_200_response:
       description: A response with a description and results references used
       example:
         data:
-          search:
+          news:
           - snippet: snippet
             image:
               width: 1
@@ -1321,18 +2295,7 @@ components:
             title: title
             url: url
             props:
-              language_probability: 2.3021358869347655
-              sort_normalize_url: sort_normalize_url
-              sort_group_id: sort_group_id
-              language: language
-              thumbnail_image:
-                width: 5
-                url: url
-                height: 5
-              paywalled: true
-              source_history:
-              - source_history
-              - source_history
+              key: ""
           - snippet: snippet
             image:
               width: 1
@@ -1342,19 +2305,8 @@ components:
             title: title
             url: url
             props:
-              language_probability: 2.3021358869347655
-              sort_normalize_url: sort_normalize_url
-              sort_group_id: sort_group_id
-              language: language
-              thumbnail_image:
-                width: 5
-                url: url
-                height: 5
-              paywalled: true
-              source_history:
-              - source_history
-              - source_history
-          adjacent_question:
+              key: ""
+          image:
           - snippet: snippet
             image:
               width: 1
@@ -1364,9 +2316,7 @@ components:
             title: title
             url: url
             props:
-              question: question
-              language_probability: 9.301444243932576
-              language: language
+              key: ""
           - snippet: snippet
             image:
               width: 1
@@ -1376,9 +2326,70 @@ components:
             title: title
             url: url
             props:
-              question: question
-              language_probability: 9.301444243932576
-              language: language
+              key: ""
+          podcast_creator:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          direct_answer:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          code:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
           web_archive:
           - snippet: snippet
             image:
@@ -1389,9 +2400,7 @@ components:
             title: title
             url: url
             props:
-              language_probability: 4.145608029883936
-              web_archive_domain: web_archive_domain
-              language: language
+              key: ""
           - snippet: snippet
             image:
               width: 1
@@ -1401,9 +2410,28 @@ components:
             title: title
             url: url
             props:
-              language_probability: 4.145608029883936
-              web_archive_domain: web_archive_domain
-              language: language
+              key: ""
+          interesting_news:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
           infobox:
           - snippet: snippet
             image:
@@ -1414,22 +2442,7 @@ components:
             title: title
             url: url
             props:
-              wikipedia.page_id: 3
-              language_probability: 2.027123023002322
-              infobox:
-              - merged: true
-                header: header
-                value: value
-              - merged: true
-                header: header
-                value: value
-              sort_normalize_url: sort_normalize_url
-              sort_group_id: sort_group_id
-              language: language
-              wikipedia.subtext: wikipedia.subtext
-              source_history:
-              - source_history
-              - source_history
+              key: ""
           - snippet: snippet
             image:
               width: 1
@@ -1439,22 +2452,28 @@ components:
             title: title
             url: url
             props:
-              wikipedia.page_id: 3
-              language_probability: 2.027123023002322
-              infobox:
-              - merged: true
-                header: header
-                value: value
-              - merged: true
-                header: header
-                value: value
-              sort_normalize_url: sort_normalize_url
-              sort_group_id: sort_group_id
-              language: language
-              wikipedia.subtext: wikipedia.subtext
-              source_history:
-              - source_history
-              - source_history
+              key: ""
+          related_search:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
           video:
           - snippet: snippet
             image:
@@ -1465,14 +2484,7 @@ components:
             title: title
             url: url
             props:
-              hires_thumbnail_url: hires_thumbnail_url
-              language_probability: 7.061401241503109
-              sort_normalize_url: sort_normalize_url
-              sort_group_id: sort_group_id
-              language: language
-              source_history:
-              - source_history
-              - source_history
+              key: ""
           - snippet: snippet
             image:
               width: 1
@@ -1482,14 +2494,175 @@ components:
             title: title
             url: url
             props:
-              hires_thumbnail_url: hires_thumbnail_url
-              language_probability: 7.061401241503109
-              sort_normalize_url: sort_normalize_url
-              sort_group_id: sort_group_id
-              language: language
-              source_history:
-              - source_history
-              - source_history
+              key: ""
+          interesting_finds:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          listicle:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          search:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          adjacent_question:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          podcast:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          weather:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          package_tracking:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          public_records:
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
+          - snippet: snippet
+            image:
+              width: 1
+              url: url
+              height: 6
+            time: time
+            title: title
+            url: url
+            props:
+              key: ""
         meta:
           node: node
           trace: trace
@@ -1685,6 +2858,749 @@ components:
         data:
           $ref: '#/components/schemas/fastGPT_200_response_data'
       type: object
+    translateAlternatives_request:
+      properties:
+        original_text:
+          description: "Original text to translate. In partial mode, this serves as\
+            \ context for the phrase (may be ignored if not relevant)."
+          type: string
+        existing_translation:
+          description: "In standard mode: existing full translation of the original\
+            \ text. In partial mode: the specific phrase you want alternative ways\
+            \ to express."
+          type: string
+        source_lang:
+          description: Source language code (ISO-639) of the original text. Helps
+            provide more accurate alternatives by understanding language-specific
+            nuances.
+          type: string
+        target_lang:
+          description: Target language code (ISO-639) for the translations
+          type: string
+        target_explanation_language:
+          default: en
+          description: Language code (ISO-639) for the explanations
+          type: string
+        translation_options:
+          description: |
+            JSON string with translation customization options:
+            - `formality`: Controls formality level ["default", "more", "less"]
+            - `speaker_gender`: Gender of the speaker ["unknown", "feminine", "masculine", "neutral"]
+            - `addressee_gender`: Gender of the person being addressed ["unknown", "feminine", "masculine", "neutral"]
+            - `style`: Translation style ["natural", "literal"]
+            - `context`: Additional context to inform translation (string)
+          example: "{\"formality\":\"more\",\"speaker_gender\":\"feminine\",\"style\"\
+            :\"natural\"}"
+          type: string
+        partial_translation:
+          default: "false"
+          description: "Mode switch: 'false' for standard mode (full translation alternatives),\
+            \ 'true' for partial mode (alternative ways to phrase a specific part)"
+          type: string
+      required:
+      - existing_translation
+      - original_text
+      - target_lang
+      type: object
+    translateAlternatives_200_response_elements_inner:
+      example:
+        translation: translation
+        explanation: explanation
+      properties:
+        translation:
+          description: Alternative translation or phrasing
+          type: string
+        explanation:
+          description: Explanation of the alternative in the requested language
+          type: string
+      type: object
+    translateAlternatives_200_response:
+      example:
+        elements:
+        - translation: translation
+          explanation: explanation
+        - translation: translation
+          explanation: explanation
+        originalDescription: originalDescription
+      properties:
+        originalDescription:
+          description: "A short description of the style, formality, or key characteristics\
+            \ of the text"
+          type: string
+        elements:
+          items:
+            $ref: '#/components/schemas/translateAlternatives_200_response_elements_inner'
+          type: array
+      type: object
+    translateAlternatives_401_response:
+      example:
+        error: Not authenticated
+      properties:
+        error:
+          example: Not authenticated
+          type: string
+      type: object
+    translateAlternatives_402_response:
+      example:
+        error: Subscription required
+      properties:
+        error:
+          example: Subscription required
+          type: string
+      type: object
+    translateAlternatives_500_response:
+      example:
+        error: Error generating alternatives
+      properties:
+        error:
+          example: Error generating alternatives
+          type: string
+      type: object
+    translateDetect_request:
+      properties:
+        text:
+          description: Text to detect language from
+          type: string
+      required:
+      - text
+      type: object
+    translateDetect_200_response:
+      example:
+        iso: en
+        label: English
+      properties:
+        iso:
+          description: ISO code of detected language
+          example: en
+          type: string
+        label:
+          description: Human-readable language name
+          example: English
+          type: string
+      type: object
+    translateDetect_400_response:
+      example:
+        error: No text
+      properties:
+        error:
+          example: No text
+          type: string
+      type: object
+    translateDictionary_request:
+      properties:
+        word:
+          description: The word to look up
+          type: string
+        word_language:
+          default: en
+          description: "Language code (ISO-639) of the word, or \"auto\" for automatic\
+            \ detection"
+          example: en
+          type: string
+        definition_language:
+          default: en
+          description: Language code (ISO-639) for the definition output
+          example: en
+          type: string
+      required:
+      - word
+      type: object
+    translateDictionary_200_response_definition_primary_meaning:
+      description: The primary or most common meaning
+      example:
+        part_of_speech:
+        - exclamation
+        definition: Used as a greeting or to begin a phone conversation
+      properties:
+        definition:
+          description: The text of the primary definition
+          example: Used as a greeting or to begin a phone conversation
+          type: string
+        part_of_speech:
+          description: The part(s) of speech that apply to this specific meaning
+          example:
+          - exclamation
+          items:
+            type: string
+          type: array
+      type: object
+    translateDictionary_200_response_definition_secondary_meanings_inner:
+      properties:
+        definition:
+          description: The text of a secondary definition
+          example: An expression of surprise
+          type: string
+        part_of_speech:
+          description: The part(s) of speech that apply to this specific meaning
+          example:
+          - noun
+          items:
+            type: string
+          type: array
+      type: object
+    translateDictionary_200_response_definition:
+      description: Structured definition of the word
+      example:
+        primary_meaning:
+          part_of_speech:
+          - exclamation
+          definition: Used as a greeting or to begin a phone conversation
+        secondary_meanings:
+        - definition: An expression of surprise
+          part_of_speech:
+          - exclamation
+        - definition: A call for attention
+          part_of_speech:
+          - noun
+        examples:
+        - "Hello, how are you?"
+        - Hello! I didn't see you there.
+        pronunciation: həˈloʊ
+        part_of_speech:
+        - exclamation
+        - noun
+        etymology: "From earlier hallo, hollo, which is from Old High German halâ\
+          , holâ"
+        usage_level:
+        - standard
+        - common
+        word: hello
+      properties:
+        word:
+          description: The word being defined
+          example: hello
+          type: string
+        part_of_speech:
+          description: All parts of speech that apply to the word across all meanings
+          example:
+          - exclamation
+          - noun
+          items:
+            type: string
+          type: array
+        usage_level:
+          description: "Register or context where the word is typically used (formal,\
+            \ informal, slang, technical, etc.)"
+          example:
+          - standard
+          - common
+          items:
+            type: string
+          type: array
+        primary_meaning:
+          $ref: '#/components/schemas/translateDictionary_200_response_definition_primary_meaning'
+        secondary_meanings:
+          description: Secondary or less common meanings
+          example:
+          - definition: An expression of surprise
+            part_of_speech:
+            - exclamation
+          - definition: A call for attention
+            part_of_speech:
+            - noun
+          items:
+            $ref: '#/components/schemas/translateDictionary_200_response_definition_secondary_meanings_inner'
+          type: array
+        examples:
+          description: Example sentences showing usage
+          example:
+          - "Hello, how are you?"
+          - Hello! I didn't see you there.
+          items:
+            type: string
+          type: array
+        pronunciation:
+          description: Phonetic pronunciation (if available)
+          example: həˈloʊ
+          type: string
+        etymology:
+          description: Information about word origin (if available)
+          example: "From earlier hallo, hollo, which is from Old High German halâ\
+            , holâ"
+          type: string
+      type: object
+    translateDictionary_200_response_language:
+      example:
+        iso: en
+        label: English
+      properties:
+        iso:
+          description: ISO code of the language
+          example: en
+          type: string
+        label:
+          description: Human-readable language name
+          example: English
+          type: string
+      type: object
+    translateDictionary_200_response:
+      example:
+        definition:
+          primary_meaning:
+            part_of_speech:
+            - exclamation
+            definition: Used as a greeting or to begin a phone conversation
+          secondary_meanings:
+          - definition: An expression of surprise
+            part_of_speech:
+            - exclamation
+          - definition: A call for attention
+            part_of_speech:
+            - noun
+          examples:
+          - "Hello, how are you?"
+          - Hello! I didn't see you there.
+          pronunciation: həˈloʊ
+          part_of_speech:
+          - exclamation
+          - noun
+          etymology: "From earlier hallo, hollo, which is from Old High German halâ\
+            , holâ"
+          usage_level:
+          - standard
+          - common
+          word: hello
+        language:
+          iso: en
+          label: English
+      properties:
+        definition:
+          $ref: '#/components/schemas/translateDictionary_200_response_definition'
+        language:
+          $ref: '#/components/schemas/translateDictionary_200_response_language'
+      type: object
+    translateDictionary_400_response:
+      example:
+        error: Word is required
+      properties:
+        error:
+          description: Error message
+          example: Word is required
+          type: string
+      type: object
+    translateDictionary_500_response:
+      example:
+        error: Failed to get definition
+      properties:
+        error:
+          description: Error message
+          example: Failed to get definition
+          type: string
+      type: object
+    translateListLanguages_200_response_inner:
+      example:
+        supports_formality: true
+        name: name
+        language: language
+      properties:
+        language:
+          description: Language code
+          type: string
+        name:
+          description: Language name
+          type: string
+        supports_formality:
+          description: Whether formality is supported for this language
+          type: boolean
+      type: object
+    translateRomanize_200_response:
+      example:
+        romanization: konnichiwa
+      properties:
+        romanization:
+          description: Romanized text
+          example: konnichiwa
+          type: string
+      type: object
+    translateWordInsights_request:
+      properties:
+        original_text:
+          description: Source text that was translated
+          type: string
+        translated_text:
+          description: Translated text to analyze for linguistic insights
+          type: string
+        target_explanation_language:
+          default: en
+          description: Language code (ISO-639) for the explanations and type labels
+          type: string
+        translation_options:
+          description: |
+            Optional JSON string with translation options that provide context for the insights.
+            Can include formality, gender preferences, and style.
+          type: string
+      required:
+      - original_text
+      - translated_text
+      type: object
+    translateWordInsights_200_response_insights_inner_variations_inner:
+      example:
+        text: Saludos
+        explanation: More formal greeting
+      properties:
+        text:
+          description: Alternative word or phrase in the target language
+          example: Saludos
+          type: string
+        explanation:
+          description: Brief explanation of usage/nuance in the explanation language
+          example: More formal greeting
+          type: string
+      type: object
+    translateWordInsights_200_response_insights_inner:
+      example:
+        variations:
+        - text: Saludos
+          explanation: More formal greeting
+        - text: Saludos
+          explanation: More formal greeting
+        id: INSIGHT_1
+        original_text: Hola
+        type: Greeting style
+      properties:
+        id:
+          description: Identifier matching the marker in marked_translation
+          example: INSIGHT_1
+          type: string
+        original_text:
+          description: The original word or phrase from the translated text
+          example: Hola
+          type: string
+        variations:
+          description: Alternative expressions with explanations
+          items:
+            $ref: '#/components/schemas/translateWordInsights_200_response_insights_inner_variations_inner'
+          type: array
+        type:
+          description: Category of the insight in the explanation language
+          example: Greeting style
+          type: string
+      type: object
+    translateWordInsights_200_response:
+      example:
+        marked_translation: <<INSIGHT_1>> <<INSIGHT_2>>
+        insights:
+        - variations:
+          - text: Saludos
+            explanation: More formal greeting
+          - text: Saludos
+            explanation: More formal greeting
+          id: INSIGHT_1
+          original_text: Hola
+          type: Greeting style
+        - variations:
+          - text: Saludos
+            explanation: More formal greeting
+          - text: Saludos
+            explanation: More formal greeting
+          id: INSIGHT_1
+          original_text: Hola
+          type: Greeting style
+      properties:
+        marked_translation:
+          description: The translated text with markers (<<INSIGHT_N>>) indicating
+            insight locations
+          example: <<INSIGHT_1>> <<INSIGHT_2>>
+          type: string
+        insights:
+          items:
+            $ref: '#/components/schemas/translateWordInsights_200_response_insights_inner'
+          type: array
+      type: object
+    translateWordInsights_400_response:
+      example:
+        error: Text too long
+      properties:
+        error:
+          example: Text too long
+          type: string
+      type: object
+    translateWordInsights_500_response:
+      example:
+        error: Failed to get word insights
+      properties:
+        error:
+          example: Failed to get word insights
+          type: string
+      type: object
+    translate_request_text:
+      oneOf:
+      - description: Text content to translate
+        type: string
+      - description: Array of text snippets for batch translation. Using this method
+          is recommended for translating multiple texts as it's faster and allows
+          for context-aware translations across snippets.
+        items:
+          type: string
+        type: array
+    translate_request:
+      properties:
+        text:
+          $ref: '#/components/schemas/translate_request_text'
+        source_lang:
+          default: auto
+          description: Source language code (ISO-639) or "auto" for automatic detection
+          example: en
+          type: string
+        target_lang:
+          default: en
+          description: Target language code (ISO-639)
+          example: es
+          type: string
+        from:
+          deprecated: true
+          description: Legacy parameter for source language (use source_lang instead)
+          type: string
+        to:
+          deprecated: true
+          description: Legacy parameter for target language (use target_lang instead)
+          type: string
+        context:
+          description: Additional context to improve translation accuracy
+          example: This is from a medical document
+          type: string
+        preserve_formatting:
+          default: false
+          description: Whether to preserve original text formatting
+          type: boolean
+        formality:
+          default: default
+          description: "Level of formality in translation. All formality levels are\
+            \ supported for all language pairs. 'prefer_more' is same as 'more', and\
+            \ 'prefer_less' is same as 'less' (included for backwards compatibility)."
+          enum:
+          - default
+          - more
+          - less
+          - prefer_more
+          - prefer_less
+          type: string
+        speaker_gender:
+          default: unknown
+          description: Gender of the speaker for languages with gender-specific expressions
+          enum:
+          - unknown
+          - feminine
+          - masculine
+          - neutral
+          type: string
+        addressee_gender:
+          default: unknown
+          description: Gender of the addressee for languages with gender-specific
+            expressions
+          enum:
+          - unknown
+          - feminine
+          - masculine
+          - neutral
+          type: string
+        translation_style:
+          default: natural
+          description: "Style of translation (natural for fluency, literal for exactness)"
+          enum:
+          - natural
+          - literal
+          type: string
+        predicted_language:
+          description: Pre-detected source language (if available)
+          type: string
+        prediction:
+          description: Pre-generated translation (if available)
+          type: string
+        stream:
+          default: false
+          description: Whether to stream the response as Server-Sent Events
+          type: boolean
+        dictionary_language:
+          description: "Language code for dictionary definitions (if not provided,\
+            \ the source language will be used)"
+          example: en
+          type: string
+      required:
+      - text
+      type: object
+    translate_200_response_oneOf_detectedLanguage:
+      example:
+        iso: en
+        label: English
+      properties:
+        iso:
+          description: ISO code of detected source language
+          example: en
+          type: string
+        label:
+          description: Human-readable language name
+          example: English
+          type: string
+      type: object
+    translate_200_response_oneOf_definition_definitions_inner_meanings_inner:
+      example:
+        synonyms:
+        - home
+        - residence
+        definition: A house or dwelling
+        example: Vivo en una casa grande
+      properties:
+        definition:
+          description: The definition text
+          example: A house or dwelling
+          type: string
+        example:
+          description: Example usage
+          example: Vivo en una casa grande
+          type: string
+        synonyms:
+          description: List of synonyms
+          example:
+          - home
+          - residence
+          items:
+            type: string
+          type: array
+      type: object
+    translate_200_response_oneOf_definition_definitions_inner:
+      example:
+        partOfSpeech: noun
+        meanings:
+        - synonyms:
+          - home
+          - residence
+          definition: A house or dwelling
+          example: Vivo en una casa grande
+        - synonyms:
+          - home
+          - residence
+          definition: A house or dwelling
+          example: Vivo en una casa grande
+      properties:
+        partOfSpeech:
+          description: Part of speech
+          example: noun
+          type: string
+        meanings:
+          items:
+            $ref: '#/components/schemas/translate_200_response_oneOf_definition_definitions_inner_meanings_inner'
+          type: array
+      type: object
+    translate_200_response_oneOf_definition:
+      description: Dictionary definition of the translated term (if available)
+      example:
+        phonetic: /ˈkasa/
+        word: casa
+        definitions:
+        - partOfSpeech: noun
+          meanings:
+          - synonyms:
+            - home
+            - residence
+            definition: A house or dwelling
+            example: Vivo en una casa grande
+          - synonyms:
+            - home
+            - residence
+            definition: A house or dwelling
+            example: Vivo en una casa grande
+        - partOfSpeech: noun
+          meanings:
+          - synonyms:
+            - home
+            - residence
+            definition: A house or dwelling
+            example: Vivo en una casa grande
+          - synonyms:
+            - home
+            - residence
+            definition: A house or dwelling
+            example: Vivo en una casa grande
+      properties:
+        word:
+          description: The word being defined
+          example: casa
+          type: string
+        phonetic:
+          description: Phonetic pronunciation
+          example: /ˈkasa/
+          type: string
+        definitions:
+          items:
+            $ref: '#/components/schemas/translate_200_response_oneOf_definition_definitions_inner'
+          type: array
+      type: object
+    translate_200_response_oneOf:
+      example:
+        translation: Hola mundo
+        detectedLanguage:
+          iso: en
+          label: English
+        definition:
+          phonetic: /ˈkasa/
+          word: casa
+          definitions:
+          - partOfSpeech: noun
+            meanings:
+            - synonyms:
+              - home
+              - residence
+              definition: A house or dwelling
+              example: Vivo en una casa grande
+            - synonyms:
+              - home
+              - residence
+              definition: A house or dwelling
+              example: Vivo en una casa grande
+          - partOfSpeech: noun
+            meanings:
+            - synonyms:
+              - home
+              - residence
+              definition: A house or dwelling
+              example: Vivo en una casa grande
+            - synonyms:
+              - home
+              - residence
+              definition: A house or dwelling
+              example: Vivo en una casa grande
+      properties:
+        translation:
+          description: Translated text
+          example: Hola mundo
+          type: string
+        detectedLanguage:
+          $ref: '#/components/schemas/translate_200_response_oneOf_detectedLanguage'
+        definition:
+          $ref: '#/components/schemas/translate_200_response_oneOf_definition'
+      type: object
+    translate_200_response_oneOf_1:
+      properties:
+        snippets:
+          description: Array of translated text snippets (for batch translation).
+            The order matches the input array and preserves context between snippets.
+          items:
+            type: string
+          type: array
+      type: object
+    translate_200_response:
+      oneOf:
+      - $ref: '#/components/schemas/translate_200_response_oneOf'
+      - $ref: '#/components/schemas/translate_200_response_oneOf_1'
+    translate_400_response:
+      example:
+        error: Text is required
+      properties:
+        error:
+          description: Error message
+          example: Text is required
+          type: string
+      type: object
+    translate_500_response:
+      example:
+        error: Translation service unavailable
+      properties:
+        error:
+          description: Error message
+          example: Translation service unavailable
+          type: string
+      type: object
     meta_query_fields_inner:
       example:
         kind: kind
@@ -1727,7 +3643,7 @@ components:
         workflow:
           type: string
       type: object
-    resultSearch_image:
+    searchResult_image:
       example:
         width: 1
         url: url
@@ -1742,166 +3658,11 @@ components:
       required:
       - url
       type: object
-    resultSearch_props_thumbnail_image:
-      example:
-        width: 5
-        url: url
-        height: 5
-      properties:
-        url:
-          type: string
-        height:
-          type: integer
-        width:
-          type: integer
-      required:
-      - url
-    resultSearch_props:
-      example:
-        language_probability: 2.3021358869347655
-        sort_normalize_url: sort_normalize_url
-        sort_group_id: sort_group_id
-        language: language
-        thumbnail_image:
-          width: 5
-          url: url
-          height: 5
-        paywalled: true
-        source_history:
-        - source_history
-        - source_history
-      properties:
-        thumbnail_image:
-          $ref: '#/components/schemas/resultSearch_props_thumbnail_image'
-        language:
-          type: string
-        language_probability:
-          type: number
-        paywalled:
-          type: boolean
-        sort_normalize_url:
-          type: string
-        sort_group_id:
-          type: string
-        source_history:
-          items:
-            type: string
-          type: array
-      type: object
-    resultVideo_props:
-      example:
-        hires_thumbnail_url: hires_thumbnail_url
-        language_probability: 7.061401241503109
-        sort_normalize_url: sort_normalize_url
-        sort_group_id: sort_group_id
-        language: language
-        source_history:
-        - source_history
-        - source_history
-      properties:
-        hires_thumbnail_url:
-          type: string
-        sort_normalize_url:
-          type: string
-        sort_group_id:
-          type: string
-        language:
-          type: string
-        language_probability:
-          type: number
-        source_history:
-          items:
-            type: string
-          type: array
-      type: object
-    resultAdjacentQuestion_props:
-      example:
-        question: question
-        language_probability: 9.301444243932576
-        language: language
-      properties:
-        question:
-          type: string
-        language:
-          type: string
-        language_probability:
-          type: number
-      type: object
-    resultInfobox_props_infobox_inner:
-      example:
-        merged: true
-        header: header
-        value: value
-      properties:
-        header:
-          type: string
-        value:
-          type: string
-        merged:
-          type: boolean
-      required:
-      - header
-      - merged
-      - value
-      type: object
-    resultInfobox_props:
-      example:
-        wikipedia.page_id: 3
-        language_probability: 2.027123023002322
-        infobox:
-        - merged: true
-          header: header
-          value: value
-        - merged: true
-          header: header
-          value: value
-        sort_normalize_url: sort_normalize_url
-        sort_group_id: sort_group_id
-        language: language
-        wikipedia.subtext: wikipedia.subtext
-        source_history:
-        - source_history
-        - source_history
-      properties:
-        infobox:
-          items:
-            $ref: '#/components/schemas/resultInfobox_props_infobox_inner'
-          type: array
-        wikipedia.subtext:
-          type: string
-        wikipedia.page_id:
-          type: integer
-        language:
-          type: string
-        language_probability:
-          type: number
-        sort_normalize_url:
-          type: string
-        sort_group_id:
-          type: string
-        source_history:
-          items:
-            type: string
-          type: array
-      type: object
-    resultWebArchive_props:
-      example:
-        language_probability: 4.145608029883936
-        web_archive_domain: web_archive_domain
-        language: language
-      properties:
-        web_archive_domain:
-          type: string
-        language:
-          type: string
-        language_probability:
-          type: number
-      type: object
     exampleError_error:
       example:
         msg: msg
         ref: ref
-        code: 7
+        code: 5
       properties:
         code:
           type: integer
@@ -1932,3 +3693,7 @@ components:
       in: header
       name: Authorization
       type: apiKey
+    kagi-translate:
+      description: Kagi Translation token used to access the traslate API
+      scheme: bearer
+      type: http

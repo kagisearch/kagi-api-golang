@@ -20,21 +20,29 @@ var _ MappedNullable = &TranslateDictionary200ResponseDefinition{}
 
 // TranslateDictionary200ResponseDefinition Structured definition of the word
 type TranslateDictionary200ResponseDefinition struct {
-	// The word being defined
+	// The word being defined (remains in word_language)
 	Word *string `json:"word,omitempty"`
-	// All parts of speech that apply to the word across all meanings
-	PartOfSpeech []string `json:"part_of_speech,omitempty"`
-	// Register or context where the word is typically used (formal, informal, slang, technical, etc.)
-	UsageLevel []string `json:"usage_level,omitempty"`
 	PrimaryMeaning *TranslateDictionary200ResponseDefinitionPrimaryMeaning `json:"primary_meaning,omitempty"`
 	// Secondary or less common meanings
 	SecondaryMeanings []TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner `json:"secondary_meanings,omitempty"`
-	// Example sentences showing usage
+	// Example sentences showing usage (remains in word_language, but includes translations in parentheses when word_language differs from definition_language)
 	Examples []string `json:"examples,omitempty"`
-	// Phonetic pronunciation (if available)
+	// Phonetic pronunciation of the word in its original language (if available)
 	Pronunciation *string `json:"pronunciation,omitempty"`
-	// Information about word origin (if available)
+	// Information about word origin (translated to definition_language if available)
 	Etymology *string `json:"etymology,omitempty"`
+	// Brief usage notes, cultural context, or helpful tips for language learners (translated to definition_language)
+	Notes *string `json:"notes,omitempty"`
+	// Optional usage trend indicator. Always in English as an enum value. Only provided when trend data is clear and meaningful.
+	TemporalTrend *string `json:"temporal_trend,omitempty"`
+	// Grammatical gender for nouns in languages that have gender. Always in English as an enum value. Only included for nouns in gendered languages.
+	Gender *string `json:"gender,omitempty"`
+	// Plural form of the word (remains in word_language). Only included for irregular or non-standard plurals.
+	Plural *string `json:"plural,omitempty"`
+	// Brief notes about verb conjugation irregularities (remains in word_language). Only included for verbs with notable irregularities.
+	ConjugationNotes *string `json:"conjugation_notes,omitempty"`
+	// Related words from the same root or word family (remains in word_language)
+	RelatedWords []string `json:"related_words,omitempty"`
 }
 
 // NewTranslateDictionary200ResponseDefinition instantiates a new TranslateDictionary200ResponseDefinition object
@@ -84,70 +92,6 @@ func (o *TranslateDictionary200ResponseDefinition) HasWord() bool {
 // SetWord gets a reference to the given string and assigns it to the Word field.
 func (o *TranslateDictionary200ResponseDefinition) SetWord(v string) {
 	o.Word = &v
-}
-
-// GetPartOfSpeech returns the PartOfSpeech field value if set, zero value otherwise.
-func (o *TranslateDictionary200ResponseDefinition) GetPartOfSpeech() []string {
-	if o == nil || IsNil(o.PartOfSpeech) {
-		var ret []string
-		return ret
-	}
-	return o.PartOfSpeech
-}
-
-// GetPartOfSpeechOk returns a tuple with the PartOfSpeech field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TranslateDictionary200ResponseDefinition) GetPartOfSpeechOk() ([]string, bool) {
-	if o == nil || IsNil(o.PartOfSpeech) {
-		return nil, false
-	}
-	return o.PartOfSpeech, true
-}
-
-// HasPartOfSpeech returns a boolean if a field has been set.
-func (o *TranslateDictionary200ResponseDefinition) HasPartOfSpeech() bool {
-	if o != nil && !IsNil(o.PartOfSpeech) {
-		return true
-	}
-
-	return false
-}
-
-// SetPartOfSpeech gets a reference to the given []string and assigns it to the PartOfSpeech field.
-func (o *TranslateDictionary200ResponseDefinition) SetPartOfSpeech(v []string) {
-	o.PartOfSpeech = v
-}
-
-// GetUsageLevel returns the UsageLevel field value if set, zero value otherwise.
-func (o *TranslateDictionary200ResponseDefinition) GetUsageLevel() []string {
-	if o == nil || IsNil(o.UsageLevel) {
-		var ret []string
-		return ret
-	}
-	return o.UsageLevel
-}
-
-// GetUsageLevelOk returns a tuple with the UsageLevel field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *TranslateDictionary200ResponseDefinition) GetUsageLevelOk() ([]string, bool) {
-	if o == nil || IsNil(o.UsageLevel) {
-		return nil, false
-	}
-	return o.UsageLevel, true
-}
-
-// HasUsageLevel returns a boolean if a field has been set.
-func (o *TranslateDictionary200ResponseDefinition) HasUsageLevel() bool {
-	if o != nil && !IsNil(o.UsageLevel) {
-		return true
-	}
-
-	return false
-}
-
-// SetUsageLevel gets a reference to the given []string and assigns it to the UsageLevel field.
-func (o *TranslateDictionary200ResponseDefinition) SetUsageLevel(v []string) {
-	o.UsageLevel = v
 }
 
 // GetPrimaryMeaning returns the PrimaryMeaning field value if set, zero value otherwise.
@@ -310,6 +254,198 @@ func (o *TranslateDictionary200ResponseDefinition) SetEtymology(v string) {
 	o.Etymology = &v
 }
 
+// GetNotes returns the Notes field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinition) GetNotes() string {
+	if o == nil || IsNil(o.Notes) {
+		var ret string
+		return ret
+	}
+	return *o.Notes
+}
+
+// GetNotesOk returns a tuple with the Notes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinition) GetNotesOk() (*string, bool) {
+	if o == nil || IsNil(o.Notes) {
+		return nil, false
+	}
+	return o.Notes, true
+}
+
+// HasNotes returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinition) HasNotes() bool {
+	if o != nil && !IsNil(o.Notes) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotes gets a reference to the given string and assigns it to the Notes field.
+func (o *TranslateDictionary200ResponseDefinition) SetNotes(v string) {
+	o.Notes = &v
+}
+
+// GetTemporalTrend returns the TemporalTrend field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinition) GetTemporalTrend() string {
+	if o == nil || IsNil(o.TemporalTrend) {
+		var ret string
+		return ret
+	}
+	return *o.TemporalTrend
+}
+
+// GetTemporalTrendOk returns a tuple with the TemporalTrend field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinition) GetTemporalTrendOk() (*string, bool) {
+	if o == nil || IsNil(o.TemporalTrend) {
+		return nil, false
+	}
+	return o.TemporalTrend, true
+}
+
+// HasTemporalTrend returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinition) HasTemporalTrend() bool {
+	if o != nil && !IsNil(o.TemporalTrend) {
+		return true
+	}
+
+	return false
+}
+
+// SetTemporalTrend gets a reference to the given string and assigns it to the TemporalTrend field.
+func (o *TranslateDictionary200ResponseDefinition) SetTemporalTrend(v string) {
+	o.TemporalTrend = &v
+}
+
+// GetGender returns the Gender field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinition) GetGender() string {
+	if o == nil || IsNil(o.Gender) {
+		var ret string
+		return ret
+	}
+	return *o.Gender
+}
+
+// GetGenderOk returns a tuple with the Gender field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinition) GetGenderOk() (*string, bool) {
+	if o == nil || IsNil(o.Gender) {
+		return nil, false
+	}
+	return o.Gender, true
+}
+
+// HasGender returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinition) HasGender() bool {
+	if o != nil && !IsNil(o.Gender) {
+		return true
+	}
+
+	return false
+}
+
+// SetGender gets a reference to the given string and assigns it to the Gender field.
+func (o *TranslateDictionary200ResponseDefinition) SetGender(v string) {
+	o.Gender = &v
+}
+
+// GetPlural returns the Plural field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinition) GetPlural() string {
+	if o == nil || IsNil(o.Plural) {
+		var ret string
+		return ret
+	}
+	return *o.Plural
+}
+
+// GetPluralOk returns a tuple with the Plural field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinition) GetPluralOk() (*string, bool) {
+	if o == nil || IsNil(o.Plural) {
+		return nil, false
+	}
+	return o.Plural, true
+}
+
+// HasPlural returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinition) HasPlural() bool {
+	if o != nil && !IsNil(o.Plural) {
+		return true
+	}
+
+	return false
+}
+
+// SetPlural gets a reference to the given string and assigns it to the Plural field.
+func (o *TranslateDictionary200ResponseDefinition) SetPlural(v string) {
+	o.Plural = &v
+}
+
+// GetConjugationNotes returns the ConjugationNotes field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinition) GetConjugationNotes() string {
+	if o == nil || IsNil(o.ConjugationNotes) {
+		var ret string
+		return ret
+	}
+	return *o.ConjugationNotes
+}
+
+// GetConjugationNotesOk returns a tuple with the ConjugationNotes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinition) GetConjugationNotesOk() (*string, bool) {
+	if o == nil || IsNil(o.ConjugationNotes) {
+		return nil, false
+	}
+	return o.ConjugationNotes, true
+}
+
+// HasConjugationNotes returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinition) HasConjugationNotes() bool {
+	if o != nil && !IsNil(o.ConjugationNotes) {
+		return true
+	}
+
+	return false
+}
+
+// SetConjugationNotes gets a reference to the given string and assigns it to the ConjugationNotes field.
+func (o *TranslateDictionary200ResponseDefinition) SetConjugationNotes(v string) {
+	o.ConjugationNotes = &v
+}
+
+// GetRelatedWords returns the RelatedWords field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinition) GetRelatedWords() []string {
+	if o == nil || IsNil(o.RelatedWords) {
+		var ret []string
+		return ret
+	}
+	return o.RelatedWords
+}
+
+// GetRelatedWordsOk returns a tuple with the RelatedWords field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinition) GetRelatedWordsOk() ([]string, bool) {
+	if o == nil || IsNil(o.RelatedWords) {
+		return nil, false
+	}
+	return o.RelatedWords, true
+}
+
+// HasRelatedWords returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinition) HasRelatedWords() bool {
+	if o != nil && !IsNil(o.RelatedWords) {
+		return true
+	}
+
+	return false
+}
+
+// SetRelatedWords gets a reference to the given []string and assigns it to the RelatedWords field.
+func (o *TranslateDictionary200ResponseDefinition) SetRelatedWords(v []string) {
+	o.RelatedWords = v
+}
+
 func (o TranslateDictionary200ResponseDefinition) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -322,12 +458,6 @@ func (o TranslateDictionary200ResponseDefinition) ToMap() (map[string]interface{
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Word) {
 		toSerialize["word"] = o.Word
-	}
-	if !IsNil(o.PartOfSpeech) {
-		toSerialize["part_of_speech"] = o.PartOfSpeech
-	}
-	if !IsNil(o.UsageLevel) {
-		toSerialize["usage_level"] = o.UsageLevel
 	}
 	if !IsNil(o.PrimaryMeaning) {
 		toSerialize["primary_meaning"] = o.PrimaryMeaning
@@ -343,6 +473,24 @@ func (o TranslateDictionary200ResponseDefinition) ToMap() (map[string]interface{
 	}
 	if !IsNil(o.Etymology) {
 		toSerialize["etymology"] = o.Etymology
+	}
+	if !IsNil(o.Notes) {
+		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.TemporalTrend) {
+		toSerialize["temporal_trend"] = o.TemporalTrend
+	}
+	if !IsNil(o.Gender) {
+		toSerialize["gender"] = o.Gender
+	}
+	if !IsNil(o.Plural) {
+		toSerialize["plural"] = o.Plural
+	}
+	if !IsNil(o.ConjugationNotes) {
+		toSerialize["conjugation_notes"] = o.ConjugationNotes
+	}
+	if !IsNil(o.RelatedWords) {
+		toSerialize["related_words"] = o.RelatedWords
 	}
 	return toSerialize, nil
 }

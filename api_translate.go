@@ -498,6 +498,12 @@ TranslateDictionary Dictionary
 
 Provides dictionary definitions for words in different languages.
 
+**Translation behavior:**
+- Fields translated to `definition_language`: definition, notes, etymology, part_of_speech, usage_level, dialect
+- Fields that remain in `word_language`: word, synonyms, pronunciation, plural, related_words, examples (with translations in parentheses when languages differ)
+- Fields always in English (strict enums): gender ("masculine", "feminine", "neuter", "common"), temporal_trend ("increasing", "stable", "decreasing")
+
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiTranslateDictionaryRequest
 */
@@ -542,7 +548,7 @@ func (a *TranslateAPIService) TranslateDictionaryExecute(r ApiTranslateDictionar
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
+	localVarHTTPHeaderAccepts := []string{"application/json", "text/plain"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

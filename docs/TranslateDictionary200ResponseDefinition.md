@@ -4,14 +4,18 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Word** | Pointer to **string** | The word being defined | [optional] 
-**PartOfSpeech** | Pointer to **[]string** | All parts of speech that apply to the word across all meanings | [optional] 
-**UsageLevel** | Pointer to **[]string** | Register or context where the word is typically used (formal, informal, slang, technical, etc.) | [optional] 
+**Word** | Pointer to **string** | The word being defined (remains in word_language) | [optional] 
 **PrimaryMeaning** | Pointer to [**TranslateDictionary200ResponseDefinitionPrimaryMeaning**](TranslateDictionary200ResponseDefinitionPrimaryMeaning.md) |  | [optional] 
 **SecondaryMeanings** | Pointer to [**[]TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner**](TranslateDictionary200ResponseDefinitionSecondaryMeaningsInner.md) | Secondary or less common meanings | [optional] 
-**Examples** | Pointer to **[]string** | Example sentences showing usage | [optional] 
-**Pronunciation** | Pointer to **string** | Phonetic pronunciation (if available) | [optional] 
-**Etymology** | Pointer to **string** | Information about word origin (if available) | [optional] 
+**Examples** | Pointer to **[]string** | Example sentences showing usage (remains in word_language, but includes translations in parentheses when word_language differs from definition_language) | [optional] 
+**Pronunciation** | Pointer to **string** | Phonetic pronunciation of the word in its original language (if available) | [optional] 
+**Etymology** | Pointer to **string** | Information about word origin (translated to definition_language if available) | [optional] 
+**Notes** | Pointer to **string** | Brief usage notes, cultural context, or helpful tips for language learners (translated to definition_language) | [optional] 
+**TemporalTrend** | Pointer to **string** | Optional usage trend indicator. Always in English as an enum value. Only provided when trend data is clear and meaningful. | [optional] 
+**Gender** | Pointer to **string** | Grammatical gender for nouns in languages that have gender. Always in English as an enum value. Only included for nouns in gendered languages. | [optional] 
+**Plural** | Pointer to **string** | Plural form of the word (remains in word_language). Only included for irregular or non-standard plurals. | [optional] 
+**ConjugationNotes** | Pointer to **string** | Brief notes about verb conjugation irregularities (remains in word_language). Only included for verbs with notable irregularities. | [optional] 
+**RelatedWords** | Pointer to **[]string** | Related words from the same root or word family (remains in word_language) | [optional] 
 
 ## Methods
 
@@ -56,56 +60,6 @@ SetWord sets Word field to given value.
 `func (o *TranslateDictionary200ResponseDefinition) HasWord() bool`
 
 HasWord returns a boolean if a field has been set.
-
-### GetPartOfSpeech
-
-`func (o *TranslateDictionary200ResponseDefinition) GetPartOfSpeech() []string`
-
-GetPartOfSpeech returns the PartOfSpeech field if non-nil, zero value otherwise.
-
-### GetPartOfSpeechOk
-
-`func (o *TranslateDictionary200ResponseDefinition) GetPartOfSpeechOk() (*[]string, bool)`
-
-GetPartOfSpeechOk returns a tuple with the PartOfSpeech field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPartOfSpeech
-
-`func (o *TranslateDictionary200ResponseDefinition) SetPartOfSpeech(v []string)`
-
-SetPartOfSpeech sets PartOfSpeech field to given value.
-
-### HasPartOfSpeech
-
-`func (o *TranslateDictionary200ResponseDefinition) HasPartOfSpeech() bool`
-
-HasPartOfSpeech returns a boolean if a field has been set.
-
-### GetUsageLevel
-
-`func (o *TranslateDictionary200ResponseDefinition) GetUsageLevel() []string`
-
-GetUsageLevel returns the UsageLevel field if non-nil, zero value otherwise.
-
-### GetUsageLevelOk
-
-`func (o *TranslateDictionary200ResponseDefinition) GetUsageLevelOk() (*[]string, bool)`
-
-GetUsageLevelOk returns a tuple with the UsageLevel field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUsageLevel
-
-`func (o *TranslateDictionary200ResponseDefinition) SetUsageLevel(v []string)`
-
-SetUsageLevel sets UsageLevel field to given value.
-
-### HasUsageLevel
-
-`func (o *TranslateDictionary200ResponseDefinition) HasUsageLevel() bool`
-
-HasUsageLevel returns a boolean if a field has been set.
 
 ### GetPrimaryMeaning
 
@@ -231,6 +185,156 @@ SetEtymology sets Etymology field to given value.
 `func (o *TranslateDictionary200ResponseDefinition) HasEtymology() bool`
 
 HasEtymology returns a boolean if a field has been set.
+
+### GetNotes
+
+`func (o *TranslateDictionary200ResponseDefinition) GetNotes() string`
+
+GetNotes returns the Notes field if non-nil, zero value otherwise.
+
+### GetNotesOk
+
+`func (o *TranslateDictionary200ResponseDefinition) GetNotesOk() (*string, bool)`
+
+GetNotesOk returns a tuple with the Notes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNotes
+
+`func (o *TranslateDictionary200ResponseDefinition) SetNotes(v string)`
+
+SetNotes sets Notes field to given value.
+
+### HasNotes
+
+`func (o *TranslateDictionary200ResponseDefinition) HasNotes() bool`
+
+HasNotes returns a boolean if a field has been set.
+
+### GetTemporalTrend
+
+`func (o *TranslateDictionary200ResponseDefinition) GetTemporalTrend() string`
+
+GetTemporalTrend returns the TemporalTrend field if non-nil, zero value otherwise.
+
+### GetTemporalTrendOk
+
+`func (o *TranslateDictionary200ResponseDefinition) GetTemporalTrendOk() (*string, bool)`
+
+GetTemporalTrendOk returns a tuple with the TemporalTrend field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTemporalTrend
+
+`func (o *TranslateDictionary200ResponseDefinition) SetTemporalTrend(v string)`
+
+SetTemporalTrend sets TemporalTrend field to given value.
+
+### HasTemporalTrend
+
+`func (o *TranslateDictionary200ResponseDefinition) HasTemporalTrend() bool`
+
+HasTemporalTrend returns a boolean if a field has been set.
+
+### GetGender
+
+`func (o *TranslateDictionary200ResponseDefinition) GetGender() string`
+
+GetGender returns the Gender field if non-nil, zero value otherwise.
+
+### GetGenderOk
+
+`func (o *TranslateDictionary200ResponseDefinition) GetGenderOk() (*string, bool)`
+
+GetGenderOk returns a tuple with the Gender field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetGender
+
+`func (o *TranslateDictionary200ResponseDefinition) SetGender(v string)`
+
+SetGender sets Gender field to given value.
+
+### HasGender
+
+`func (o *TranslateDictionary200ResponseDefinition) HasGender() bool`
+
+HasGender returns a boolean if a field has been set.
+
+### GetPlural
+
+`func (o *TranslateDictionary200ResponseDefinition) GetPlural() string`
+
+GetPlural returns the Plural field if non-nil, zero value otherwise.
+
+### GetPluralOk
+
+`func (o *TranslateDictionary200ResponseDefinition) GetPluralOk() (*string, bool)`
+
+GetPluralOk returns a tuple with the Plural field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPlural
+
+`func (o *TranslateDictionary200ResponseDefinition) SetPlural(v string)`
+
+SetPlural sets Plural field to given value.
+
+### HasPlural
+
+`func (o *TranslateDictionary200ResponseDefinition) HasPlural() bool`
+
+HasPlural returns a boolean if a field has been set.
+
+### GetConjugationNotes
+
+`func (o *TranslateDictionary200ResponseDefinition) GetConjugationNotes() string`
+
+GetConjugationNotes returns the ConjugationNotes field if non-nil, zero value otherwise.
+
+### GetConjugationNotesOk
+
+`func (o *TranslateDictionary200ResponseDefinition) GetConjugationNotesOk() (*string, bool)`
+
+GetConjugationNotesOk returns a tuple with the ConjugationNotes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConjugationNotes
+
+`func (o *TranslateDictionary200ResponseDefinition) SetConjugationNotes(v string)`
+
+SetConjugationNotes sets ConjugationNotes field to given value.
+
+### HasConjugationNotes
+
+`func (o *TranslateDictionary200ResponseDefinition) HasConjugationNotes() bool`
+
+HasConjugationNotes returns a boolean if a field has been set.
+
+### GetRelatedWords
+
+`func (o *TranslateDictionary200ResponseDefinition) GetRelatedWords() []string`
+
+GetRelatedWords returns the RelatedWords field if non-nil, zero value otherwise.
+
+### GetRelatedWordsOk
+
+`func (o *TranslateDictionary200ResponseDefinition) GetRelatedWordsOk() (*[]string, bool)`
+
+GetRelatedWordsOk returns a tuple with the RelatedWords field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRelatedWords
+
+`func (o *TranslateDictionary200ResponseDefinition) SetRelatedWords(v []string)`
+
+SetRelatedWords sets RelatedWords field to given value.
+
+### HasRelatedWords
+
+`func (o *TranslateDictionary200ResponseDefinition) HasRelatedWords() bool`
+
+HasRelatedWords returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

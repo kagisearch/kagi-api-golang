@@ -28,6 +28,12 @@ type TranslateDictionaryRequest struct {
 	WordLanguage *string `json:"word_language,omitempty"`
 	// Language code (ISO-639) for the definition output
 	DefinitionLanguage *string `json:"definition_language,omitempty"`
+	// Whether to return a streaming response with fields sent as they become available
+	Stream *bool `json:"stream,omitempty"`
+	// Whether to allow NSFW/inappropriate content. If false, returns empty definition for inappropriate words
+	Nsfw *bool `json:"nsfw,omitempty"`
+	// Optional model identifier. Can be either a model name (e.g., \"gpt-4o\", \"claude-35-sonnet\", \"gemini-flash-2.0\") or a model constant (e.g., \"ANTHROPIC_CLAUDE_35_SONNET\", \"OPENAI_GPT4O\"). See model-selection.ts for full list.
+	Model *string `json:"model,omitempty"`
 }
 
 type _TranslateDictionaryRequest TranslateDictionaryRequest
@@ -43,6 +49,10 @@ func NewTranslateDictionaryRequest(word string) *TranslateDictionaryRequest {
 	this.WordLanguage = &wordLanguage
 	var definitionLanguage string = "en"
 	this.DefinitionLanguage = &definitionLanguage
+	var stream bool = false
+	this.Stream = &stream
+	var nsfw bool = true
+	this.Nsfw = &nsfw
 	return &this
 }
 
@@ -55,6 +65,10 @@ func NewTranslateDictionaryRequestWithDefaults() *TranslateDictionaryRequest {
 	this.WordLanguage = &wordLanguage
 	var definitionLanguage string = "en"
 	this.DefinitionLanguage = &definitionLanguage
+	var stream bool = false
+	this.Stream = &stream
+	var nsfw bool = true
+	this.Nsfw = &nsfw
 	return &this
 }
 
@@ -146,6 +160,102 @@ func (o *TranslateDictionaryRequest) SetDefinitionLanguage(v string) {
 	o.DefinitionLanguage = &v
 }
 
+// GetStream returns the Stream field value if set, zero value otherwise.
+func (o *TranslateDictionaryRequest) GetStream() bool {
+	if o == nil || IsNil(o.Stream) {
+		var ret bool
+		return ret
+	}
+	return *o.Stream
+}
+
+// GetStreamOk returns a tuple with the Stream field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionaryRequest) GetStreamOk() (*bool, bool) {
+	if o == nil || IsNil(o.Stream) {
+		return nil, false
+	}
+	return o.Stream, true
+}
+
+// HasStream returns a boolean if a field has been set.
+func (o *TranslateDictionaryRequest) HasStream() bool {
+	if o != nil && !IsNil(o.Stream) {
+		return true
+	}
+
+	return false
+}
+
+// SetStream gets a reference to the given bool and assigns it to the Stream field.
+func (o *TranslateDictionaryRequest) SetStream(v bool) {
+	o.Stream = &v
+}
+
+// GetNsfw returns the Nsfw field value if set, zero value otherwise.
+func (o *TranslateDictionaryRequest) GetNsfw() bool {
+	if o == nil || IsNil(o.Nsfw) {
+		var ret bool
+		return ret
+	}
+	return *o.Nsfw
+}
+
+// GetNsfwOk returns a tuple with the Nsfw field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionaryRequest) GetNsfwOk() (*bool, bool) {
+	if o == nil || IsNil(o.Nsfw) {
+		return nil, false
+	}
+	return o.Nsfw, true
+}
+
+// HasNsfw returns a boolean if a field has been set.
+func (o *TranslateDictionaryRequest) HasNsfw() bool {
+	if o != nil && !IsNil(o.Nsfw) {
+		return true
+	}
+
+	return false
+}
+
+// SetNsfw gets a reference to the given bool and assigns it to the Nsfw field.
+func (o *TranslateDictionaryRequest) SetNsfw(v bool) {
+	o.Nsfw = &v
+}
+
+// GetModel returns the Model field value if set, zero value otherwise.
+func (o *TranslateDictionaryRequest) GetModel() string {
+	if o == nil || IsNil(o.Model) {
+		var ret string
+		return ret
+	}
+	return *o.Model
+}
+
+// GetModelOk returns a tuple with the Model field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionaryRequest) GetModelOk() (*string, bool) {
+	if o == nil || IsNil(o.Model) {
+		return nil, false
+	}
+	return o.Model, true
+}
+
+// HasModel returns a boolean if a field has been set.
+func (o *TranslateDictionaryRequest) HasModel() bool {
+	if o != nil && !IsNil(o.Model) {
+		return true
+	}
+
+	return false
+}
+
+// SetModel gets a reference to the given string and assigns it to the Model field.
+func (o *TranslateDictionaryRequest) SetModel(v string) {
+	o.Model = &v
+}
+
 func (o TranslateDictionaryRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -162,6 +272,15 @@ func (o TranslateDictionaryRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DefinitionLanguage) {
 		toSerialize["definition_language"] = o.DefinitionLanguage
+	}
+	if !IsNil(o.Stream) {
+		toSerialize["stream"] = o.Stream
+	}
+	if !IsNil(o.Nsfw) {
+		toSerialize["nsfw"] = o.Nsfw
+	}
+	if !IsNil(o.Model) {
+		toSerialize["model"] = o.Model
 	}
 	return toSerialize, nil
 }

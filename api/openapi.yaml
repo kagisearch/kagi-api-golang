@@ -999,7 +999,13 @@ paths:
       url: https://translate.kagi.com
   /api/dictionary:
     post:
-      description: Provides dictionary definitions for words in different languages.
+      description: |
+        Provides dictionary definitions for words in different languages.
+
+        **Translation behavior:**
+        - Fields translated to `definition_language`: definition, notes, etymology, part_of_speech, usage_level, dialect
+        - Fields that remain in `word_language`: word, synonyms, pronunciation, plural, related_words, examples (with translations in parentheses when languages differ)
+        - Fields always in English (strict enums): gender ("masculine", "feminine", "neuter", "common"), temporal_trend ("increasing", "stable", "decreasing")
       operationId: translateDictionary
       requestBody:
         content:
@@ -1019,6 +1025,22 @@ paths:
                   word: hola
                   word_language: es
                   definition_language: en
+              streamingDefinition:
+                description: Get definition with streaming response
+                summary: Streaming Definition
+                value:
+                  word: hello
+                  word_language: en
+                  definition_language: en
+                  stream: true
+              safeDefinition:
+                description: Get definition with NSFW content filtering enabled
+                summary: Safe Definition (NSFW filtered)
+                value:
+                  word: hello
+                  word_language: en
+                  definition_language: en
+                  nsfw: false
             schema:
               $ref: '#/components/schemas/translateDictionary_request'
         required: true
@@ -1033,34 +1055,71 @@ paths:
                   value:
                     definition:
                       word: hello
-                      part_of_speech:
-                      - exclamation
-                      - noun
-                      usage_level:
-                      - standard
-                      - common
                       primary_meaning:
                         definition: Used as a greeting or to begin a phone conversation
                         part_of_speech:
                         - exclamation
+                        usage_level:
+                        - standard
+                        dialect:
+                        - US
+                        - UK
+                        synonyms:
+                        - hi
+                        - greetings
+                        - hey
+                        - howdy
                       secondary_meanings:
                       - definition: An expression of surprise
                         part_of_speech:
                         - exclamation
+                        usage_level:
+                        - informal
+                        dialect:
+                        - US
+                        synonyms:
+                        - wow
+                        - oh my
+                        - goodness
                       - definition: A call for attention
                         part_of_speech:
                         - noun
+                        usage_level:
+                        - standard
                       examples:
                       - "Hello, how are you?"
                       - Hello! I didn't see you there.
                       pronunciation: həˈloʊ
                       etymology: "From earlier hallo, hollo, which is from Old High\
                         \ German halâ, holâ"
+                      notes: Be careful with tone - 'hello' can sound overly formal
+                        in casual text messages where 'hi' or 'hey' might be preferred.
+                      temporal_trend: stable
                     language:
                       iso: en
                       label: English
               schema:
                 $ref: '#/components/schemas/translateDictionary_200_response'
+            text/plain:
+              example: |
+                data: {"detected_language": {"iso": "en", "label": "English"}}
+
+                data: {"definition_field": {"field": "word", "value": "hello"}}
+
+                data: {"definition_field": {"field": "primary_meaning", "value": {"definition": "Used as a greeting or to begin a phone conversation", "part_of_speech": ["exclamation"], "usage_level": ["standard"], "synonyms": ["hi", "greetings", "hey"]}}}
+
+                data: {"definition_field": {"field": "secondary_meaning", "value": {"definition": "An expression of surprise", "part_of_speech": ["exclamation"], "usage_level": ["informal"], "synonyms": ["wow", "oh my"]}}}
+
+                data: {"definition_field": {"field": "examples", "value": ["Hello, how are you?", "Hello! I didn't see you there."]}}
+
+                data: {"definition_field": {"field": "pronunciation", "value": "həˈloʊ"}}
+
+                data: {"definition_field": {"field": "etymology", "value": "From earlier hallo, hollo"}}
+
+                data: {"done": true}
+              schema:
+                description: Server-Sent Events format with definition fields
+                type: string
           description: Successful dictionary lookup
         "400":
           content:
@@ -1108,6 +1167,19 @@ paths:
           });
           const data = await response.json();
           console.log(data.definition);
+      - lang: curl
+        label: Curl (Streaming)
+        source: |
+          curl -X POST "https://translate.kagi.com/api/dictionary" \
+            -H "Authorization: Bearer YOUR_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "word": "hello",
+              "word_language": "en",
+              "definition_language": "en",
+              "stream": true
+            }' \
+            --no-buffer
     servers:
     - description: Translate production endpoint
       url: https://translate.kagi.com
@@ -3002,24 +3074,82 @@ components:
           description: Language code (ISO-639) for the definition output
           example: en
           type: string
+        stream:
+          default: false
+          description: Whether to return a streaming response with fields sent as
+            they become available
+          example: false
+          type: boolean
+        nsfw:
+          default: true
+          description: "Whether to allow NSFW/inappropriate content. If false, returns\
+            \ empty definition for inappropriate words"
+          example: true
+          type: boolean
+        model:
+          description: "Optional model identifier. Can be either a model name (e.g.,\
+            \ \"gpt-4o\", \"claude-35-sonnet\", \"gemini-flash-2.0\") or a model constant\
+            \ (e.g., \"ANTHROPIC_CLAUDE_35_SONNET\", \"OPENAI_GPT4O\"). See model-selection.ts\
+            \ for full list."
+          example: claude-35-sonnet
+          type: string
       required:
       - word
       type: object
     translateDictionary_200_response_definition_primary_meaning:
       description: The primary or most common meaning
       example:
+        dialect:
+        - US
+        - UK
+        synonyms:
+        - hi
+        - greetings
+        - good day
+        - howdy
         part_of_speech:
         - exclamation
         definition: Used as a greeting or to begin a phone conversation
+        usage_level:
+        - standard
       properties:
         definition:
-          description: The text of the primary definition
+          description: The text of the primary definition (translated to definition_language)
           example: Used as a greeting or to begin a phone conversation
           type: string
         part_of_speech:
-          description: The part(s) of speech that apply to this specific meaning
+          description: The part(s) of speech that apply to this specific meaning (translated
+            to definition_language)
           example:
           - exclamation
+          items:
+            type: string
+          type: array
+        usage_level:
+          description: "Register or context where this specific meaning is used (formal,\
+            \ informal, slang, technical, etc.) - translated to definition_language"
+          example:
+          - standard
+          items:
+            type: string
+          type: array
+        dialect:
+          description: "Specific dialects where this meaning is used (e.g., \"US\"\
+            , \"UK\", \"Australian\")"
+          example:
+          - US
+          - UK
+          items:
+            type: string
+          type: array
+        synonyms:
+          description: "List of synonyms for this meaning, ordered from strongest/closest\
+            \ to least similar (remains in word_language)"
+          example:
+          - hi
+          - greetings
+          - good day
+          - howdy
           items:
             type: string
           type: array
@@ -3037,56 +3167,88 @@ components:
           items:
             type: string
           type: array
+        usage_level:
+          description: "Register or context where this specific meaning is used (formal,\
+            \ informal, slang, technical, etc.)"
+          example:
+          - informal
+          items:
+            type: string
+          type: array
+        dialect:
+          description: Specific dialects where this meaning is used
+          example:
+          - US
+          items:
+            type: string
+          type: array
+        synonyms:
+          description: "List of synonyms for this meaning, ordered from strongest/closest\
+            \ to least similar"
+          example:
+          - wow
+          - oh my
+          - goodness
+          items:
+            type: string
+          type: array
       type: object
     translateDictionary_200_response_definition:
       description: Structured definition of the word
       example:
+        related_words:
+        - decide
+        - decision
+        - decisive
+        - indecisive
         primary_meaning:
+          dialect:
+          - US
+          - UK
+          synonyms:
+          - hi
+          - greetings
+          - good day
+          - howdy
           part_of_speech:
           - exclamation
           definition: Used as a greeting or to begin a phone conversation
+          usage_level:
+          - standard
         secondary_meanings:
         - definition: An expression of surprise
           part_of_speech:
           - exclamation
+          usage_level:
+          - informal
+          dialect:
+          - US
+          synonyms:
+          - wow
+          - oh my
         - definition: A call for attention
           part_of_speech:
           - noun
+          usage_level:
+          - standard
+        notes: Be careful with tone - 'hello' can sound overly formal in casual text
+          messages where 'hi' or 'hey' might be preferred.
+        plural: children
         examples:
         - "Hello, how are you?"
         - Hello! I didn't see you there.
         pronunciation: həˈloʊ
-        part_of_speech:
-        - exclamation
-        - noun
+        gender: masculine
         etymology: "From earlier hallo, hollo, which is from Old High German halâ\
           , holâ"
-        usage_level:
-        - standard
-        - common
+        conjugation_notes: "irregular past tense: went"
+        temporal_trend: stable
         word: hello
       properties:
         word:
-          description: The word being defined
+          description: The word being defined (remains in word_language)
           example: hello
           type: string
-        part_of_speech:
-          description: All parts of speech that apply to the word across all meanings
-          example:
-          - exclamation
-          - noun
-          items:
-            type: string
-          type: array
-        usage_level:
-          description: "Register or context where the word is typically used (formal,\
-            \ informal, slang, technical, etc.)"
-          example:
-          - standard
-          - common
-          items:
-            type: string
-          type: array
         primary_meaning:
           $ref: '#/components/schemas/translateDictionary_200_response_definition_primary_meaning'
         secondary_meanings:
@@ -3095,14 +3257,25 @@ components:
           - definition: An expression of surprise
             part_of_speech:
             - exclamation
+            usage_level:
+            - informal
+            dialect:
+            - US
+            synonyms:
+            - wow
+            - oh my
           - definition: A call for attention
             part_of_speech:
             - noun
+            usage_level:
+            - standard
           items:
             $ref: '#/components/schemas/translateDictionary_200_response_definition_secondary_meanings_inner'
           type: array
         examples:
-          description: Example sentences showing usage
+          description: "Example sentences showing usage (remains in word_language,\
+            \ but includes translations in parentheses when word_language differs\
+            \ from definition_language)"
           example:
           - "Hello, how are you?"
           - Hello! I didn't see you there.
@@ -3110,14 +3283,63 @@ components:
             type: string
           type: array
         pronunciation:
-          description: Phonetic pronunciation (if available)
+          description: Phonetic pronunciation of the word in its original language
+            (if available)
           example: həˈloʊ
           type: string
         etymology:
-          description: Information about word origin (if available)
+          description: Information about word origin (translated to definition_language
+            if available)
           example: "From earlier hallo, hollo, which is from Old High German halâ\
             , holâ"
           type: string
+        notes:
+          description: "Brief usage notes, cultural context, or helpful tips for language\
+            \ learners (translated to definition_language)"
+          example: Be careful with tone - 'hello' can sound overly formal in casual
+            text messages where 'hi' or 'hey' might be preferred.
+          type: string
+        temporal_trend:
+          description: Optional usage trend indicator. Always in English as an enum
+            value. Only provided when trend data is clear and meaningful.
+          enum:
+          - increasing
+          - stable
+          - decreasing
+          example: stable
+          type: string
+        gender:
+          description: Grammatical gender for nouns in languages that have gender.
+            Always in English as an enum value. Only included for nouns in gendered
+            languages.
+          enum:
+          - masculine
+          - feminine
+          - neuter
+          - common
+          example: masculine
+          type: string
+        plural:
+          description: Plural form of the word (remains in word_language). Only included
+            for irregular or non-standard plurals.
+          example: children
+          type: string
+        conjugation_notes:
+          description: Brief notes about verb conjugation irregularities (remains
+            in word_language). Only included for verbs with notable irregularities.
+          example: "irregular past tense: went"
+          type: string
+        related_words:
+          description: Related words from the same root or word family (remains in
+            word_language)
+          example:
+          - decide
+          - decision
+          - decisive
+          - indecisive
+          items:
+            type: string
+          type: array
       type: object
     translateDictionary_200_response_language:
       example:
@@ -3136,29 +3358,53 @@ components:
     translateDictionary_200_response:
       example:
         definition:
+          related_words:
+          - decide
+          - decision
+          - decisive
+          - indecisive
           primary_meaning:
+            dialect:
+            - US
+            - UK
+            synonyms:
+            - hi
+            - greetings
+            - good day
+            - howdy
             part_of_speech:
             - exclamation
             definition: Used as a greeting or to begin a phone conversation
+            usage_level:
+            - standard
           secondary_meanings:
           - definition: An expression of surprise
             part_of_speech:
             - exclamation
+            usage_level:
+            - informal
+            dialect:
+            - US
+            synonyms:
+            - wow
+            - oh my
           - definition: A call for attention
             part_of_speech:
             - noun
+            usage_level:
+            - standard
+          notes: Be careful with tone - 'hello' can sound overly formal in casual
+            text messages where 'hi' or 'hey' might be preferred.
+          plural: children
           examples:
           - "Hello, how are you?"
           - Hello! I didn't see you there.
           pronunciation: həˈloʊ
-          part_of_speech:
-          - exclamation
-          - noun
+          gender: masculine
           etymology: "From earlier hallo, hollo, which is from Old High German halâ\
             , holâ"
-          usage_level:
-          - standard
-          - common
+          conjugation_notes: "irregular past tense: went"
+          temporal_trend: stable
           word: hello
         language:
           iso: en

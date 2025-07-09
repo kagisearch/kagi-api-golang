@@ -20,10 +20,16 @@ var _ MappedNullable = &TranslateDictionary200ResponseDefinitionPrimaryMeaning{}
 
 // TranslateDictionary200ResponseDefinitionPrimaryMeaning The primary or most common meaning
 type TranslateDictionary200ResponseDefinitionPrimaryMeaning struct {
-	// The text of the primary definition
+	// The text of the primary definition (translated to definition_language)
 	Definition *string `json:"definition,omitempty"`
-	// The part(s) of speech that apply to this specific meaning
+	// The part(s) of speech that apply to this specific meaning (translated to definition_language)
 	PartOfSpeech []string `json:"part_of_speech,omitempty"`
+	// Register or context where this specific meaning is used (formal, informal, slang, technical, etc.) - translated to definition_language
+	UsageLevel []string `json:"usage_level,omitempty"`
+	// Specific dialects where this meaning is used (e.g., \"US\", \"UK\", \"Australian\")
+	Dialect []string `json:"dialect,omitempty"`
+	// List of synonyms for this meaning, ordered from strongest/closest to least similar (remains in word_language)
+	Synonyms []string `json:"synonyms,omitempty"`
 }
 
 // NewTranslateDictionary200ResponseDefinitionPrimaryMeaning instantiates a new TranslateDictionary200ResponseDefinitionPrimaryMeaning object
@@ -107,6 +113,102 @@ func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) SetPartOfSpeech
 	o.PartOfSpeech = v
 }
 
+// GetUsageLevel returns the UsageLevel field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) GetUsageLevel() []string {
+	if o == nil || IsNil(o.UsageLevel) {
+		var ret []string
+		return ret
+	}
+	return o.UsageLevel
+}
+
+// GetUsageLevelOk returns a tuple with the UsageLevel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) GetUsageLevelOk() ([]string, bool) {
+	if o == nil || IsNil(o.UsageLevel) {
+		return nil, false
+	}
+	return o.UsageLevel, true
+}
+
+// HasUsageLevel returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) HasUsageLevel() bool {
+	if o != nil && !IsNil(o.UsageLevel) {
+		return true
+	}
+
+	return false
+}
+
+// SetUsageLevel gets a reference to the given []string and assigns it to the UsageLevel field.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) SetUsageLevel(v []string) {
+	o.UsageLevel = v
+}
+
+// GetDialect returns the Dialect field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) GetDialect() []string {
+	if o == nil || IsNil(o.Dialect) {
+		var ret []string
+		return ret
+	}
+	return o.Dialect
+}
+
+// GetDialectOk returns a tuple with the Dialect field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) GetDialectOk() ([]string, bool) {
+	if o == nil || IsNil(o.Dialect) {
+		return nil, false
+	}
+	return o.Dialect, true
+}
+
+// HasDialect returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) HasDialect() bool {
+	if o != nil && !IsNil(o.Dialect) {
+		return true
+	}
+
+	return false
+}
+
+// SetDialect gets a reference to the given []string and assigns it to the Dialect field.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) SetDialect(v []string) {
+	o.Dialect = v
+}
+
+// GetSynonyms returns the Synonyms field value if set, zero value otherwise.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) GetSynonyms() []string {
+	if o == nil || IsNil(o.Synonyms) {
+		var ret []string
+		return ret
+	}
+	return o.Synonyms
+}
+
+// GetSynonymsOk returns a tuple with the Synonyms field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) GetSynonymsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Synonyms) {
+		return nil, false
+	}
+	return o.Synonyms, true
+}
+
+// HasSynonyms returns a boolean if a field has been set.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) HasSynonyms() bool {
+	if o != nil && !IsNil(o.Synonyms) {
+		return true
+	}
+
+	return false
+}
+
+// SetSynonyms gets a reference to the given []string and assigns it to the Synonyms field.
+func (o *TranslateDictionary200ResponseDefinitionPrimaryMeaning) SetSynonyms(v []string) {
+	o.Synonyms = v
+}
+
 func (o TranslateDictionary200ResponseDefinitionPrimaryMeaning) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +224,15 @@ func (o TranslateDictionary200ResponseDefinitionPrimaryMeaning) ToMap() (map[str
 	}
 	if !IsNil(o.PartOfSpeech) {
 		toSerialize["part_of_speech"] = o.PartOfSpeech
+	}
+	if !IsNil(o.UsageLevel) {
+		toSerialize["usage_level"] = o.UsageLevel
+	}
+	if !IsNil(o.Dialect) {
+		toSerialize["dialect"] = o.Dialect
+	}
+	if !IsNil(o.Synonyms) {
+		toSerialize["synonyms"] = o.Synonyms
 	}
 	return toSerialize, nil
 }

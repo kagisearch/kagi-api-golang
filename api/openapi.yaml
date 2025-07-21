@@ -16,15 +16,16 @@ info:
     \ have a language you would like to use and it's not in the list, send us a message\
     \ and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download)\
     \ to build your own custom library.\n\n- [Golang](https://github.com/kagisearch/kagi-api-golang)\n\
-    - [Python](https://github.com/kagisearch/kagi-api-python)\n\n### Unofficial Client\
-    \ Libraries\n\nThere also exist third party libraries for interacting with the\
-    \ Kagi API.\n\n- [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT\
-    \ & Universal Summarizer\n- [kagi-api](https://crates.io/crates/kagi-api) for\
-    \ Rust\n- [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby\n- [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet)\
-    \ for C#/.NET\n\n### API Status\n\nOur existing API, the \"v0\" beta API, is being\
-    \ replaced with a new version that will be available publicly soon. As changes\
-    \ are made, we will be updating the documentation below when the new features\
-    \ become available.\n\nSee the [Support and Community](https://help.kagi.com/kagi/support-and-community/)\
+    - [Python](https://github.com/kagisearch/kagi-api-python)\n- [Rust](https://github.com/kagisearch/kagi-api-rust)\n\
+    \n### Unofficial Client Libraries\n\nThere also exist third party libraries for\
+    \ interacting with the Kagi API.\n\n- [kagigo for Go](https://github.com/httpjamesm/kagigo)\
+    \ - FastGPT & Universal Summarizer\n- [kagi-api](https://crates.io/crates/kagi-api)\
+    \ for Rust\n- [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby\n-\
+    \ [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET\n\n###\
+    \ API Status\n\nOur existing API, the \"v0\" beta API, is being replaced with\
+    \ a new version that will be available publicly soon. As changes are made, we\
+    \ will be updating the documentation below when the new features become available.\n\
+    \nSee the [Support and Community](https://help.kagi.com/kagi/support-and-community/)\
     \ section for details.\n### Pricing\n\nWe are in the process of moving all APIs\
     \ to a post-paid tiered system, where each tier has a limit on the number of requests\
     \ that can be made. If an API has a pricing section, then it is still being migrated\
@@ -123,7 +124,7 @@ paths:
           application/json:
             examples:
               basicSearch:
-                description: Simple search showing how to use the serach API
+                description: Simple search showing how to use the search API
                 summary: Basic search query
                 value:
                   query: steve jobs
@@ -136,7 +137,7 @@ paths:
                   query: '@r headphones'
                   workflow: search
               imageSearch:
-                description: "Searching just for images, or other catrgories is supported\
+                description: "Searching just for images, or other categories is supported\
                   \ using the workflow parameter"
                 summary: Search just for images
                 value:
@@ -1706,56 +1707,65 @@ components:
       description: Access token is missing or invalid
   schemas:
     meta:
+      additionalProperties: true
+      description: This object is subject to change as it is provided for debugging
+        purposes. Fields may be added or removed as required. Don't build any hard
+        dependancies on any of this data.
       example:
         node: node
         trace: trace
         ms: 0
-        query:
-          workflow: workflow
-          terms: terms
-          raw: raw
-          fields:
-          - kind: kind
-            negate: true
-            name: name
-            value: value
-          - kind: kind
-            negate: true
-            name: name
-            value: value
         id: id
       properties:
         trace:
+          description: "Trace ID that can be used to debug individual API requests.\
+            \ Provide this, if needed, when contacting Kagi support."
           type: string
         id:
           type: string
         node:
+          description: The hostname of the node that fulfilled the request.
           type: string
         ms:
+          description: "how long the request took to fulfill, excluding round trip\
+            \ to the client."
           type: integer
-        query:
-          $ref: '#/components/schemas/meta_query'
       type: object
     searchResult:
+      description: A search result that fulfills the query sent to the kagi API
       example:
-        snippet: snippet
+        snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an American\
+          \ businessman, inventor, and investor best known for co-founding the ..."
         image:
-          width: 1
-          url: url
-          height: 6
-        time: time
-        title: title
-        url: url
+          width: 310
+          url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+          height: 300
+        time: 2024-11-29T03:54:26Z
+        title: Steve Jobs - Wikipedia
+        url: https://en.wikipedia.org/wiki/Steve_Jobs
         props:
           key: ""
       properties:
         url:
+          description: The location of the result. This is the direct URL to the resource
+            that matches the query
+          example: https://en.wikipedia.org/wiki/Steve_Jobs
           type: string
         title:
+          description: "This is the title of the resource. For HTML resources, it\
+            \ is the title in the header of the document. For Video resources, it\
+            \ is the name of the video that would be displayed on the video site"
+          example: Steve Jobs - Wikipedia
           type: string
         snippet:
+          description: A short summary of the contents of the resource
+          example: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           type: string
         time:
+          description: A date for when the resource was last updated or created.
+          example: 2024-11-29T03:54:26Z
           type: string
         image:
           $ref: '#/components/schemas/searchResult_image'
@@ -1775,24 +1785,11 @@ components:
           node: node
           trace: trace
           ms: 0
-          query:
-            workflow: workflow
-            terms: terms
-            raw: raw
-            fields:
-            - kind: kind
-              negate: true
-              name: name
-              value: value
-            - kind: kind
-              negate: true
-              name: name
-              value: value
           id: id
         error:
           msg: msg
           ref: ref
-          code: 5
+          code: 6
       properties:
         meta:
           $ref: '#/components/schemas/meta'
@@ -1812,19 +1809,6 @@ components:
           node: node
           trace: trace
           ms: 0
-          query:
-            workflow: workflow
-            terms: terms
-            raw: raw
-            fields:
-            - kind: kind
-              negate: true
-              name: name
-              value: value
-            - kind: kind
-              negate: true
-              name: name
-              value: value
           id: id
       properties:
         meta:
@@ -1847,13 +1831,13 @@ components:
       example:
         snippet: snippet
         image:
-          width: 1
+          width: 2
           url: url
-          height: 6
+          height: 5
         thumbnail:
-          width: 1
+          width: 5
           url: url
-          height: 6
+          height: 1
         t: 0
         rank: 6
         published: published
@@ -1861,21 +1845,30 @@ components:
         url: url
       properties:
         t:
+          description: This is always set to 0. It is used as a flag to identify if
+            the result was a rearch result or a related searches object.
           type: integer
         rank:
+          description: "Order of resarch results, the highest rank is 1 and should\
+            \ identify results that match the search request better."
           type: integer
         url:
+          description: URL of the resource identified in the search result.
           type: string
         title:
+          description: "Title of the search result. This can be taken from the title\
+            \ of the html document, or the title of a media resource."
           type: string
         snippet:
+          description: "a short desciption, or summary, of the content."
           type: string
         published:
+          description: the date the rearch result was created
           type: string
         thumbnail:
-          $ref: '#/components/schemas/searchResult_image'
+          $ref: '#/components/schemas/searchObject_thumbnail'
         image:
-          $ref: '#/components/schemas/searchResult_image'
+          $ref: '#/components/schemas/searchObject_image'
       required:
       - title
       - url
@@ -1900,455 +1893,565 @@ components:
       - query
       type: object
     search_200_response_data:
+      description: "Holds all the search results for the query specified. As results\
+        \ have different types and sources, they are spearated into different fields\
+        \ within this object. For example image results are stored under `data.image`\
+        \ while news results are stored under `data.news`. All results will have the\
+        \ same main structure, but additional data might be stored under the `data.{name}[].props`\
+        \ path. Please look at each different type of result for more information\
+        \ about this."
       example:
         news:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         image:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         podcast_creator:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         direct_answer:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         code:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         web_archive:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         interesting_news:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         infobox:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         related_search:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         video:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         interesting_finds:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         listicle:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         search:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         adjacent_question:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         podcast:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         weather:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         package_tracking:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
         public_records:
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
-        - snippet: snippet
+        - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+            \ American businessman, inventor, and investor best known for co-founding\
+            \ the ..."
           image:
-            width: 1
-            url: url
-            height: 6
-          time: time
-          title: title
-          url: url
+            width: 310
+            url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+            height: 300
+          time: 2024-11-29T03:54:26Z
+          title: Steve Jobs - Wikipedia
+          url: https://en.wikipedia.org/wiki/Steve_Jobs
           props:
             key: ""
       properties:
         search:
+          description: Contains all search results for html pages or wedbsites.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         image:
+          description: Contains all search results for images.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         video:
+          description: Contains all search results for videos.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         podcast:
+          description: Contains all search results for podcasts.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         podcast_creator:
+          description: Contains all search results for creators of podcasta.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         news:
+          description: Contains all search results for news articles.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         adjacent_question:
+          description: Contains results that are obtained by searching for slightly
+            different queries. These questions are stored under the `props.question`
+            path.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         direct_answer:
+          description: "If the search query was a math equation, or unit conversions,\
+            \ things that can be answered quickly, the result will be in here."
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         interesting_news:
+          description: Contains news results from publishers collected and stored
+            in Kagis' news index.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         interesting_finds:
+          description: Contains small web results from publishers collected and stored
+            in Kagis' small web index.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         infobox:
+          description: "Contains detailed summary and tabulated information about\
+            \ a person, place, or thing."
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         code:
+          description: Contains all search results that link to code resources or
+            repositories.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         package_tracking:
+          description: "If the search query was a package tracking number, the correct\
+            \ package tracking website should be present in this collection."
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         public_records:
+          description: "Contains all search results for public records, such as government\
+            \ documents, or public court records."
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         weather:
+          description: Contains all search results for the current weather.
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         related_search:
+          description: "Contains a list of searches that are related to the current\
+            \ search, and may help narrow down the results."
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         listicle:
+          description: "Contains all search results that are lists of things. Results\
+            \ with titles like \"5 things you didn't know about...\", or \"10 of the\
+            \ best headphones\"."
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
         web_archive:
+          description: Contains all search results for archived websites that may
+            not be available anymore
           items:
             $ref: '#/components/schemas/searchResult'
           type: array
@@ -2358,400 +2461,459 @@ components:
       example:
         data:
           news:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           image:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           podcast_creator:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           direct_answer:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           code:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           web_archive:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           interesting_news:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           infobox:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           related_search:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           video:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           interesting_finds:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           listicle:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           search:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           adjacent_question:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           podcast:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           weather:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           package_tracking:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
           public_records:
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
-          - snippet: snippet
+          - snippet: "Steven Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+              \ American businessman, inventor, and investor best known for co-founding\
+              \ the ..."
             image:
-              width: 1
-              url: url
-              height: 6
-            time: time
-            title: title
-            url: url
+              width: 310
+              url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+              height: 300
+            time: 2024-11-29T03:54:26Z
+            title: Steve Jobs - Wikipedia
+            url: https://en.wikipedia.org/wiki/Steve_Jobs
             props:
               key: ""
         meta:
           node: node
           trace: trace
           ms: 0
-          query:
-            workflow: workflow
-            terms: terms
-            raw: raw
-            fields:
-            - kind: kind
-              negate: true
-              name: name
-              value: value
-            - kind: kind
-              negate: true
-              name: name
-              value: value
           id: id
       properties:
         meta:
@@ -2765,13 +2927,13 @@ components:
         data:
         - snippet: snippet
           image:
-            width: 1
+            width: 2
             url: url
-            height: 6
+            height: 5
           thumbnail:
-            width: 1
+            width: 5
             url: url
-            height: 6
+            height: 1
           t: 0
           rank: 6
           published: published
@@ -2779,13 +2941,13 @@ components:
           url: url
         - snippet: snippet
           image:
-            width: 1
+            width: 2
             url: url
-            height: 6
+            height: 5
           thumbnail:
-            width: 1
+            width: 5
             url: url
-            height: 6
+            height: 1
           t: 0
           rank: 6
           published: published
@@ -2795,19 +2957,6 @@ components:
           node: node
           trace: trace
           ms: 0
-          query:
-            workflow: workflow
-            terms: terms
-            raw: raw
-            fields:
-            - kind: kind
-              negate: true
-              name: name
-              value: value
-            - kind: kind
-              negate: true
-              name: name
-              value: value
           id: id
       properties:
         meta:
@@ -2834,13 +2983,13 @@ components:
         references:
         - snippet: snippet
           image:
-            width: 1
+            width: 2
             url: url
-            height: 6
+            height: 5
           thumbnail:
-            width: 1
+            width: 5
             url: url
-            height: 6
+            height: 1
           t: 0
           rank: 6
           published: published
@@ -2848,13 +2997,13 @@ components:
           url: url
         - snippet: snippet
           image:
-            width: 1
+            width: 2
             url: url
-            height: 6
+            height: 5
           thumbnail:
-            width: 1
+            width: 5
             url: url
-            height: 6
+            height: 1
           t: 0
           rank: 6
           published: published
@@ -2879,13 +3028,13 @@ components:
           references:
           - snippet: snippet
             image:
-              width: 1
+              width: 2
               url: url
-              height: 6
+              height: 5
             thumbnail:
-              width: 1
+              width: 5
               url: url
-              height: 6
+              height: 1
             t: 0
             rank: 6
             published: published
@@ -2893,13 +3042,13 @@ components:
             url: url
           - snippet: snippet
             image:
-              width: 1
+              width: 2
               url: url
-              height: 6
+              height: 5
             thumbnail:
-              width: 1
+              width: 5
               url: url
-              height: 6
+              height: 1
             t: 0
             rank: 6
             published: published
@@ -2910,19 +3059,6 @@ components:
           node: node
           trace: trace
           ms: 0
-          query:
-            workflow: workflow
-            terms: terms
-            raw: raw
-            fields:
-            - kind: kind
-              negate: true
-              name: name
-              value: value
-            - kind: kind
-              negate: true
-              name: name
-              value: value
           id: id
       properties:
         meta:
@@ -3847,59 +3983,26 @@ components:
           example: Translation service unavailable
           type: string
       type: object
-    meta_query_fields_inner:
-      example:
-        kind: kind
-        negate: true
-        name: name
-        value: value
-      properties:
-        kind:
-          type: string
-        value:
-          type: string
-        name:
-          type: string
-        negate:
-          type: boolean
-      type: object
-    meta_query:
-      example:
-        workflow: workflow
-        terms: terms
-        raw: raw
-        fields:
-        - kind: kind
-          negate: true
-          name: name
-          value: value
-        - kind: kind
-          negate: true
-          name: name
-          value: value
-      properties:
-        raw:
-          type: string
-        terms:
-          type: string
-        fields:
-          items:
-            $ref: '#/components/schemas/meta_query_fields_inner'
-          type: array
-        workflow:
-          type: string
-      type: object
     searchResult_image:
+      description: "An image that goes with the main resource. This could be a thumbnail\
+        \ of a video resource, Or a main image on an html resource"
       example:
-        width: 1
-        url: url
-        height: 6
+        width: 310
+        url: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
+        height: 300
       properties:
         url:
+          description: This is a URL that links directly to the image that goes with
+            the resources.
+          example: https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/330px-Steve_Jobs_Headshot_2010-CROP_%28cropp    ed_2%29.jpg
           type: string
         height:
+          description: The height of the image.
+          example: 300
           type: integer
         width:
+          description: The width of the image.
+          example: 310
           type: integer
       required:
       - url
@@ -3908,7 +4011,7 @@ components:
       example:
         msg: msg
         ref: ref
-        code: 5
+        code: 6
       properties:
         code:
           type: integer
@@ -3932,6 +4035,44 @@ components:
       required:
       - output
       - tokens
+    searchObject_thumbnail:
+      description: A small image that can be displayed along side the serach result.
+      example:
+        width: 5
+        url: url
+        height: 1
+      properties:
+        url:
+          description: URL of the thumbnail
+          type: string
+        height:
+          description: hight of the thumbnail
+          type: integer
+        width:
+          description: width of the thumbnail
+          type: integer
+      required:
+      - url
+      type: object
+    searchObject_image:
+      description: An image that is linked to the search result.
+      example:
+        width: 2
+        url: url
+        height: 5
+      properties:
+        url:
+          description: URL of the image
+          type: string
+        height:
+          description: hight of the image
+          type: integer
+        width:
+          description: width of the image
+          type: integer
+      required:
+      - url
+      type: object
   securitySchemes:
     kagi:
       description: "Kagi Bot token for automated access, Please prefix with `Bot `.\

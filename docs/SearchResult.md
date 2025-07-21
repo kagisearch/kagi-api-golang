@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Url** | **string** |  | 
-**Title** | **string** |  | 
-**Snippet** | Pointer to **string** |  | [optional] 
-**Time** | Pointer to **string** |  | [optional] 
+**Url** | **string** | The location of the result. This is the direct URL to the resource that matches the query | 
+**Title** | **string** | This is the title of the resource. For HTML resources, it is the title in the header of the document. For Video resources, it is the name of the video that would be displayed on the video site | 
+**Snippet** | Pointer to **string** | A short summary of the contents of the resource | [optional] 
+**Time** | Pointer to **string** | A date for when the resource was last updated or created. | [optional] 
 **Image** | Pointer to [**SearchResultImage**](SearchResultImage.md) |  | [optional] 
 **Props** | Pointer to **map[string]interface{}** | Holds arbitrary result metadata | [optional] 
 

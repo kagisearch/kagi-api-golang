@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Url** | **string** |  | 
-**Height** | Pointer to **int32** |  | [optional] 
-**Width** | Pointer to **int32** |  | [optional] 
+**Url** | **string** | This is a URL that links directly to the image that goes with the resources. | 
+**Height** | Pointer to **int32** | The height of the image. | [optional] 
+**Width** | Pointer to **int32** | The width of the image. | [optional] 
 
 ## Methods
 

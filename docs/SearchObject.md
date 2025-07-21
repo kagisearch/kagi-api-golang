@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**T** | Pointer to **int32** |  | [optional] 
-**Rank** | Pointer to **int32** |  | [optional] 
-**Url** | **string** |  | 
-**Title** | **string** |  | 
-**Snippet** | Pointer to **string** |  | [optional] 
-**Published** | Pointer to **string** |  | [optional] 
-**Thumbnail** | Pointer to [**SearchResultImage**](SearchResultImage.md) |  | [optional] 
-**Image** | Pointer to [**SearchResultImage**](SearchResultImage.md) |  | [optional] 
+**T** | Pointer to **int32** | This is always set to 0. It is used as a flag to identify if the result was a rearch result or a related searches object. | [optional] 
+**Rank** | Pointer to **int32** | Order of resarch results, the highest rank is 1 and should identify results that match the search request better. | [optional] 
+**Url** | **string** | URL of the resource identified in the search result. | 
+**Title** | **string** | Title of the search result. This can be taken from the title of the html document, or the title of a media resource. | 
+**Snippet** | Pointer to **string** | a short desciption, or summary, of the content. | [optional] 
+**Published** | Pointer to **string** | the date the rearch result was created | [optional] 
+**Thumbnail** | Pointer to [**SearchObjectThumbnail**](SearchObjectThumbnail.md) |  | [optional] 
+**Image** | Pointer to [**SearchObjectImage**](SearchObjectImage.md) |  | [optional] 
 
 ## Methods
 
@@ -174,20 +174,20 @@ HasPublished returns a boolean if a field has been set.
 
 ### GetThumbnail
 
-`func (o *SearchObject) GetThumbnail() SearchResultImage`
+`func (o *SearchObject) GetThumbnail() SearchObjectThumbnail`
 
 GetThumbnail returns the Thumbnail field if non-nil, zero value otherwise.
 
 ### GetThumbnailOk
 
-`func (o *SearchObject) GetThumbnailOk() (*SearchResultImage, bool)`
+`func (o *SearchObject) GetThumbnailOk() (*SearchObjectThumbnail, bool)`
 
 GetThumbnailOk returns a tuple with the Thumbnail field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetThumbnail
 
-`func (o *SearchObject) SetThumbnail(v SearchResultImage)`
+`func (o *SearchObject) SetThumbnail(v SearchObjectThumbnail)`
 
 SetThumbnail sets Thumbnail field to given value.
 
@@ -199,20 +199,20 @@ HasThumbnail returns a boolean if a field has been set.
 
 ### GetImage
 
-`func (o *SearchObject) GetImage() SearchResultImage`
+`func (o *SearchObject) GetImage() SearchObjectImage`
 
 GetImage returns the Image field if non-nil, zero value otherwise.
 
 ### GetImageOk
 
-`func (o *SearchObject) GetImageOk() (*SearchResultImage, bool)`
+`func (o *SearchObject) GetImageOk() (*SearchObjectImage, bool)`
 
 GetImageOk returns a tuple with the Image field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetImage
 
-`func (o *SearchObject) SetImage(v SearchResultImage)`
+`func (o *SearchObject) SetImage(v SearchObjectImage)`
 
 SetImage sets Image field to given value.
 

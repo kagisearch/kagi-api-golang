@@ -1,7 +1,7 @@
 /*
 Kagi API
 
-The Kagi API provides programmatic access to data that powers our search results & more.   Quick start for all APIs:  - Create an account at [Kagi](https://kagi.com/signup) - Generate an [API key](https://kagi.com/settings?p=api) - Call the API  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  ### Free  - Kagi Small Web RSS feed (public)  ### Official Client Libraries  We offer the following libraries you can use to interact with the Kagi API. These are generated from an OpenAPI spec. If you have a language you would like to use and it's not in the list, send us a message and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download) to build your own custom library.  - [Golang](https://github.com/kagisearch/kagi-api-golang) - [Python](https://github.com/kagisearch/kagi-api-python)  ### Unofficial Client Libraries  There also exist third party libraries for interacting with the Kagi API.  - [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT & Universal Summarizer - [kagi-api](https://crates.io/crates/kagi-api) for Rust - [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby - [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET  ### API Status  Our existing API, the \"v0\" beta API, is being replaced with a new version that will be available publicly soon. As changes are made, we will be updating the documentation below when the new features become available.  See the [Support and Community](https://help.kagi.com/kagi/support-and-community/) section for details. ### Pricing  We are in the process of moving all APIs to a post-paid tiered system, where each tier has a limit on the number of requests that can be made. If an API has a pricing section, then it is still being migrated over to the new billing system.  ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose) - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api) - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)  ### Discord Join our [Discord](https://kagi.com/discord)! Good for quick questions or chatting about things you've made with our APIs! 
+The Kagi API provides programmatic access to data that powers our search results & more.   Quick start for all APIs:  - Create an account at [Kagi](https://kagi.com/signup) - Generate an [API key](https://kagi.com/settings?p=api) - Call the API  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  ### Free  - Kagi Small Web RSS feed (public)  ### Official Client Libraries  We offer the following libraries you can use to interact with the Kagi API. These are generated from an OpenAPI spec. If you have a language you would like to use and it's not in the list, send us a message and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download) to build your own custom library.  - [Golang](https://github.com/kagisearch/kagi-api-golang) - [Python](https://github.com/kagisearch/kagi-api-python) - [Rust](https://github.com/kagisearch/kagi-api-rust)  ### Unofficial Client Libraries  There also exist third party libraries for interacting with the Kagi API.  - [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT & Universal Summarizer - [kagi-api](https://crates.io/crates/kagi-api) for Rust - [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby - [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET  ### API Status  Our existing API, the \"v0\" beta API, is being replaced with a new version that will be available publicly soon. As changes are made, we will be updating the documentation below when the new features become available.  See the [Support and Community](https://help.kagi.com/kagi/support-and-community/) section for details. ### Pricing  We are in the process of moving all APIs to a post-paid tiered system, where each tier has a limit on the number of requests that can be made. If an API has a pricing section, then it is still being migrated over to the new billing system.  ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose) - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api) - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)  ### Discord Join our [Discord](https://kagi.com/discord)! Good for quick questions or chatting about things you've made with our APIs! 
 
 API version: 0.1.0
 Contact: support@kagi.com
@@ -22,14 +22,20 @@ var _ MappedNullable = &SearchObject{}
 
 // SearchObject struct for SearchObject
 type SearchObject struct {
+	// This is always set to 0. It is used as a flag to identify if the result was a rearch result or a related searches object.
 	T *int32 `json:"t,omitempty"`
+	// Order of resarch results, the highest rank is 1 and should identify results that match the search request better.
 	Rank *int32 `json:"rank,omitempty"`
+	// URL of the resource identified in the search result.
 	Url string `json:"url"`
+	// Title of the search result. This can be taken from the title of the html document, or the title of a media resource.
 	Title string `json:"title"`
+	// a short desciption, or summary, of the content.
 	Snippet *string `json:"snippet,omitempty"`
+	// the date the rearch result was created
 	Published *string `json:"published,omitempty"`
-	Thumbnail *SearchResultImage `json:"thumbnail,omitempty"`
-	Image *SearchResultImage `json:"image,omitempty"`
+	Thumbnail *SearchObjectThumbnail `json:"thumbnail,omitempty"`
+	Image *SearchObjectImage `json:"image,omitempty"`
 }
 
 type _SearchObject SearchObject
@@ -230,9 +236,9 @@ func (o *SearchObject) SetPublished(v string) {
 }
 
 // GetThumbnail returns the Thumbnail field value if set, zero value otherwise.
-func (o *SearchObject) GetThumbnail() SearchResultImage {
+func (o *SearchObject) GetThumbnail() SearchObjectThumbnail {
 	if o == nil || IsNil(o.Thumbnail) {
-		var ret SearchResultImage
+		var ret SearchObjectThumbnail
 		return ret
 	}
 	return *o.Thumbnail
@@ -240,7 +246,7 @@ func (o *SearchObject) GetThumbnail() SearchResultImage {
 
 // GetThumbnailOk returns a tuple with the Thumbnail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetThumbnailOk() (*SearchResultImage, bool) {
+func (o *SearchObject) GetThumbnailOk() (*SearchObjectThumbnail, bool) {
 	if o == nil || IsNil(o.Thumbnail) {
 		return nil, false
 	}
@@ -256,15 +262,15 @@ func (o *SearchObject) HasThumbnail() bool {
 	return false
 }
 
-// SetThumbnail gets a reference to the given SearchResultImage and assigns it to the Thumbnail field.
-func (o *SearchObject) SetThumbnail(v SearchResultImage) {
+// SetThumbnail gets a reference to the given SearchObjectThumbnail and assigns it to the Thumbnail field.
+func (o *SearchObject) SetThumbnail(v SearchObjectThumbnail) {
 	o.Thumbnail = &v
 }
 
 // GetImage returns the Image field value if set, zero value otherwise.
-func (o *SearchObject) GetImage() SearchResultImage {
+func (o *SearchObject) GetImage() SearchObjectImage {
 	if o == nil || IsNil(o.Image) {
-		var ret SearchResultImage
+		var ret SearchObjectImage
 		return ret
 	}
 	return *o.Image
@@ -272,7 +278,7 @@ func (o *SearchObject) GetImage() SearchResultImage {
 
 // GetImageOk returns a tuple with the Image field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchObject) GetImageOk() (*SearchResultImage, bool) {
+func (o *SearchObject) GetImageOk() (*SearchObjectImage, bool) {
 	if o == nil || IsNil(o.Image) {
 		return nil, false
 	}
@@ -288,8 +294,8 @@ func (o *SearchObject) HasImage() bool {
 	return false
 }
 
-// SetImage gets a reference to the given SearchResultImage and assigns it to the Image field.
-func (o *SearchObject) SetImage(v SearchResultImage) {
+// SetImage gets a reference to the given SearchObjectImage and assigns it to the Image field.
+func (o *SearchObject) SetImage(v SearchObjectImage) {
 	o.Image = &v
 }
 

@@ -1,7 +1,7 @@
 /*
 Kagi API
 
-The Kagi API provides programmatic access to data that powers our search results & more.   Quick start for all APIs:  - Create an account at [Kagi](https://kagi.com/signup) - Generate an [API key](https://kagi.com/settings?p=api) - Call the API  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  ### Free  - Kagi Small Web RSS feed (public)  ### Official Client Libraries  We offer the following libraries you can use to interact with the Kagi API. These are generated from an OpenAPI spec. If you have a language you would like to use and it's not in the list, send us a message and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download) to build your own custom library.  - [Golang](https://github.com/kagisearch/kagi-api-golang) - [Python](https://github.com/kagisearch/kagi-api-python)  ### Unofficial Client Libraries  There also exist third party libraries for interacting with the Kagi API.  - [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT & Universal Summarizer - [kagi-api](https://crates.io/crates/kagi-api) for Rust - [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby - [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET  ### API Status  Our existing API, the \"v0\" beta API, is being replaced with a new version that will be available publicly soon. As changes are made, we will be updating the documentation below when the new features become available.  See the [Support and Community](https://help.kagi.com/kagi/support-and-community/) section for details. ### Pricing  We are in the process of moving all APIs to a post-paid tiered system, where each tier has a limit on the number of requests that can be made. If an API has a pricing section, then it is still being migrated over to the new billing system.  ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose) - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api) - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)  ### Discord Join our [Discord](https://kagi.com/discord)! Good for quick questions or chatting about things you've made with our APIs! 
+The Kagi API provides programmatic access to data that powers our search results & more.   Quick start for all APIs:  - Create an account at [Kagi](https://kagi.com/signup) - Generate an [API key](https://kagi.com/settings?p=api) - Call the API  We have the following APIs available. ### Commercial  - Kagi Search API (invite only at the moment) - Web and News Enrichment API (public, exposes Kagi's own indexes Teclis and TinyGem) - Universal Summarizer API (public) - FastGPT API (public)  ### Free  - Kagi Small Web RSS feed (public)  ### Official Client Libraries  We offer the following libraries you can use to interact with the Kagi API. These are generated from an OpenAPI spec. If you have a language you would like to use and it's not in the list, send us a message and we will add it to the list if it is supported. Or you can use the [spec](https://wild-wombat.redocly.app/_spec/openapi.yaml?download) to build your own custom library.  - [Golang](https://github.com/kagisearch/kagi-api-golang) - [Python](https://github.com/kagisearch/kagi-api-python) - [Rust](https://github.com/kagisearch/kagi-api-rust)  ### Unofficial Client Libraries  There also exist third party libraries for interacting with the Kagi API.  - [kagigo for Go](https://github.com/httpjamesm/kagigo) - FastGPT & Universal Summarizer - [kagi-api](https://crates.io/crates/kagi-api) for Rust - [kagi-api](https://alchemists.io/projects/kagi-api) for Ruby - [kagi-dotnet](https://github.com/patchoulish/kagi-dotnet) for C#/.NET  ### API Status  Our existing API, the \"v0\" beta API, is being replaced with a new version that will be available publicly soon. As changes are made, we will be updating the documentation below when the new features become available.  See the [Support and Community](https://help.kagi.com/kagi/support-and-community/) section for details. ### Pricing  We are in the process of moving all APIs to a post-paid tiered system, where each tier has a limit on the number of requests that can be made. If an API has a pricing section, then it is still being migrated over to the new billing system.  ### GitHub Discussions  This is the preferred venue for bug reports and feature requests.  - [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose) - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api) - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)  ### Discord Join our [Discord](https://kagi.com/discord)! Good for quick questions or chatting about things you've made with our APIs! 
 
 API version: 0.1.0
 Contact: support@kagi.com
@@ -18,14 +18,19 @@ import (
 // checks if the Meta type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Meta{}
 
-// Meta struct for Meta
+// Meta This object is subject to change as it is provided for debugging purposes. Fields may be added or removed as required. Don't build any hard dependancies on any of this data.
 type Meta struct {
+	// Trace ID that can be used to debug individual API requests. Provide this, if needed, when contacting Kagi support.
 	Trace *string `json:"trace,omitempty"`
 	Id *string `json:"id,omitempty"`
+	// The hostname of the node that fulfilled the request.
 	Node *string `json:"node,omitempty"`
+	// how long the request took to fulfill, excluding round trip to the client.
 	Ms *int32 `json:"ms,omitempty"`
-	Query *MetaQuery `json:"query,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _Meta Meta
 
 // NewMeta instantiates a new Meta object
 // This constructor will assign default values to properties that have it defined,
@@ -172,38 +177,6 @@ func (o *Meta) SetMs(v int32) {
 	o.Ms = &v
 }
 
-// GetQuery returns the Query field value if set, zero value otherwise.
-func (o *Meta) GetQuery() MetaQuery {
-	if o == nil || IsNil(o.Query) {
-		var ret MetaQuery
-		return ret
-	}
-	return *o.Query
-}
-
-// GetQueryOk returns a tuple with the Query field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Meta) GetQueryOk() (*MetaQuery, bool) {
-	if o == nil || IsNil(o.Query) {
-		return nil, false
-	}
-	return o.Query, true
-}
-
-// HasQuery returns a boolean if a field has been set.
-func (o *Meta) HasQuery() bool {
-	if o != nil && !IsNil(o.Query) {
-		return true
-	}
-
-	return false
-}
-
-// SetQuery gets a reference to the given MetaQuery and assigns it to the Query field.
-func (o *Meta) SetQuery(v MetaQuery) {
-	o.Query = &v
-}
-
 func (o Meta) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -226,10 +199,36 @@ func (o Meta) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Ms) {
 		toSerialize["ms"] = o.Ms
 	}
-	if !IsNil(o.Query) {
-		toSerialize["query"] = o.Query
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
 	}
+
 	return toSerialize, nil
+}
+
+func (o *Meta) UnmarshalJSON(data []byte) (err error) {
+	varMeta := _Meta{}
+
+	err = json.Unmarshal(data, &varMeta)
+
+	if err != nil {
+		return err
+	}
+
+	*o = Meta(varMeta)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "trace")
+		delete(additionalProperties, "id")
+		delete(additionalProperties, "node")
+		delete(additionalProperties, "ms")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableMeta struct {

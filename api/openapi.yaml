@@ -144,7 +144,7 @@ paths:
                   query: doggo
                   workflow: images
             schema:
-              $ref: '#/components/schemas/search_request'
+              $ref: "#/components/schemas/search_request"
         description: Contains the search query to run
         required: true
       responses:
@@ -257,25 +257,10 @@ paths:
                           language: en
                           language_probability: 0.9541819095611572
               schema:
-                $ref: '#/components/schemas/search_200_response'
+                $ref: "#/components/schemas/search_200_response"
           description: Success
         "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
+          $ref: "#/components/responses/unauthorized"
       security:
       - kagi: []
       summary: Perform a search of the web.
@@ -403,25 +388,10 @@ paths:
                         \ knowledge about how to simplify."
                       tokens: 11757
               schema:
-                $ref: '#/components/schemas/summary'
+                $ref: "#/components/schemas/summary"
           description: Success
         "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
+          $ref: "#/components/responses/unauthorized"
       security:
       - kagi: []
       summary: Get a summary for a URL
@@ -515,10 +485,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/uploadText'
+              $ref: "#/components/schemas/uploadText"
           x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/uploadText'
+              $ref: "#/components/schemas/uploadText"
         description: Text to summarize
         required: true
       responses:
@@ -551,25 +521,10 @@ paths:
                         \ evocative and paints a vivid picture of the journey ahead."
                       tokens: 543
               schema:
-                $ref: '#/components/schemas/summary'
+                $ref: "#/components/schemas/summary"
           description: successful operation
         "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
+          $ref: "#/components/responses/unauthorized"
       security:
       - kagi: []
       summary: Upload text to summarize.
@@ -633,25 +588,10 @@ paths:
                       snippet: Microsoft Bob| Microsoft Bob And so Microsoft Bob disappeared
                         in to obscurity.
               schema:
-                $ref: '#/components/schemas/enrichSearch_200_response'
+                $ref: "#/components/schemas/enrichSearch_200_response"
           description: Success
         "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
+          $ref: "#/components/responses/unauthorized"
       security:
       - kagi: []
       summary: Get enriched search results
@@ -674,7 +614,7 @@ paths:
                   query: who is steve jobs?
                   cache: true
             schema:
-              $ref: '#/components/schemas/fastGPT_request'
+              $ref: "#/components/schemas/fastGPT_request"
         description: Contains the query to process.
         required: true
       responses:
@@ -707,25 +647,10 @@ paths:
                         snippet: '...'
                         url: https://earthly.dev/blog/python-3.11-new-features/
               schema:
-                $ref: '#/components/schemas/fastGPT_200_response'
+                $ref: "#/components/schemas/fastGPT_200_response"
           description: Success
         "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
+          $ref: "#/components/responses/unauthorized"
       security:
       - kagi: []
       summary: Answer a query.
@@ -778,7 +703,7 @@ paths:
                   translation_options: "{\"formality\":\"more\",\"speaker_gender\"\
                     :\"masculine\"}"
             schema:
-              $ref: '#/components/schemas/translateAlternatives_request'
+              $ref: "#/components/schemas/translateAlternatives_request"
         required: true
       responses:
         "200":
@@ -810,25 +735,25 @@ paths:
                       explanation: "Uses 'rimandata' (delayed/postponed) which has\
                         \ a slightly different connotation, implying a brief delay."
               schema:
-                $ref: '#/components/schemas/translateAlternatives_200_response'
+                $ref: "#/components/schemas/translateAlternatives_200_response"
           description: Alternative translations with explanations
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateAlternatives_401_response'
+                $ref: "#/components/schemas/translateAlternatives_401_response"
           description: Unauthorized
         "402":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateAlternatives_402_response'
+                $ref: "#/components/schemas/translateAlternatives_402_response"
           description: Payment Required
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateAlternatives_500_response'
+                $ref: "#/components/schemas/translateAlternatives_500_response"
           description: Server error
       security:
       - kagi-translate: []
@@ -939,7 +864,7 @@ paths:
                 value:
                   text: Bonjour le monde
             schema:
-              $ref: '#/components/schemas/translateDetect_request'
+              $ref: "#/components/schemas/translateDetect_request"
         required: true
       responses:
         "200":
@@ -959,13 +884,13 @@ paths:
                     iso: fr
                     label: French
               schema:
-                $ref: '#/components/schemas/translateDetect_200_response'
+                $ref: "#/components/schemas/translateDetect_200_response"
           description: Successful language detection
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateDetect_400_response'
+                $ref: "#/components/schemas/translateDetect_400_response"
           description: Bad request
       security:
       - kagi-translate: []
@@ -1043,7 +968,7 @@ paths:
                   definition_language: en
                   nsfw: false
             schema:
-              $ref: '#/components/schemas/translateDictionary_request'
+              $ref: "#/components/schemas/translateDictionary_request"
         required: true
       responses:
         "200":
@@ -1100,7 +1025,7 @@ paths:
                       iso: en
                       label: English
               schema:
-                $ref: '#/components/schemas/translateDictionary_200_response'
+                $ref: "#/components/schemas/translateDictionary_200_response"
             text/plain:
               example: |
                 data: {"detected_language": {"iso": "en", "label": "English"}}
@@ -1126,13 +1051,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateDictionary_400_response'
+                $ref: "#/components/schemas/translateDictionary_400_response"
           description: Bad request
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateDictionary_500_response'
+                $ref: "#/components/schemas/translateDictionary_500_response"
           description: Server error
       security:
       - kagi-translate: []
@@ -1230,26 +1155,11 @@ paths:
                     supports_formality: true
               schema:
                 items:
-                  $ref: '#/components/schemas/translateListLanguages_200_response_inner'
+                  $ref: "#/components/schemas/translateListLanguages_200_response_inner"
                 type: array
           description: A list of supported languages
         "401":
-          content:
-            application/json:
-              examples:
-                default:
-                  summary: Response with example search objects
-                  value:
-                    meta:
-                      id: 69c3f5c4168f66b860e951c585550f1c
-                      node: us-central1
-                      ms: 213
-                    error:
-                      code: 2
-                      msg: Unauthorized
-              schema:
-                $ref: '#/components/schemas/exampleError'
-          description: Access token is missing or invalid
+          $ref: "#/components/responses/unauthorized"
       security:
       - kagi-translate: []
       summary: List Supported Languages
@@ -1345,13 +1255,13 @@ paths:
                   value:
                     romanization: geia sou kosme
               schema:
-                $ref: '#/components/schemas/translateRomanize_200_response'
+                $ref: "#/components/schemas/translateRomanize_200_response"
           description: Successful romanization
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateDetect_400_response'
+                $ref: "#/components/schemas/translateDetect_400_response"
           description: Bad request
       security:
       - kagi-translate: []
@@ -1402,7 +1312,7 @@ paths:
                   translated_text: Hola mundo
                   target_explanation_language: en
             schema:
-              $ref: '#/components/schemas/translateWordInsights_request'
+              $ref: "#/components/schemas/translateWordInsights_request"
         required: true
       responses:
         "200":
@@ -1432,31 +1342,31 @@ paths:
                         explanation: Addresses people directly
                       type: Object reference
               schema:
-                $ref: '#/components/schemas/translateWordInsights_200_response'
+                $ref: "#/components/schemas/translateWordInsights_200_response"
           description: Detailed linguistic insights for the translated text
         "400":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateWordInsights_400_response'
+                $ref: "#/components/schemas/translateWordInsights_400_response"
           description: Bad Request
         "401":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateAlternatives_401_response'
+                $ref: "#/components/schemas/translateAlternatives_401_response"
           description: Unauthorized
         "402":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateAlternatives_402_response'
+                $ref: "#/components/schemas/translateAlternatives_402_response"
           description: Payment Required
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translateWordInsights_500_response'
+                $ref: "#/components/schemas/translateWordInsights_500_response"
           description: Server error
       security:
       - kagi-translate: []
@@ -1557,7 +1467,7 @@ paths:
                   target_lang: en
                   dictionary_language: en
             schema:
-              $ref: '#/components/schemas/translate_request'
+              $ref: "#/components/schemas/translate_request"
         required: true
       responses:
         "200":
@@ -1619,7 +1529,7 @@ paths:
                           - dwelling
                           - domicile
               schema:
-                $ref: '#/components/schemas/translate_200_response'
+                $ref: "#/components/schemas/translate_200_response"
             text/event-stream:
               examples:
                 streamingTranslation:
@@ -1641,13 +1551,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translate_400_response'
+                $ref: "#/components/schemas/translate_400_response"
           description: Bad request
         "500":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/translate_500_response'
+                $ref: "#/components/schemas/translate_500_response"
           description: Server error
       security:
       - kagi-translate: []
@@ -1703,7 +1613,7 @@ components:
                   code: 2
                   msg: Unauthorized
           schema:
-            $ref: '#/components/schemas/exampleError'
+            $ref: "#/components/schemas/exampleError"
       description: Access token is missing or invalid
   schemas:
     meta:
@@ -1768,7 +1678,7 @@ components:
           example: 2024-11-29T03:54:26Z
           type: string
         image:
-          $ref: '#/components/schemas/searchResult_image'
+          $ref: "#/components/schemas/searchResult_image"
         props:
           additionalProperties: true
           description: Holds arbitrary result metadata
@@ -1792,9 +1702,9 @@ components:
           code: 6
       properties:
         meta:
-          $ref: '#/components/schemas/meta'
+          $ref: "#/components/schemas/meta"
         error:
-          $ref: '#/components/schemas/exampleError_error'
+          $ref: "#/components/schemas/exampleError_error"
       required:
       - error
       - meta
@@ -1812,9 +1722,9 @@ components:
           id: id
       properties:
         meta:
-          $ref: '#/components/schemas/meta'
+          $ref: "#/components/schemas/meta"
         data:
-          $ref: '#/components/schemas/summary_data'
+          $ref: "#/components/schemas/summary_data"
       required:
       - data
       - meta
@@ -1866,12 +1776,70 @@ components:
           description: the date the rearch result was created
           type: string
         thumbnail:
-          $ref: '#/components/schemas/searchObject_thumbnail'
+          $ref: "#/components/schemas/searchObject_thumbnail"
         image:
-          $ref: '#/components/schemas/searchObject_image'
+          $ref: "#/components/schemas/searchObject_image"
       required:
       - title
       - url
+      type: object
+    search_request_lens:
+      description: "An inline description of a lens to apply to the search. Options\
+        \ supplied by the lens take pecedent over those supplied by the user in their\
+        \ search terms (e.g., `site:` operators), allowing you to restrict the scope\
+        \ of the search to return more relevant results in specific applications."
+      properties:
+        sites_included:
+          description: A list of domains to restrict the search to.
+          items:
+            description: domains
+            type: string
+          type: array
+        sites_excluded:
+          description: A list of domains to restrict the search to.
+          items:
+            description: domains
+            type: string
+          type: array
+        keywords_included:
+          description: "A list of keywords to filter results on, such that every result\
+            \ *must* contain these terms."
+          items:
+            description: keywords
+            type: string
+          type: array
+        keywords_excluded:
+          description: "A list of keywords to filter results on, such that any result\
+            \ containing these terms is removed."
+          items:
+            description: keywords
+            type: string
+          type: array
+        file_type:
+          description: "A specific file type to search for. (e.g., `pdf`)"
+          type: string
+        time_after:
+          description: Filters for web pages that have been updated or published *after*
+            the given date (`YYYY-MM-DD`).
+          type: string
+        time_before:
+          description: Filters for web pages that have been updated or published *before*
+            the given date (`YYYY-MM-DD`).
+          type: string
+        time_relative:
+          description: "Filters for web pages that have been updated or published\
+            \ in the given interval, relative to today's date."
+          enum:
+          - day
+          - week
+          - month
+          type: string
+        search_region:
+          description: "Requests results localized to a specific region. Can be any\
+            \ valid [ISO-3166-1 Alpha-2 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements),\
+            \ or the special value `no_region`, that will try to get the most general\
+            \ results possible."
+          type: string
       type: object
     search_request:
       description: Used to upload the search query
@@ -1889,6 +1857,21 @@ components:
           - news
           - podcasts
           type: string
+        lens_id:
+          description: "A lens ID, as shown on https://kagi.com/settings/lenses when\
+            \ a lens is set to be shareable. Can be just the ID portion of the URL\
+            \ (`https://kagi.com/lenses/ID`), or the full URL."
+          type: string
+        lens:
+          $ref: "#/components/schemas/search_request_lens"
+        timeout:
+          description: "Number of seconds to allow for collecting search results.\
+            \ Lower values will return results more quickly, but may be lower quality\
+            \ or inconsistent between calls. If omitted, will use the latest recommended\
+            \ value by Kagi."
+          maximum: 4
+          minimum: 0.5
+          type: number
       required:
       - query
       type: object
@@ -2355,105 +2338,105 @@ components:
         search:
           description: Contains all search results for html pages or wedbsites.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         image:
           description: Contains all search results for images.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         video:
           description: Contains all search results for videos.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         podcast:
           description: Contains all search results for podcasts.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         podcast_creator:
           description: Contains all search results for creators of podcasta.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         news:
           description: Contains all search results for news articles.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         adjacent_question:
           description: Contains results that are obtained by searching for slightly
             different queries. These questions are stored under the `props.question`
             path.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         direct_answer:
           description: "If the search query was a math equation, or unit conversions,\
             \ things that can be answered quickly, the result will be in here."
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         interesting_news:
           description: Contains news results from publishers collected and stored
             in Kagis' news index.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         interesting_finds:
           description: Contains small web results from publishers collected and stored
             in Kagis' small web index.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         infobox:
           description: "Contains detailed summary and tabulated information about\
             \ a person, place, or thing."
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         code:
           description: Contains all search results that link to code resources or
             repositories.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         package_tracking:
           description: "If the search query was a package tracking number, the correct\
             \ package tracking website should be present in this collection."
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         public_records:
           description: "Contains all search results for public records, such as government\
             \ documents, or public court records."
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         weather:
           description: Contains all search results for the current weather.
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         related_search:
           description: "Contains a list of searches that are related to the current\
             \ search, and may help narrow down the results."
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         listicle:
           description: "Contains all search results that are lists of things. Results\
             \ with titles like \"5 things you didn't know about...\", or \"10 of the\
             \ best headphones\"."
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
         web_archive:
           description: Contains all search results for archived websites that may
             not be available anymore
           items:
-            $ref: '#/components/schemas/searchResult'
+            $ref: "#/components/schemas/searchResult"
           type: array
       type: object
     search_200_response:
@@ -2917,9 +2900,9 @@ components:
           id: id
       properties:
         meta:
-          $ref: '#/components/schemas/meta'
+          $ref: "#/components/schemas/meta"
         data:
-          $ref: '#/components/schemas/search_200_response_data'
+          $ref: "#/components/schemas/search_200_response_data"
       type: object
     enrichSearch_200_response:
       description: An array of search objects that can enrich a search query
@@ -2960,10 +2943,10 @@ components:
           id: id
       properties:
         meta:
-          $ref: '#/components/schemas/meta'
+          $ref: "#/components/schemas/meta"
         data:
           items:
-            $ref: '#/components/schemas/searchObject'
+            $ref: "#/components/schemas/searchObject"
           type: array
       type: object
     fastGPT_request:
@@ -3017,7 +3000,7 @@ components:
           type: integer
         references:
           items:
-            $ref: '#/components/schemas/searchObject'
+            $ref: "#/components/schemas/searchObject"
           type: array
       type: object
     fastGPT_200_response:
@@ -3062,9 +3045,9 @@ components:
           id: id
       properties:
         meta:
-          $ref: '#/components/schemas/meta'
+          $ref: "#/components/schemas/meta"
         data:
-          $ref: '#/components/schemas/fastGPT_200_response_data'
+          $ref: "#/components/schemas/fastGPT_200_response_data"
       type: object
     translateAlternatives_request:
       properties:
@@ -3137,7 +3120,7 @@ components:
           type: string
         elements:
           items:
-            $ref: '#/components/schemas/translateAlternatives_200_response_elements_inner'
+            $ref: "#/components/schemas/translateAlternatives_200_response_elements_inner"
           type: array
       type: object
     translateAlternatives_401_response:
@@ -3386,7 +3369,7 @@ components:
           example: hello
           type: string
         primary_meaning:
-          $ref: '#/components/schemas/translateDictionary_200_response_definition_primary_meaning'
+          $ref: "#/components/schemas/translateDictionary_200_response_definition_primary_meaning"
         secondary_meanings:
           description: Secondary or less common meanings
           example:
@@ -3406,7 +3389,7 @@ components:
             usage_level:
             - standard
           items:
-            $ref: '#/components/schemas/translateDictionary_200_response_definition_secondary_meanings_inner'
+            $ref: "#/components/schemas/translateDictionary_200_response_definition_secondary_meanings_inner"
           type: array
         examples:
           description: "Example sentences showing usage (remains in word_language,\
@@ -3547,9 +3530,9 @@ components:
           label: English
       properties:
         definition:
-          $ref: '#/components/schemas/translateDictionary_200_response_definition'
+          $ref: "#/components/schemas/translateDictionary_200_response_definition"
         language:
-          $ref: '#/components/schemas/translateDictionary_200_response_language'
+          $ref: "#/components/schemas/translateDictionary_200_response_language"
       type: object
     translateDictionary_400_response:
       example:
@@ -3651,7 +3634,7 @@ components:
         variations:
           description: Alternative expressions with explanations
           items:
-            $ref: '#/components/schemas/translateWordInsights_200_response_insights_inner_variations_inner'
+            $ref: "#/components/schemas/translateWordInsights_200_response_insights_inner_variations_inner"
           type: array
         type:
           description: Category of the insight in the explanation language
@@ -3686,7 +3669,7 @@ components:
           type: string
         insights:
           items:
-            $ref: '#/components/schemas/translateWordInsights_200_response_insights_inner'
+            $ref: "#/components/schemas/translateWordInsights_200_response_insights_inner"
           type: array
       type: object
     translateWordInsights_400_response:
@@ -3718,7 +3701,7 @@ components:
     translate_request:
       properties:
         text:
-          $ref: '#/components/schemas/translate_request_text'
+          $ref: "#/components/schemas/translate_request_text"
         source_lang:
           default: auto
           description: Source language code (ISO-639) or "auto" for automatic detection
@@ -3861,7 +3844,7 @@ components:
           type: string
         meanings:
           items:
-            $ref: '#/components/schemas/translate_200_response_oneOf_definition_definitions_inner_meanings_inner'
+            $ref: "#/components/schemas/translate_200_response_oneOf_definition_definitions_inner_meanings_inner"
           type: array
       type: object
     translate_200_response_oneOf_definition:
@@ -3905,7 +3888,7 @@ components:
           type: string
         definitions:
           items:
-            $ref: '#/components/schemas/translate_200_response_oneOf_definition_definitions_inner'
+            $ref: "#/components/schemas/translate_200_response_oneOf_definition_definitions_inner"
           type: array
       type: object
     translate_200_response_oneOf:
@@ -3948,9 +3931,9 @@ components:
           example: Hola mundo
           type: string
         detectedLanguage:
-          $ref: '#/components/schemas/translate_200_response_oneOf_detectedLanguage'
+          $ref: "#/components/schemas/translate_200_response_oneOf_detectedLanguage"
         definition:
-          $ref: '#/components/schemas/translate_200_response_oneOf_definition'
+          $ref: "#/components/schemas/translate_200_response_oneOf_definition"
       type: object
     translate_200_response_oneOf_1:
       properties:
@@ -3963,8 +3946,8 @@ components:
       type: object
     translate_200_response:
       oneOf:
-      - $ref: '#/components/schemas/translate_200_response_oneOf'
-      - $ref: '#/components/schemas/translate_200_response_oneOf_1'
+      - $ref: "#/components/schemas/translate_200_response_oneOf"
+      - $ref: "#/components/schemas/translate_200_response_oneOf_1"
     translate_400_response:
       example:
         error: Text is required

@@ -26,6 +26,11 @@ type SearchRequest struct {
 	Query string `json:"query"`
 	// Can be used to filter result output to a single category.
 	Workflow *string `json:"workflow,omitempty"`
+	// A lens ID, as shown on https://kagi.com/settings/lenses when a lens is set to be shareable. Can be just the ID portion of the URL (`https://kagi.com/lenses/ID`), or the full URL.
+	LensId *string `json:"lens_id,omitempty"`
+	Lens *SearchRequestLens `json:"lens,omitempty"`
+	// Number of seconds to allow for collecting search results. Lower values will return results more quickly, but may be lower quality or inconsistent between calls. If omitted, will use the latest recommended value by Kagi.
+	Timeout *float32 `json:"timeout,omitempty"`
 }
 
 type _SearchRequest SearchRequest
@@ -108,6 +113,102 @@ func (o *SearchRequest) SetWorkflow(v string) {
 	o.Workflow = &v
 }
 
+// GetLensId returns the LensId field value if set, zero value otherwise.
+func (o *SearchRequest) GetLensId() string {
+	if o == nil || IsNil(o.LensId) {
+		var ret string
+		return ret
+	}
+	return *o.LensId
+}
+
+// GetLensIdOk returns a tuple with the LensId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchRequest) GetLensIdOk() (*string, bool) {
+	if o == nil || IsNil(o.LensId) {
+		return nil, false
+	}
+	return o.LensId, true
+}
+
+// HasLensId returns a boolean if a field has been set.
+func (o *SearchRequest) HasLensId() bool {
+	if o != nil && !IsNil(o.LensId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLensId gets a reference to the given string and assigns it to the LensId field.
+func (o *SearchRequest) SetLensId(v string) {
+	o.LensId = &v
+}
+
+// GetLens returns the Lens field value if set, zero value otherwise.
+func (o *SearchRequest) GetLens() SearchRequestLens {
+	if o == nil || IsNil(o.Lens) {
+		var ret SearchRequestLens
+		return ret
+	}
+	return *o.Lens
+}
+
+// GetLensOk returns a tuple with the Lens field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchRequest) GetLensOk() (*SearchRequestLens, bool) {
+	if o == nil || IsNil(o.Lens) {
+		return nil, false
+	}
+	return o.Lens, true
+}
+
+// HasLens returns a boolean if a field has been set.
+func (o *SearchRequest) HasLens() bool {
+	if o != nil && !IsNil(o.Lens) {
+		return true
+	}
+
+	return false
+}
+
+// SetLens gets a reference to the given SearchRequestLens and assigns it to the Lens field.
+func (o *SearchRequest) SetLens(v SearchRequestLens) {
+	o.Lens = &v
+}
+
+// GetTimeout returns the Timeout field value if set, zero value otherwise.
+func (o *SearchRequest) GetTimeout() float32 {
+	if o == nil || IsNil(o.Timeout) {
+		var ret float32
+		return ret
+	}
+	return *o.Timeout
+}
+
+// GetTimeoutOk returns a tuple with the Timeout field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchRequest) GetTimeoutOk() (*float32, bool) {
+	if o == nil || IsNil(o.Timeout) {
+		return nil, false
+	}
+	return o.Timeout, true
+}
+
+// HasTimeout returns a boolean if a field has been set.
+func (o *SearchRequest) HasTimeout() bool {
+	if o != nil && !IsNil(o.Timeout) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeout gets a reference to the given float32 and assigns it to the Timeout field.
+func (o *SearchRequest) SetTimeout(v float32) {
+	o.Timeout = &v
+}
+
 func (o SearchRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -121,6 +222,15 @@ func (o SearchRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["query"] = o.Query
 	if !IsNil(o.Workflow) {
 		toSerialize["workflow"] = o.Workflow
+	}
+	if !IsNil(o.LensId) {
+		toSerialize["lens_id"] = o.LensId
+	}
+	if !IsNil(o.Lens) {
+		toSerialize["lens"] = o.Lens
+	}
+	if !IsNil(o.Timeout) {
+		toSerialize["timeout"] = o.Timeout
 	}
 	return toSerialize, nil
 }

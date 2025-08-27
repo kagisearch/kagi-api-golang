@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Output** | **string** |  | 
-**Tokens** | **int32** |  | 
+**Output** | Pointer to **string** | Contains the summary text. | [optional] 
+**Tokens** | Pointer to **int32** | A count of how many tokens were used to perform the summary. | [optional] 
 
 ## Methods
 
 ### NewSummaryData
 
-`func NewSummaryData(output string, tokens int32, ) *SummaryData`
+`func NewSummaryData() *SummaryData`
 
 NewSummaryData instantiates a new SummaryData object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +45,11 @@ and a boolean to check if the value has been set.
 
 SetOutput sets Output field to given value.
 
+### HasOutput
+
+`func (o *SummaryData) HasOutput() bool`
+
+HasOutput returns a boolean if a field has been set.
 
 ### GetTokens
 
@@ -65,6 +70,11 @@ and a boolean to check if the value has been set.
 
 SetTokens sets Tokens field to given value.
 
+### HasTokens
+
+`func (o *SummaryData) HasTokens() bool`
+
+HasTokens returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

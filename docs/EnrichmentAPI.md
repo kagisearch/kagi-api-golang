@@ -28,7 +28,7 @@ import (
 
 func main() {
 	q := "steve jobs" // string | Query to enrich
-	type_ := "type__example" // string | Enrich with 'web' results or 'news' results (default to "web")
+	type_ := "type__example" // string | Enrich a search query with results pulled from Kagi indexes. (default to "web")
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -48,7 +48,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**type_** | **string** | Enrich with &#39;web&#39; results or &#39;news&#39; results | [default to &quot;web&quot;]
+**type_** | **string** | Enrich a search query with results pulled from Kagi indexes. | [default to &quot;web&quot;]
 
 ### Other Parameters
 

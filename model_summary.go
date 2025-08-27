@@ -13,29 +13,23 @@ package openapi
 
 import (
 	"encoding/json"
-	"bytes"
-	"fmt"
 )
 
 // checks if the Summary type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Summary{}
 
-// Summary A summary of the text or url provided
+// Summary A response to the summarize request. Contains both a metadata section that contains information about the response, and a data section that contains the actual summary.
 type Summary struct {
-	Meta Meta `json:"meta"`
-	Data SummaryData `json:"data"`
+	Meta *Meta `json:"meta,omitempty"`
+	Data *SummaryData `json:"data,omitempty"`
 }
-
-type _Summary Summary
 
 // NewSummary instantiates a new Summary object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSummary(meta Meta, data SummaryData) *Summary {
+func NewSummary() *Summary {
 	this := Summary{}
-	this.Meta = meta
-	this.Data = data
 	return &this
 }
 
@@ -47,52 +41,68 @@ func NewSummaryWithDefaults() *Summary {
 	return &this
 }
 
-// GetMeta returns the Meta field value
+// GetMeta returns the Meta field value if set, zero value otherwise.
 func (o *Summary) GetMeta() Meta {
-	if o == nil {
+	if o == nil || IsNil(o.Meta) {
 		var ret Meta
 		return ret
 	}
-
-	return o.Meta
+	return *o.Meta
 }
 
-// GetMetaOk returns a tuple with the Meta field value
+// GetMetaOk returns a tuple with the Meta field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Summary) GetMetaOk() (*Meta, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Meta) {
 		return nil, false
 	}
-	return &o.Meta, true
+	return o.Meta, true
 }
 
-// SetMeta sets field value
+// HasMeta returns a boolean if a field has been set.
+func (o *Summary) HasMeta() bool {
+	if o != nil && !IsNil(o.Meta) {
+		return true
+	}
+
+	return false
+}
+
+// SetMeta gets a reference to the given Meta and assigns it to the Meta field.
 func (o *Summary) SetMeta(v Meta) {
-	o.Meta = v
+	o.Meta = &v
 }
 
-// GetData returns the Data field value
+// GetData returns the Data field value if set, zero value otherwise.
 func (o *Summary) GetData() SummaryData {
-	if o == nil {
+	if o == nil || IsNil(o.Data) {
 		var ret SummaryData
 		return ret
 	}
-
-	return o.Data
+	return *o.Data
 }
 
-// GetDataOk returns a tuple with the Data field value
+// GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *Summary) GetDataOk() (*SummaryData, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
-	return &o.Data, true
+	return o.Data, true
 }
 
-// SetData sets field value
+// HasData returns a boolean if a field has been set.
+func (o *Summary) HasData() bool {
+	if o != nil && !IsNil(o.Data) {
+		return true
+	}
+
+	return false
+}
+
+// SetData gets a reference to the given SummaryData and assigns it to the Data field.
 func (o *Summary) SetData(v SummaryData) {
-	o.Data = v
+	o.Data = &v
 }
 
 func (o Summary) MarshalJSON() ([]byte, error) {
@@ -105,47 +115,13 @@ func (o Summary) MarshalJSON() ([]byte, error) {
 
 func (o Summary) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["meta"] = o.Meta
-	toSerialize["data"] = o.Data
+	if !IsNil(o.Meta) {
+		toSerialize["meta"] = o.Meta
+	}
+	if !IsNil(o.Data) {
+		toSerialize["data"] = o.Data
+	}
 	return toSerialize, nil
-}
-
-func (o *Summary) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"meta",
-		"data",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varSummary := _Summary{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSummary)
-
-	if err != nil {
-		return err
-	}
-
-	*o = Summary(varSummary)
-
-	return err
 }
 
 type NullableSummary struct {

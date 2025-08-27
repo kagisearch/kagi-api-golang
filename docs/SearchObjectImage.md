@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Url** | **string** | URL of the image | 
+**Url** | Pointer to **string** | URL of the image | [optional] 
 **Height** | Pointer to **int32** | hight of the image | [optional] 
 **Width** | Pointer to **int32** | width of the image | [optional] 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewSearchObjectImage
 
-`func NewSearchObjectImage(url string, ) *SearchObjectImage`
+`func NewSearchObjectImage() *SearchObjectImage`
 
 NewSearchObjectImage instantiates a new SearchObjectImage object
 This constructor will assign default values to properties that have it defined,
@@ -46,6 +46,11 @@ and a boolean to check if the value has been set.
 
 SetUrl sets Url field to given value.
 
+### HasUrl
+
+`func (o *SearchObjectImage) HasUrl() bool`
+
+HasUrl returns a boolean if a field has been set.
 
 ### GetHeight
 

@@ -45,12 +45,20 @@ servers:
   url: https://kagi.com/api/v1
 tags:
 - description: |
-    The Search API gives programmable access to Kagi's premium search results. It will inherit the settings in your account. For example, you can:
+    The Search API gives programmable access to Kagi's premium search results. These results are pulled from many different sources, including our inhouse indexes, and re ranked inorder surface more interesting and applicable results. Because we do not accept money for paid placement or advertising, the results should natually be more in tune to the search being performed.
 
-    - Block or promote websites ([results personalization](https://help.kagi.com/kagi/getting-started/index.html))
-    - Select to receive longer or shorter search snippets (under [Settings -> Search](https://help.kagi.com/kagi/settings/search.html))
+    You can read about our approach towards search [on our blog](https://blog.kagi.com/the-many-benefits-of-paying-for-search).
 
-    For a full list, please check out our [search features.](https://help.kagi.com/kagi/features/website-info-personalized-results.html)
+    The API also supports some of the features that we offer through our web UI, mainly Lenses.
+
+    ## Lenses
+
+    Lenses allow more fine grained filtering and control over the search results, and what sort of content is returned. You can read more about how Lenses work in [our documentation](https://help.kagi.com/kagi/features/lenses.html).
+
+
+    ## Pricing
+
+    Pricing for the Search API is currently being updated, once launched this section will be updated with how much it will cost to use.
   name: Search
   x-displayName: Search API
 - description: |
@@ -260,7 +268,22 @@ paths:
                 $ref: "#/components/schemas/search_200_response"
           description: Success
         "401":
-          $ref: "#/components/responses/unauthorized"
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: "#/components/schemas/exampleError"
+          description: Access token is missing or invalid
       security:
       - kagi: []
       summary: Perform a search of the web.
@@ -391,7 +414,22 @@ paths:
                 $ref: "#/components/schemas/summary"
           description: Success
         "401":
-          $ref: "#/components/responses/unauthorized"
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: "#/components/schemas/exampleError"
+          description: Access token is missing or invalid
       security:
       - kagi: []
       summary: Get a summary for a URL
@@ -524,7 +562,22 @@ paths:
                 $ref: "#/components/schemas/summary"
           description: successful operation
         "401":
-          $ref: "#/components/responses/unauthorized"
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: "#/components/schemas/exampleError"
+          description: Access token is missing or invalid
       security:
       - kagi: []
       summary: Upload text to summarize.
@@ -545,7 +598,7 @@ paths:
         schema:
           type: string
         style: form
-      - description: Enrich with 'web' results or 'news' results
+      - description: Enrich a search query with results pulled from Kagi indexes.
         explode: false
         in: path
         name: type
@@ -591,7 +644,22 @@ paths:
                 $ref: "#/components/schemas/enrichSearch_200_response"
           description: Success
         "401":
-          $ref: "#/components/responses/unauthorized"
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: "#/components/schemas/exampleError"
+          description: Access token is missing or invalid
       security:
       - kagi: []
       summary: Get enriched search results
@@ -650,7 +718,22 @@ paths:
                 $ref: "#/components/schemas/fastGPT_200_response"
           description: Success
         "401":
-          $ref: "#/components/responses/unauthorized"
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: "#/components/schemas/exampleError"
+          description: Access token is missing or invalid
       security:
       - kagi: []
       summary: Answer a query.
@@ -1159,7 +1242,22 @@ paths:
                 type: array
           description: A list of supported languages
         "401":
-          $ref: "#/components/responses/unauthorized"
+          content:
+            application/json:
+              examples:
+                default:
+                  summary: Response with example search objects
+                  value:
+                    meta:
+                      id: 69c3f5c4168f66b860e951c585550f1c
+                      node: us-central1
+                      ms: 213
+                    error:
+                      code: 2
+                      msg: Unauthorized
+              schema:
+                $ref: "#/components/schemas/exampleError"
+          description: Access token is missing or invalid
       security:
       - kagi-translate: []
       summary: List Supported Languages
@@ -1710,7 +1808,9 @@ components:
       - meta
       type: object
     summary:
-      description: A summary of the text or url provided
+      description: "A response to the summarize request. Contains both a metadata\
+        \ section that contains information about the response, and a data section\
+        \ that contains the actual summary."
       example:
         data:
           output: output
@@ -1725,9 +1825,6 @@ components:
           $ref: "#/components/schemas/meta"
         data:
           $ref: "#/components/schemas/summary_data"
-      required:
-      - data
-      - meta
       type: object
     uploadText:
       description: Used to upload text to be summarized
@@ -1779,9 +1876,6 @@ components:
           $ref: "#/components/schemas/searchObject_thumbnail"
         image:
           $ref: "#/components/schemas/searchObject_image"
-      required:
-      - title
-      - url
       type: object
     search_request_lens:
       description: "An inline description of a lens to apply to the search. Options\
@@ -2961,6 +3055,8 @@ components:
       - query
       type: object
     fastGPT_200_response_data:
+      description: The response object which contains the output and token count for
+        the query.
       example:
         output: output
         references:
@@ -2995,10 +3091,13 @@ components:
         tokens: 0
       properties:
         output:
+          description: The actual response to the query.
           type: string
         tokens:
+          description: How many tokens were used to generate the response.
           type: integer
         references:
+          description: A collection of search results that are related to the query.
           items:
             $ref: "#/components/schemas/searchObject"
           type: array
@@ -4007,17 +4106,17 @@ components:
       - msg
       type: object
     summary_data:
+      description: The actual summary response.
       example:
         output: output
         tokens: 0
       properties:
         output:
+          description: Contains the summary text.
           type: string
         tokens:
+          description: A count of how many tokens were used to perform the summary.
           type: integer
-      required:
-      - output
-      - tokens
     searchObject_thumbnail:
       description: A small image that can be displayed along side the serach result.
       example:
@@ -4034,8 +4133,6 @@ components:
         width:
           description: width of the thumbnail
           type: integer
-      required:
-      - url
       type: object
     searchObject_image:
       description: An image that is linked to the search result.
@@ -4053,8 +4150,6 @@ components:
         width:
           description: width of the image
           type: integer
-      required:
-      - url
       type: object
   securitySchemes:
     kagi:

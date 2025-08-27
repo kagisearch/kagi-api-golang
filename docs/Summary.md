@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Meta** | [**Meta**](Meta.md) |  | 
-**Data** | [**SummaryData**](SummaryData.md) |  | 
+**Meta** | Pointer to [**Meta**](Meta.md) |  | [optional] 
+**Data** | Pointer to [**SummaryData**](SummaryData.md) |  | [optional] 
 
 ## Methods
 
 ### NewSummary
 
-`func NewSummary(meta Meta, data SummaryData, ) *Summary`
+`func NewSummary() *Summary`
 
 NewSummary instantiates a new Summary object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +45,11 @@ and a boolean to check if the value has been set.
 
 SetMeta sets Meta field to given value.
 
+### HasMeta
+
+`func (o *Summary) HasMeta() bool`
+
+HasMeta returns a boolean if a field has been set.
 
 ### GetData
 
@@ -65,6 +70,11 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
+### HasData
+
+`func (o *Summary) HasData() bool`
+
+HasData returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Output** | Pointer to **string** |  | [optional] 
-**Tokens** | Pointer to **int32** |  | [optional] 
-**References** | Pointer to [**[]SearchObject**](SearchObject.md) |  | [optional] 
+**Output** | Pointer to **string** | The actual response to the query. | [optional] 
+**Tokens** | Pointer to **int32** | How many tokens were used to generate the response. | [optional] 
+**References** | Pointer to [**[]SearchObject**](SearchObject.md) | A collection of search results that are related to the query. | [optional] 
 
 ## Methods
 

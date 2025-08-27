@@ -13,29 +13,25 @@ package openapi
 
 import (
 	"encoding/json"
-	"bytes"
-	"fmt"
 )
 
 // checks if the SummaryData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SummaryData{}
 
-// SummaryData struct for SummaryData
+// SummaryData The actual summary response.
 type SummaryData struct {
-	Output string `json:"output"`
-	Tokens int32 `json:"tokens"`
+	// Contains the summary text.
+	Output *string `json:"output,omitempty"`
+	// A count of how many tokens were used to perform the summary.
+	Tokens *int32 `json:"tokens,omitempty"`
 }
-
-type _SummaryData SummaryData
 
 // NewSummaryData instantiates a new SummaryData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewSummaryData(output string, tokens int32) *SummaryData {
+func NewSummaryData() *SummaryData {
 	this := SummaryData{}
-	this.Output = output
-	this.Tokens = tokens
 	return &this
 }
 
@@ -47,52 +43,68 @@ func NewSummaryDataWithDefaults() *SummaryData {
 	return &this
 }
 
-// GetOutput returns the Output field value
+// GetOutput returns the Output field value if set, zero value otherwise.
 func (o *SummaryData) GetOutput() string {
-	if o == nil {
+	if o == nil || IsNil(o.Output) {
 		var ret string
 		return ret
 	}
-
-	return o.Output
+	return *o.Output
 }
 
-// GetOutputOk returns a tuple with the Output field value
+// GetOutputOk returns a tuple with the Output field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SummaryData) GetOutputOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Output) {
 		return nil, false
 	}
-	return &o.Output, true
+	return o.Output, true
 }
 
-// SetOutput sets field value
+// HasOutput returns a boolean if a field has been set.
+func (o *SummaryData) HasOutput() bool {
+	if o != nil && !IsNil(o.Output) {
+		return true
+	}
+
+	return false
+}
+
+// SetOutput gets a reference to the given string and assigns it to the Output field.
 func (o *SummaryData) SetOutput(v string) {
-	o.Output = v
+	o.Output = &v
 }
 
-// GetTokens returns the Tokens field value
+// GetTokens returns the Tokens field value if set, zero value otherwise.
 func (o *SummaryData) GetTokens() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Tokens) {
 		var ret int32
 		return ret
 	}
-
-	return o.Tokens
+	return *o.Tokens
 }
 
-// GetTokensOk returns a tuple with the Tokens field value
+// GetTokensOk returns a tuple with the Tokens field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SummaryData) GetTokensOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Tokens) {
 		return nil, false
 	}
-	return &o.Tokens, true
+	return o.Tokens, true
 }
 
-// SetTokens sets field value
+// HasTokens returns a boolean if a field has been set.
+func (o *SummaryData) HasTokens() bool {
+	if o != nil && !IsNil(o.Tokens) {
+		return true
+	}
+
+	return false
+}
+
+// SetTokens gets a reference to the given int32 and assigns it to the Tokens field.
 func (o *SummaryData) SetTokens(v int32) {
-	o.Tokens = v
+	o.Tokens = &v
 }
 
 func (o SummaryData) MarshalJSON() ([]byte, error) {
@@ -105,47 +117,13 @@ func (o SummaryData) MarshalJSON() ([]byte, error) {
 
 func (o SummaryData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["output"] = o.Output
-	toSerialize["tokens"] = o.Tokens
+	if !IsNil(o.Output) {
+		toSerialize["output"] = o.Output
+	}
+	if !IsNil(o.Tokens) {
+		toSerialize["tokens"] = o.Tokens
+	}
 	return toSerialize, nil
-}
-
-func (o *SummaryData) UnmarshalJSON(data []byte) (err error) {
-	// This validates that all required properties are included in the JSON object
-	// by unmarshalling the object into a generic map with string keys and checking
-	// that every required field exists as a key in the generic map.
-	requiredProperties := []string{
-		"output",
-		"tokens",
-	}
-
-	allProperties := make(map[string]interface{})
-
-	err = json.Unmarshal(data, &allProperties)
-
-	if err != nil {
-		return err;
-	}
-
-	for _, requiredProperty := range(requiredProperties) {
-		if _, exists := allProperties[requiredProperty]; !exists {
-			return fmt.Errorf("no value given for required property %v", requiredProperty)
-		}
-	}
-
-	varSummaryData := _SummaryData{}
-
-	decoder := json.NewDecoder(bytes.NewReader(data))
-	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varSummaryData)
-
-	if err != nil {
-		return err
-	}
-
-	*o = SummaryData(varSummaryData)
-
-	return err
 }
 
 type NullableSummaryData struct {

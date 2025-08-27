@@ -45,7 +45,7 @@ func (r ApiEnrichSearchRequest) Execute() (*EnrichSearch200Response, *http.Respo
 EnrichSearch Get enriched search results
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param type_ Enrich with 'web' results or 'news' results
+ @param type_ Enrich a search query with results pulled from Kagi indexes.
  @return ApiEnrichSearchRequest
 */
 func (a *EnrichmentAPIService) EnrichSearch(ctx context.Context, type_ string) ApiEnrichSearchRequest {

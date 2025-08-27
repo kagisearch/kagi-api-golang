@@ -18,10 +18,13 @@ import (
 // checks if the FastGPT200ResponseData type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &FastGPT200ResponseData{}
 
-// FastGPT200ResponseData struct for FastGPT200ResponseData
+// FastGPT200ResponseData The response object which contains the output and token count for the query.
 type FastGPT200ResponseData struct {
+	// The actual response to the query.
 	Output *string `json:"output,omitempty"`
+	// How many tokens were used to generate the response.
 	Tokens *int32 `json:"tokens,omitempty"`
+	// A collection of search results that are related to the query.
 	References []SearchObject `json:"references,omitempty"`
 }
 

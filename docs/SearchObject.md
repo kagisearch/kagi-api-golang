@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **T** | Pointer to **int32** | This is always set to 0. It is used as a flag to identify if the result was a rearch result or a related searches object. | [optional] 
 **Rank** | Pointer to **int32** | Order of resarch results, the highest rank is 1 and should identify results that match the search request better. | [optional] 
-**Url** | **string** | URL of the resource identified in the search result. | 
-**Title** | **string** | Title of the search result. This can be taken from the title of the html document, or the title of a media resource. | 
+**Url** | Pointer to **string** | URL of the resource identified in the search result. | [optional] 
+**Title** | Pointer to **string** | Title of the search result. This can be taken from the title of the html document, or the title of a media resource. | [optional] 
 **Snippet** | Pointer to **string** | a short desciption, or summary, of the content. | [optional] 
 **Published** | Pointer to **string** | the date the rearch result was created | [optional] 
 **Thumbnail** | Pointer to [**SearchObjectThumbnail**](SearchObjectThumbnail.md) |  | [optional] 
@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewSearchObject
 
-`func NewSearchObject(url string, title string, ) *SearchObject`
+`func NewSearchObject() *SearchObject`
 
 NewSearchObject instantiates a new SearchObject object
 This constructor will assign default values to properties that have it defined,
@@ -101,6 +101,11 @@ and a boolean to check if the value has been set.
 
 SetUrl sets Url field to given value.
 
+### HasUrl
+
+`func (o *SearchObject) HasUrl() bool`
+
+HasUrl returns a boolean if a field has been set.
 
 ### GetTitle
 
@@ -121,6 +126,11 @@ and a boolean to check if the value has been set.
 
 SetTitle sets Title field to given value.
 
+### HasTitle
+
+`func (o *SearchObject) HasTitle() bool`
+
+HasTitle returns a boolean if a field has been set.
 
 ### GetSnippet
 

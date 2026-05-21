@@ -1,30 +1,43 @@
 openapi: 3.0.0
 info:
   contact:
-    email: support@kagi.com
+    email: developers@kagi.com
     name: API Support
-    url: https://kagi.com/support
   description: "The Kagi API provides programmatic access to data that powers our\
     \ search results & more. \n\nGet started on the [API Dashboard](https://kagi.com/api)\
-    \ to set up billing, manage API keys, and more.\n\n### Official Client Libraries\n\
-    \nWe offer the following libraries you can use to interact with the Kagi API.\
-    \ These are generated from an OpenAPI spec. If you have a language you would like\
-    \ to use and it's not in the list, send us a message and we will add it to the\
-    \ list if it is supported. Or you can use the [spec](https://kagi.redocly.app/_spec/openapi.yaml?download)\
-    \ to build your own custom library.\n\n- [Golang](https://github.com/kagisearch/kagi-openapi-golang)\n\
+    \ to set up billing, manage API keys, and more.\n\nSee our [API Pricing](https://kagi.com/api/pricing)\
+    \ page for standard rates.\n\n### Official Client Libraries\n\nWe offer the following\
+    \ libraries you can use to interact with the Kagi API. These are generated from\
+    \ an OpenAPI spec.\n\n- [Golang](https://github.com/kagisearch/kagi-openapi-golang)\n\
     - [Python](https://github.com/kagisearch/kagi-openapi-python)\n- [TypeScript](https://github.com/kagisearch/kagi-openapi-typescript)\n\
-    - [Rust](https://github.com/kagisearch/kagi-openapi-rust)\n\n### API Status\n\n\
-    **The v1 API is currently in preview to early access testers.**\n\nOur existing\
-    \ API, the \"v0\" beta API, is being replaced with a new version that will be\
-    \ available publicly soon. As changes are made, we will be updating the documentation\
-    \ below when the new features become available.\n\nSee the [Support and Community](https://help.kagi.com/kagi/support-and-community/)\
-    \ section for details.\n\n### Pricing\n\nSee our [API Pricing](https://kagi.com/api/pricing)\
-    \ page for standard rates.\n\n### GitHub Discussions\n\nThis is the preferred\
-    \ venue for bug reports and feature requests.\n\n- [Bug Reports](https://github.com/kagisearch/kagi-docs/issues/new/choose)\n\
-    - [Q&A Forum](https://github.com/kagisearch/kagi-docs/discussions/categories/q-a?discussions_q=category%3AQ%26A+label%3Aproduct%3Akagi_search_api)\n\
-    - [API Feature Requests](https://github.com/kagisearch/kagi-docs/discussions/categories/kagi-search-api-feature-requests-ideas)\n\
-    \n### Discord\n\nJoin our [Discord](https://kagi.com/discord)! Good for quick\
-    \ questions or chatting about things you've made with our APIs!\n"
+    - [Rust](https://github.com/kagisearch/kagi-openapi-rust)\n\nIf you have a language\
+    \ you would like to use and it's not in the list, send us a message and we will\
+    \ add it to the list if it is supported. Or you can use the [spec](https://kagi.redocly.app/_spec/openapi.yaml?download)\
+    \ to build your own custom library.\n\nIn the future we will most likely offer\
+    \ more crafted API wrappers and spotlight clients and applications built by our\
+    \ community - feel free to send them to us!\n\n### MCP\n\nWe offer a hosted MCP\
+    \ server at: https://mcp.kagi.com/mcp\n\nAt this time, we do not support setup\
+    \ via OAuth2 flow, but this is on our roadmap. You will need to get your [API\
+    \ key from the dashboard](https://kagi.com/api/keys) and plug it into your local\
+    \ client with `Bearer` HTTP authentication.\n\nHere is an example to get started\
+    \ with Claude Code:\n\n```\nclaude mcp add kagi https://mcp.kagi.com/mcp --transport\
+    \ http --header \"Authorization: Bearer $(read -sp 'API key: ' k; echo $k)\" --scope\
+    \ user\n```\n\nYou can review and contribute to our [MCP server on GitHub](https://github.com/kagisearch/kagimcp/tree/rehan/v1-api)!\n\
+    \n### Support\n\nFor bug reports, feature requests, or billing related issues\
+    \ please reach out to [developers@kagi.com](mailto:developers@kagi.com) and we\
+    \ will be happy to assist you.\n\nTo help us answer your reports efficiently,\
+    \ please be prepared to provide as much info as you can:\n\n- For bugs, include\
+    \ request trace IDs from `meta.trace` or the `X-Kagi-Trace` response header.\n\
+    - If issues are easily reproduced in our [playground](https://kagi.com/api/playground/search),\
+    \ send us a link to the playground - the URL will contain parameters to configure\
+    \ the request so that we can reproduce ourselves.\n- Include any code snippets\
+    \ or precise descriptions of the request you are making, and full samples of the\
+    \ response bodies from the API\n- Include mention of which wrapper you are using\
+    \ if any, or links to relevant application code we can review\n- Include the email\
+    \ address associated with your Kagi login if it is not the one you are emailing\
+    \ from\n\nThank you!\n\n### Discord\n\nJoin our [Discord](https://kagi.com/discord)!\
+    \ Good for quick questions or chatting about things you've made with our APIs!\n\
+    \nIn the server you will find the `#api` forum for API related inquiries.\n"
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html

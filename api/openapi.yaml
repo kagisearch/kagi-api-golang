@@ -99,13 +99,537 @@ paths:
                 default:
                   summary: Response with example search objects
                   value:
-                    $ref: examples/search_steve_jobs.yaml
+                    meta:
+                      trace: 97383064af92b8980b9b4d419b4ce4a9
+                      ms: 314
+                      node: us-east4
+                    data:
+                      search:
+                      - url: https://en.wikipedia.org/wiki/Steve_Jobs
+                        title: Steve Jobs - Wikipedia
+                        snippet: "Steve Jobs · Pioneer of the personal computer revolution\
+                          \ with Steve Wozniak · Co-creator of the Apple II, Macintosh,\
+                          \ iPod, iPhone, iPad, and first Apple Stores. ... Steven\
+                          \ Paul Jobs (February 24, 1955 – October 5, 2011) was an\
+                          \ American businessman, inventor, [2] and investor. A pioneer\
+                          \ of the personal computer revolution of the 1970s and 1980s,\
+                          \ Jobs co-founded Apple Inc. with his early business partner\
+                          \ Steve Wozniak as Apple Computer Company in 1976. After\
+                          \ the company&#39;s board of directors fired him in 1985,\
+                          \ he founded NeXT the same year and purchased ... ... Steven\
+                          \ Paul Jobs was an American businessman, inventor, and investor.\
+                          \ A pioneer of the personal computer revolution of the 1970s\
+                          \ and 1980s, Jobs co-founded Apple Inc. with his early business\
+                          \ partner Steve Wozniak as Apple Computer Company in 1976.\
+                          \ After the company&#39;s board of directors fired him in\
+                          \ 1985, he founded NeXT the same year and purchased Pixar\
+                          \ in 1986, becoming its chairman and majority shareholder\
+                          \ until 2007."
+                        time: 2012-02-23T07:00:59Z
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdIZHFmzy_9fVEKrvFI-hPjn9NSJulYkorNApo0h-QjOIcaPzoLVMmbuzEkIM-iPgqNDDIn0YpMaotS5c51iUmF37FaWcxqp-HUqn_2lndJOU
+                        props:
+                          language: en
+                          language_probability: 0.9653164148330688
+                          group_id: en.wikipedia.org
+                      - url: https://en.wikipedia.org/wiki/Steve_Jobs_(book)
+                        title: Steve Jobs (book) - Wikipedia
+                        snippet: "Steve Jobs is the authorized self-titled biography\
+                          \ of American business magnate and Apple co-founder Steve\
+                          \ Jobs. The book was written at the request of Jobs by Walter\
+                          \ Isaacson, a former executive at CNN and Time who had previously\
+                          \ written best-selling biographies of Benjamin Franklin\
+                          \ and Albert Einstein."
+                        time: 2011-12-23T20:19:37Z
+                        props:
+                          language: en
+                          language_probability: 0.9680122137069702
+                          group_id: en.wikipedia.org
+                      - url: https://en.wikipedia.org/wiki/List_of_depictions_of_Steve_Jobs
+                        title: List of depictions of Steve Jobs - Wikipedia
+                        snippet: "Steve Jobs was an American pioneer of the personal\
+                          \ computer revolution of the 1970s who, along with Steve\
+                          \ Wozniak and Ronald Wayne, founded Apple Computer. Before\
+                          \ and after his death in 2011, Jobs was known as a counter-culture\
+                          \ figure within the computer industry, and as a perfectionist\
+                          \ who could be demanding of his colleagues and employees—\
+                          sometimes to the point of cruelty."
+                        time: 2015-01-21T03:50:39Z
+                        props:
+                          language: en
+                          language_probability: 0.9821324348449707
+                          group_id: en.wikipedia.org
+                      - url: https://book.stevejobsarchive.com/
+                        title: "Steve Jobs: Make Something Wonderful"
+                        snippet: "Read Steve Jobs in his own words in this free online\
+                          \ book featuring speeches, quotes, emails, and photographs\
+                          \ from the Steve Jobs Archive. ... Steve Jobs in his own\
+                          \ words. There’s lots of ways to be, as a person. And some\
+                          \ people express their deep appreciation in different ways.A\
+                          \ passport for Steven Paul Jobs issued on May 11, 1973,\
+                          \ featuring a stamped photo of him with shaggy hair."
+                        time: 2023-04-11T10:22:28Z
+                        props:
+                          language: en
+                          language_probability: 0.8534004092216492
+                          group_id: book.stevejobsarchive.com
+                      - url: https://www.apple.com/stevejobs/
+                        title: Remembering Steve Jobs - Apple
+                        snippet: "Steven (Einstein) Jobs. More then most losses from\
+                          \ the list of extraordinary Change Agents, the loss of Steve\
+                          \ Jobs is a massive void. An icon has passed, yet ... ...\
+                          \ Apple has lost a visionary and creative genius, and the\
+                          \ world has lost an amazing human being. Those of us who\
+                          \ have been fortunate enough to know and work with Steve\
+                          \ have lost a dear friend and an inspiring mentor. Steve\
+                          \ leaves behind a company that only he could have built,\
+                          \ and his spirit will forever be the foundation of Apple."
+                        props:
+                          language: en
+                          group_id: apple.com
+                      - url: https://www.britannica.com/money/Steve-Jobs
+                        title: "Steve Jobs | Biography, Education, Apple, &amp; Facts\
+                          \ | Britannica Money"
+                        snippet: "Learn about Steve Jobs, the cofounder of Apple and\
+                          \ a visionary of the personal computer era. Explore his\
+                          \ life, education, achievements, products, and death from\
+                          \ Britannica Money. ... Steve Jobs was born in 1955 and\
+                          \ raised by adoptive parents in Cupertino, California. Though\
+                          \ he was interested in engineering, his passions as a ..."
+                        time: 2026-05-17T20:22:53Z
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdJA1PBlTyqKv_ODlqaknlO5oL8YHQhL7q8l3K_p3xWeRCdE-rDjFAzXPqbV6ka_TrjerKI5b6XDilJHtuZWmVTzCFSWy5X8wZE0-QmCR3Mvx
+                        props:
+                          ai_generated: false
+                          paywalled: true
+                          language: en
+                          language_probability: 0.9891567230224609
+                          group_id: britannica.com
+                      - url: https://www.imdb.com/title/tt2080374/
+                        title: Steve Jobs (2015) - IMDb
+                        snippet: "Steve Jobs takes us behind the scenes of the digital\
+                          \ revolution, to paint a portrait of the man at its epicenter.\
+                          \ The story unfolds backstage at three ..."
+                        props:
+                          language: en
+                          language_probability: 0.8846994638442993
+                          group_id: imdb.com
+                      - url: https://stevejobsarchive.com/
+                        title: The Steve Jobs Archive
+                        snippet: The Steve Jobs Archive is the authoritative home
+                          for Steve&#39;s story and a resource to help new generations
+                          make their own mark. ... The Steve Jobs Archive is the authoritative
+                          home for Steve’s story and a resource to help new generations
+                          make their own mark.Steve Jobs stands behind a lectern and
+                          smiles at the crowd off-camera. He wears a black graduation
+                          gown with red regalia.
+                        time: 2012-06-23T12:59:35Z
+                        props:
+                          language: en
+                          language_probability: 0.8303269743919373
+                          group_id: stevejobsarchive.com
+                      - url: https://www.businessnewsdaily.com/4195-business-profile-steve-jobs.html
+                        title: Steve Jobs Biography - Business News Daily
+                        snippet: "Apple co-founder Steve Jobs revolutionized the computer\
+                          \ industry. Read Steve Jobs&#39; biography, quotes and an\
+                          \ analysis of his leadership style. ... Steve Jobs was a\
+                          \ computer designer, executive and innovator, as well as\
+                          \ an all-around role model for many people in their professional\
+                          \ and personal lives. As the co-founder of Apple Computers\
+                          \ and the former chairman of Pixar Animation Studios, he\
+                          \ revolutionized the computer and animation industries,\
+                          \ amassing a fortune worth $10.2 billion at the time of\
+                          \ his death. Jobs died at age 56 on Oct."
+                        time: 2012-08-11T15:50:04Z
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdAwFSMzRrkJ4pC49w7dSH_odnud49o4xbo5DndwrXKrHgB3BGMmLQBPUdClIjim1iU4LwjZjlF1c_YHRFGHSSl6Y_FS-2lIi-tpMFpfR7K1Y
+                        props:
+                          language: en
+                          language_probability: 0.9785066246986389
+                          group_id: businessnewsdaily.com
+                      - url: https://www.investopedia.com/articles/fundamental-analysis/12/steve-jobs-apple-story.asp
+                        title: "Steve Jobs: From Apple&#39;s Founding to a Tech Revolution"
+                        snippet: Explore Steve Jobs&#39; journey from co-founding
+                          Apple to transforming tech with innovations like the iPhone.
+                          Learn key lessons from his visionary leadership.
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdEOFoW6yTQmMA8oZwr0B1kEm4RyCFnTxXn6ctKHT9gZHVItUlx789BRJV7i4ZxpeLte5KlOHg7tkuR9Bzz0QNTs65N-IksuXCO8puFPhcGgL
+                        props:
+                          language: en
+                          group_id: investopedia.com
+                      - url: https://www.ebsco.com/research-starters/biography/steve-jobs
+                        title: Steve Jobs | Biography | Research Starters | EBSCO
+                          Research
+                        snippet: "Steve Jobs was a prominent figure in the technology\
+                          \ and entertainment industries, known for his role as the\
+                          \ co-founder and CEO of Apple Inc. and Pixar Animation Studios.\
+                          \ Born on February 24, 1955, in San Francisco, California,\
+                          \ he was adopted shortly after birth and exhibited a natural\
+                          \ curiosity and intelligence from an early age."
+                        time: 2025-03-07T00:11:48Z
+                        props:
+                          language: en
+                          language_probability: 0.9734721183776855
+                          group_id: ebsco.com
+                      - url: https://www.kennedy-center.org/wno/home/2024-2025/the-revolution-of-steve-jobs/
+                        title: The (R)evolution of Steve Jobs - Kennedy Center
+                        snippet: "Free with The (R)evolution of Steve Jobs ticket,\
+                          \ starting 1 hour before the performance and lasting 25–\
+                          30 minutes. Stay after for a Post-Performance Artist Q&amp;A\
+                          \ Don’t miss your opportunity to engage directly with our\
+                          \ artists and share your thoughts on the experience you\
+                          \ just had!"
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdKDtBQAZo9zAJWd9V6IZfVyGY9zZ9yhfhMINDOL_r2AGayPiOMv_yoYyy7v7PTM5WB_98fpPgew-F9gwZ8t5OUV3tkEl0qjQGYnSzW84xrlk
+                        props:
+                          language: en
+                          group_id: kennedy-center.org
+                      - url: https://www.jagranjosh.com/us/explainers/steve-jobs-biography-1860000806
+                        title: "Steve Jobs Biography: Age, Early Life, Career, Net\
+                          \ Worth &amp; Interesting ..."
+                        snippet: "Discover Steve Jobs&#39; biography, age, early life,\
+                          \ education, career milestones, net worth, and inspiring\
+                          \ facts about Apple’s visionary co-founder."
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdGKM1ybo7xhMJr04ewgc8LctYaUAkgdzZheRycFnMpuZqF146ottCgTdbR6SPqRBLT8bNmhq3H0FgQJ4fjhOlGWGPD9c3Jb5PyLahLXN0MOE
+                        props:
+                          language: en
+                          group_id: jagranjosh.com
+                      - url: https://www.gettyimages.com/photos/steve-jobs
+                        title: "11,671 Steve Jobs Photos &amp; High Res Pictures -\
+                          \ Getty Images"
+                        snippet: "Browse 11,671 authentic steve jobs photos, pictures,\
+                          \ and images, or explore apple or bill gates to find the\
+                          \ right picture.Apple CEO Steve Jobs Delivers Opening Keynote\
+                          \ At Macworld. American businessman Steve Jobs , Chairman\
+                          \ of Apple Computers, and John Sculley, Apple&#39;s president,\
+                          \ pose with the new Macintosh personal computer"
+                        time: 2015-06-23T18:38:56Z
+                        props:
+                          group_id: gettyimages.com
+                      - url: https://www.shutterstock.com/search/steve-jobs?image_type=photo
+                        title: "Steve Jobs: Over 3,214 Royalty-Free Licensable Stock...\
+                          \ | Shutterstock"
+                        snippet: "A tribute to Steve Jobs, highlighting his impact\
+                          \ on technology, innovation, and design with the iconic\
+                          \ Apple smartphone and the Apple logo.PRAGUE, CZECH REPUBLIC\
+                          \ - AUG 6, 2017: Think Different slogan and young Steve\
+                          \ Jobs photo, Apple museum in Prague. Editorial Stock Photo."
+                        time: 2019-01-17T09:01:12Z
+                        props:
+                          group_id: shutterstock.com
+                      - url: https://www.inc.com/larry-kim/43-surprising-facts-about-steve-jobs.html
+                        title: 43 Surprising Facts About Steve Jobs
+                        snippet: "Learn about the real Steve Jobs with these 43 facts.\
+                          \ Steve Jobs was adopted shortly after being born. Jobs\
+                          \ was, biologically, half Arab. His biological father was\
+                          \ Syrian and his mother was American. Jobs’s biological\
+                          \ parents had one mandate–that Jobs be adopted by two college-educated\
+                          \ people."
+                        time: 2015-03-25T21:47:43Z
+                        props:
+                          paywalled: true
+                          language: en
+                          language_probability: 0.9832644462585449
+                          group_id: inc.com
+                      - url: https://www.azquotes.com/author/7449-Steve_Jobs
+                        title: TOP 25 QUOTES BY STEVE JOBS (of 586) | A-Z Quotes
+                        snippet: Discover Steve Jobs famous and rare quotes. Share
+                          inspirational quotes by Steve Jobs and quotations about
+                          technology and innovation.
+                        time: 2014-05-25T15:46:00Z
+                        props:
+                          group_id: azquotes.com
+                      - url: https://www.linkedin.com/pulse/founder-apple-inc-steve-jobs-web-design-media
+                        title: FOUNDER OF APPLE Inc. (STEVE JOBS)
+                        snippet: "&quot;Steve&quot; Jobs (February 24, 1955 – October\
+                          \ 5, 2011) was an American entrepreneur, businessman, inventor,\
+                          \ and industrial designer.According to Apple cofounder Steve\
+                          \ Wozniak &quot;Steve didn&#39;t ever code. He wasn&#39;t\
+                          \ an engineer and he didn&#39;t do any original design...&quot;\
+                          \ Daniel Kottke, one of Apple&#39;s earliest employees and\
+                          \ a college friend of Jobs&#39;s, stated that &quot;Between\
+                          \ Woz and Jobs, Woz was the innovator, the inventor."
+                        time: 2024-12-13T00:56:55Z
+                        props:
+                          ai_generated: false
+                          language: en
+                          language_probability: 0.937929630279541
+                          group_id: linkedin.com
+                      - url: https://www.linkedin.com/pulse/genius-behind-apple-steve-jobs-success-story-jegadeesh-sathaiya
+                        title: "The Genius Behind Apple: The Steve Jobs Success Story"
+                        snippet: "Steve Jobs was born on February 24, 1955, in San\
+                          \ Francisco, California. He was adopted by Paul and Clara\
+                          \ Jobs, who nurtured his early interest in electronics.\
+                          \ Jobs&#39; fascination with technology led him to tinker\
+                          \ with gadgets in his garage, a place that would later become\
+                          \ the birthplace of Apple. Founding Apple Computer with\
+                          \ Steve Wozniak."
+                        time: 2023-10-01T22:35:11Z
+                        props:
+                          ai_generated: false
+                          language: en
+                          language_probability: 0.9839490652084351
+                          group_id: linkedin.com
+                      - url: https://www.linkedin.com/pulse/steve-jobs-philosophy-achieving-success-fulfillment-through-vinluan-e7q6e
+                        title: "Steve Jobs&#39; Philosophy: Achieving Success and\
+                          \ Fulfillment through..."
+                        snippet: "Steve Jobs, the co-founder of Apple Inc., is celebrated\
+                          \ not only for his groundbreaking innovations but also for\
+                          \ his profound philosophy on work, creativity, and personal\
+                          \ growth. His visionary thinking and approach to life have\
+                          \ inspired millions around the world. This article delves\
+                          \ into Jobs&#39; philosophy, offering valuable insights\
+                          \ into achieving success and fulfillment."
+                        time: 2024-05-31T00:50:06Z
+                        props:
+                          ai_generated: false
+                          language: en
+                          language_probability: 0.951023519039154
+                          group_id: linkedin.com
+                      - url: https://news.google.com/topics/CAAqJQgKIh9DQkFTRVFvSUwyMHZNRFo1TTNJU0JXVnVMVlZUS0FBUAE?hl=en-US&gl=US&ceid=US%3Aen
+                        title: Google News - Steve Jobs - Latest
+                        snippet: "The glorious return of Steve Jobs. Mar 30. By David\
+                          \ Pierce. New York Magazine. More. The Mystery of Steve\
+                          \ Jobs. 27 days ago. By David Pogue.Corning CEO says Steve\
+                          \ Jobs pressured him into making all the screens for the\
+                          \ first iPhone: ‘Do you know what your biggest problem is?\
+                          \ You’re afraid’."
+                        time: 2018-05-26T23:55:43Z
+                        props:
+                          language: en
+                          language_probability: 0.8321699500083923
+                          group_id: news.google.com
+                      - url: https://in.pinterest.com/ideas/steve-jobs/942977635344/
+                        title: Find and save ideas about steve jobs on Pinterest.
+                        snippet: "Steve jobs photo, Steve jobs, Steve jobs apple.\
+                          \ The First Iphone.Steve Jobs Glasses Wallpaper. Black And\
+                          \ White Einstein Poster."
+                        time: 2014-12-26T14:12:27Z
+                        props:
+                          group_id: in.pinterest.com
+                      - url: https://kids.kiddle.co/Steve_Jobs
+                        title: Steve Jobs Facts for Kids
+                        snippet: "The house where Steve Jobs grew up in Los Altos,\
+                          \ California, was declared a historic site in 2013. It was\
+                          \ the first location of Apple Computer. Jobs usually wore\
+                          \ a black long-sleeved mock turtleneck, Levi&#39;s 501 blue\
+                          \ jeans, and New Balance 991 sneakers. Even though he was\
+                          \ a billionaire, Jobs said that most of his money would\
+                          \ not go to his children."
+                        time: 2017-08-21T14:45:33Z
+                        props:
+                          language: en
+                          language_probability: 0.9688087701797485
+                          group_id: kids.kiddle.co
+                      - url: https://openlab.citytech.cuny.edu/?get_group_doc=4339/1387685350-stevejobs.pdf
+                        title: steve jobs
+                        snippet: "Steve Jobs’ life. • 1955, Steven Paul was born in\
+                          \ San Francisco, the son of Abdulfattah Jandali and Joanne\
+                          \ Schieble. He is quickly adopted by Paul and Clara Jobs.\
+                          \ • 1973, Steve spends the fall semester at Reed College,\
+                          \ Oregon, then drops out. He will stay on campus and attend\
+                          \ the classes that interest him for a while, then move to\
+                          \ a hippie commune."
+                        time: 2015-11-16T06:50:57Z
+                        props:
+                          language: en
+                          language_probability: 0.9463335275650024
+                          group_id: citytech.cuny.edu
+                      - url: https://www.theceo.in/leaders/steve-jobs
+                        title: Steve Jobs
+                        snippet: "Steve Jobs, born on February 24, 1955, in San Francisco,\
+                          \ California, was a transformative figure in the world of\
+                          \ technology and business. As the co-founder of Apple Inc.,\
+                          \ Jobs played a pivotal role in shaping the personal computer\
+                          \ era, revolutionising multiple industries, and leaving\
+                          \ an indelible mark on the world."
+                        time: 2023-10-17T11:47:31Z
+                        props:
+                          language: en
+                          language_probability: 0.9521870613098145
+                          group_id: theceo.in
+                      - url: https://allaboutstevejobs.com/
+                        title: Home | all about Steve Jobs.com
+                        snippet: "This website is a repository of all things Steve\
+                          \ Jobs — biography, pictures, videos of his keynotes and\
+                          \ demos, quotes, interviews — you name it ..."
+                        props:
+                          language: en
+                          language_probability: 0.8613680005073547
+                          group_id: allaboutstevejobs.com
+                      - url: https://www.entrepreneur.com/growing-a-business/who-was-steve-jobs-see-the-apple-founders-career-and-more/197538
+                        title: Steve Jobs Biography - Entrepreneur
+                        snippet: "Ever wondered how Steve Jobs was so successful?\
+                          \ Discover the answers in this comprehensive overview of\
+                          \ his life, career and death. ... Steven Paul Jobs was an\
+                          \ American business owner, entrepreneur, investor and media\
+                          \ proprietor. He was best known for co-founding and leading\
+                          \ Apple."
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdKDtBQAZo9zAJWd9V6IZfVxB7YH0jkBorA28LPLnXZnim41K06rGNYyf-IJ9rbXpTHR-LiG2W8CZXjfpQ8WXIzx1yt05hzWts9gLAMx7SB6u
+                        props:
+                          language: en
+                          language_probability: 0.9691977500915527
+                          group_id: entrepreneur.com
+                      - url: https://www.biography.com/business-leaders/steve-jobs
+                        title: "Steve Jobs: Biography, Apple Cofounder, Entrepreneur"
+                        snippet: "In 1976, Steve Jobs cofounded Apple with Steve Wozniak.\
+                          \ Learn about the entrepreneur’s career, net worth, parents,\
+                          \ wife, children, education, and death in 2011."
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdJA1PBlTyqKv_ODlqaknlO6iX20VQ-czDfhMg6yFCtd7LV4EMf6ska_qsPswxlDujOMDMYY1E-t8ObJKuyQ_0BivoCmMrJjcqDuk8rF9FUHp
+                        props:
+                          language: en
+                          ai_generated: true
+                          group_id: biography.com
+                      - url: https://www.thoughtco.com/steve-jobs-biography-1991928
+                        title: "Biography of Steve Jobs, Co-Founder of Apple Computers"
+                        snippet: Steve Jobs was one of the founders of Apple Computers
+                          and a major pioneer in the computer industry. Learn about
+                          his impact on today&#39;s technology.
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdLgft05lwQj3-URIys8q9rQpLz7UA1YsTJu0rdpa7pIcInKUopnvOCdBZ_yAqJV1kTC-NE4A3mAIwafQdeWmL-CNkJlzui8YGMrQDVmQ5W2S
+                        props:
+                          language: en
+                          group_id: thoughtco.com
+                      - url: https://www.theguardian.com/technology/2011/oct/06/steve-jobs-obituary
+                        title: Steve Jobs obituary | Steve Jobs | The Guardian
+                        snippet: "Steve Jobs, who has died aged 56 of pancreatic cancer,\
+                          \ made an unprecedented impact on the world&#39;s consumer\
+                          \ electronics markets with a string of successful products,\
+                          \ including the iPod media player, iPhone smartphone and\
+                          \ iPad tablet computer.Steve Jobs, co-founder and chairman\
+                          \ of Apple, has died aged 56. Photograph: Paul Sakuma/AP.\
+                          \ The iPod, iPhone and iPad were all relatively late to\
+                          \ market, expensive, and, in their initial versions, lacked\
+                          \ important features."
+                        time: 2011-10-06T04:00:00Z
+                        props:
+                          language: en
+                          language_probability: 0.9655269980430603
+                          group_id: theguardian.com
+                      - url: https://www.theguardian.com/technology/2011/oct/06/steve-jobs-timeline-apple
+                        title: "Steve Jobs: from parents&#39; garage to world power\
+                          \ | The Guardian"
+                        snippet: "1955 Steve Jobs is born in San Francisco on 24 February\
+                          \ 1955, and adopted by Paul and Clara Jobs of Mountain View,\
+                          \ California. 1974 He takes a job at videogame company Atari\
+                          \ Inc but resigns after a few months to travel to India.\
+                          \ 1975 Jobs and his friend Steve Wozniak build a prototype\
+                          \ computer in the garage of Jobs&#39; parents."
+                        time: 2011-10-06T04:00:00Z
+                        props:
+                          language: en
+                          language_probability: 0.936636745929718
+                          group_id: theguardian.com
+                      - url: https://www.theguardian.com/technology/2011/oct/06/steve-jobs-apple-cofounder-dies
+                        title: "Steve Jobs, Apple co-founder, dies at 56 | Steve Jobs\
+                          \ | The Guardian"
+                        snippet: "Steve Jobs, billionaire co-founder of Apple and\
+                          \ the mastermind behind an empire of products that revolutionised\
+                          \ computing, telephony and the music industry, has died\
+                          \ in California at the age of 56. Jobs stepped down in August\
+                          \ as chief executive of the company he helped set up in\
+                          \ 1976, citing illness."
+                        time: 2011-10-06T04:00:00Z
+                        props:
+                          language: en
+                          language_probability: 0.9619073271751404
+                          group_id: theguardian.com
+                      - url: https://www.thefamouspeople.com/profiles/steve-paul-jobs-2904.php
+                        title: "Steve Jobs Biography - Facts, Childhood, Family Life\
+                          \ &amp; Achievements"
+                        snippet: "Steve Jobs asked William Hewlett, co-founder of\
+                          \ Hewlett-Packard for some parts to complete a school project\
+                          \ when he was 12. Impressed, Hewlett offered Jobs an internship\
+                          \ at his company. Jobs and his friend Steve Wozniak built\
+                          \ and sold digital blue boxes for hacking telephone systems\
+                          \ before they started Apple."
+                        time: 2013-10-01T02:22:48Z
+                        props:
+                          language: en
+                          language_probability: 0.9485479593276978
+                          group_id: thefamouspeople.com
+                      - url: https://www.mentalfloss.com/technology/computers/steve-jobs-apple-facts
+                        title: 10 Fascinating Facts About Steve Jobs
+                        snippet: "Jobs co-founded Apple in 1976, was forced out of\
+                          \ the company in 1985, and returned as CEO in 1996. He continued\
+                          \ to be the face of the brand until his death from neuroendocrine\
+                          \ cancer in 2011. Without Jobs, the ubiquitous technology\
+                          \ of the modern world might look very different, and the\
+                          \ man behind the machine was a fascinatingly complex figure.\
+                          \ Here are some facts about Steve Jobs you might not have\
+                          \ known."
+                        time: 2021-02-25T19:40:21Z
+                        props:
+                          language: en
+                          language_probability: 0.9746167063713074
+                          group_id: mentalfloss.com
+                      adjacent_question:
+                      - url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4924574/
+                        title: What can we learn from Steve Jobs about complementary
+                          and ... - PMC
+                        snippet: "The untimely death of Steve Jobs from pancreatic\
+                          \ cancer at the age of 56 in October 2011 was highly publicized\
+                          \ (Kane and Fowler, 2011; Markoff, 2011)."
+                        props:
+                          question: What caused Steve Jobs to pass away?
+                          language: en
+                          language_probability: 0.9402046799659729
+                      video:
+                      - url: https://www.youtube.com/watch?v=SCTHVKP0kmA
+                        title: Steve Jobs - Founder of Apple Documentary - YouTube
+                        snippet: "Discover the unvarnished story of Steve Jobs, the\
+                          \ visionary entrepreneur who revolutionized the world with\
+                          \ Apple but often destroyed the ..."
+                        time: 2026-01-10T00:00:00Z
+                        props:
+                          language: en
+                          language_probability: 0.8305477499961853
+                          group_id: youtube.com
+                      - url: https://www.youtube.com/watch?v=Tuw8hxrFBH8
+                        title: One of the Greatest Speeches Ever | Steve Jobs - YouTube
+                        snippet: "Steve Jobs: The Exclusive Biography - https://amzn.to/3zKeTM6Steve\
+                          \ Jobs delivers an inspirational speech. Listen to the end\
+                          \ for the most life changing quote ..."
+                        image:
+                          url: https://p.kagi.com/proxy/th?c=fl5H5doFdZVT3TYbM87OdHDyYlO9TIUIGNr_7c55vcUBKaVvsRc-Ln3kVpLN28FvUamlIQSOmUN7-ZXSLvsD0wf-_AqNL_zayaC9dTqQSZAyplfnO0BUIKUEEwMhqfcH
+                        props:
+                          language: en
+                          group_id: youtube.com
+                      - url: https://www.youtube.com/watch?v=kYfNvmF0Bqw
+                        title: Steve Jobs Secrets of Life - YouTube
+                        snippet: "In 1994, the Santa Clara Valley Historical Association\
+                          \ interviewed Steve Jobs. What he said during this unscripted\
+                          \ film interview is remarkable. In this foot..."
+                        time: 2011-10-06T04:00:00Z
+                        props:
+                          language: en
+                          language_probability: 0.8776662945747375
+                          group_id: youtube.com
+                      - url: https://www.youtube.com/watch?v=s1dR0ooLyDo
+                        title: Steve Jobs Full Documentary On His Entire Life
+                        time: 2016-04-17T19:33:45Z
+                        props:
+                          group_id: youtube.com
+                      - url: https://www.youtube.com/watch?v=s4pVFLUlx8g
+                        title: History of Steve Jobs (Full Documentary) - YouTube
+                        snippet: Jobs was one of the most innovative and influential
+                          entrepreneurs of our time. He left a legacy that will be
+                          marveled over and studied for decades.
+                        time: 2021-03-17T23:22:12Z
+                        props:
+                          language: en
+                          language_probability: 0.9413296580314636
+                          group_id: youtube.com
+                          text/markdown:
+                            schema:
+                              type: string
+                              description: Plain markdown search results without JSON
+                                wrapper
               schema:
                 $ref: "#/components/schemas/search_200_response"
-            text/markdown:
-              schema:
-                description: Plain markdown search results without JSON wrapper
-                type: string
           description: Success
         "400":
           content:

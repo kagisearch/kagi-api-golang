@@ -992,6 +992,7 @@ components:
           # Article Title
 
           This is the extracted content...
+        error: error
         url: https://example.com/article
       properties:
         url:
@@ -1000,12 +1001,16 @@ components:
           format: uri
           type: string
         markdown:
-          description: Extracted markdown content of the page
+          description: Extracted markdown content of the page. Will be absent if extraction
+            fails.
           example: |-
             # Article Title
 
             This is the extracted content...
           nullable: true
+          type: string
+        error:
+          description: "If extraction fails, a string describing the reason why."
           type: string
       required:
       - url
@@ -1018,11 +1023,13 @@ components:
             # Article Title
 
             This is the extracted content...
+          error: error
           url: https://example.com/article
         - markdown: |-
             # Article Title
 
             This is the extracted content...
+          error: error
           url: https://example.com/article
         meta:
           node: node

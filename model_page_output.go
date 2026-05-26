@@ -24,8 +24,10 @@ var _ MappedNullable = &PageOutput{}
 type PageOutput struct {
 	// The URL of the extracted page
 	Url string `json:"url"`
-	// Extracted markdown content of the page
+	// Extracted markdown content of the page. Will be absent if extraction fails.
 	Markdown NullableString `json:"markdown,omitempty"`
+	// If extraction fails, a string describing the reason why.
+	Error *string `json:"error,omitempty"`
 }
 
 type _PageOutput PageOutput
@@ -114,6 +116,38 @@ func (o *PageOutput) UnsetMarkdown() {
 	o.Markdown.Unset()
 }
 
+// GetError returns the Error field value if set, zero value otherwise.
+func (o *PageOutput) GetError() string {
+	if o == nil || IsNil(o.Error) {
+		var ret string
+		return ret
+	}
+	return *o.Error
+}
+
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PageOutput) GetErrorOk() (*string, bool) {
+	if o == nil || IsNil(o.Error) {
+		return nil, false
+	}
+	return o.Error, true
+}
+
+// HasError returns a boolean if a field has been set.
+func (o *PageOutput) HasError() bool {
+	if o != nil && !IsNil(o.Error) {
+		return true
+	}
+
+	return false
+}
+
+// SetError gets a reference to the given string and assigns it to the Error field.
+func (o *PageOutput) SetError(v string) {
+	o.Error = &v
+}
+
 func (o PageOutput) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -127,6 +161,9 @@ func (o PageOutput) ToMap() (map[string]interface{}, error) {
 	toSerialize["url"] = o.Url
 	if o.Markdown.IsSet() {
 		toSerialize["markdown"] = o.Markdown.Get()
+	}
+	if !IsNil(o.Error) {
+		toSerialize["error"] = o.Error
 	}
 	return toSerialize, nil
 }
